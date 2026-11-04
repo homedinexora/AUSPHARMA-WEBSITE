@@ -99,10 +99,6 @@ const THERAPY: Record<string, string> = {
   // BONE DISORDERS, SKIN DISORDERS, GENITO URINARY: no colour-guide therapy yet (left null).
 };
 
-/** Brand spellings corrected by AUSPHARMA (the ERP master has older spellings). */
-const SPELLING: [RegExp, string][] = [[/\bAUSCILIN\b/g, "AUSCILLIN"]];
-const fixSpelling = (v: string | null) => (v ? SPELLING.reduce((acc, [re, to]) => acc.replace(re, to), v) : v);
-
 const titleCase = (s: string) => s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
 
 function packSize(row: Row): string | null {
@@ -140,9 +136,9 @@ async function importProducts(masterRows: Row[]) {
     const itemId = r.ITEMID!;
     const values = {
       itemId,
-      brand: fixSpelling(r.BRAND),
+      brand: r.BRAND,
       division: "aquris", // all AUSPHARMA products belong to the +aquris division (confirmed Nov 2026)
-      brandName: fixSpelling(r.ITEMNAME)!,
+      brandName: r.ITEMNAME!,
       composition: r.COMPOSITION!,
       classification: r.CLASSIFICATION,
       category: r.CATEGORY,
