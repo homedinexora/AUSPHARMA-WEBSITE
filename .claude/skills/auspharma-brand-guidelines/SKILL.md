@@ -51,17 +51,16 @@ manufacturing partners**. It does not run its own plant. Every claim must match 
 
 ## 2. Logo
 
-- Mockup logo: a white rounded square holding a teal **"A"**, followed by the
-  **AUS Pharma** wordmark in Inter Bold, white on the brand header.
-- `TODO(brand):` no logo file has been supplied. Until it is, build the logo as an
-  inline SVG component (`components/brand/Logo.tsx`) that reproduces the mockup mark,
-  so swapping in the official SVG later is a one-file change.
-- When the official logo arrives: put `logo.svg`, `logo-white.svg` and `mark.svg` in
-  `public/brand/`, then generate `app/icon.svg`, `app/apple-icon.png` (180×180) and
-  the OG image from it.
-- Rules: keep clear space of at least the height of the "A" on every side. Minimum
-  height 24px. Never stretch, recolour outside the palette, add shadows or effects, or
-  place it on a busy photo.
+- **Official logo: the bold italic "AUSPHARMA" wordmark** (supplied `docs/design/auspharma-logo.pdf`,
+  vector). Web copy: `public/brand/auspharma-logo.svg`; component `components/brand/Logo.tsx`
+  (inline SVG, `currentColor`: white on dark teal header/footer, ink on light backgrounds).
+- Favicon `app/icon.svg`: the wordmark's own "A" (cropped from the same path, not redrawn), white on a
+  `brand-600` rounded square. Legible at 16 px.
+- Rules: keep clear space of at least the cap height on every side. Minimum width 96 px on screen.
+  Never stretch, outline, add effects, re-type it in another font, or recolour it outside ink, white or
+  brand teal. Don't place it on a busy photo.
+- `TODO(brand):` running text currently says "AUS Pharma" (mockups); the logo and cartons say AUSPHARMA.
+  Confirm which spelling to use in sentences.
 
 ## 3. Brand colours (website)
 
