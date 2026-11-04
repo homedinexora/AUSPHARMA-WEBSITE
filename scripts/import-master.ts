@@ -61,7 +61,7 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
   AUS0092: { gtin: "8906219880049", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880049.webp" },
   AUS0098: { gtin: "8906219880063", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880063.webp" },
   // Cartons received 2026-11-04 (barcode + QR decoded; licence/manufacturer/storage read from panels).
-  // ACEELO and ACEELO PS are NSAIDs (confirmed by AUSPHARMA); the ERP lists them under C.N.S DRUGS.
+  // ACEELO and ACEELO PS are NSAIDs (confirmed by AUSPHARMA); ACEELO's ERP category is MUSCLE RELAXANT.
   ACE0943: { therapy: "pain-fever-inflammation", gtin: "8906219880247", manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880247.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
   ACE0949: { therapy: "pain-fever-inflammation", gtin: "8906219880254", manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "51/UA/SC/P-2013", schedule: "H", packImageBlob: "/packs/8906219880254.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
   AUS0090: { gtin: "8906219880070", manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880070.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
@@ -98,6 +98,15 @@ const THERAPY: Record<string, string> = {
   "ANTI ALLERGIC DRUGS": "respiratory-allergy",
   "GASTRO ENTROLOGY": "gastro",
   // BONE DISORDERS, SKIN DISORDERS, GENITO URINARY: no colour-guide therapy yet (left null).
+};
+
+/**
+ * ERP CATEGORY overrides CLASSIFICATION: the ERP files pain relievers under C.N.S DRUGS, but AUSPHARMA
+ * places them under Pain, fever & inflammation (confirmed Nov 2026).
+ */
+const CATEGORY_THERAPY: Record<string, string> = {
+  "NSAID'S": "pain-fever-inflammation",
+  "ANALGESICS & ANTIPYRETICS": "pain-fever-inflammation",
 };
 
 const titleCase = (s: string) => s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
@@ -146,7 +155,7 @@ async function importProducts(masterRows: Row[]) {
       dosageForm: r.PRODUCTFORM ? titleCase(r.PRODUCTFORM) : null,
       packSize: packSize(r),
       packType: r.PACKINGTYPE ? titleCase(r.PACKINGTYPE) : null,
-      therapy: THERAPY[r.CLASSIFICATION ?? ""] ?? null,
+      therapy: CATEGORY_THERAPY[r.CATEGORY ?? ""] ?? THERAPY[r.CLASSIFICATION ?? ""] ?? null,
       marketedBy: "Auspharma Private Limited",
       ...CONFIRMED[itemId],
     };
