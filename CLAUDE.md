@@ -24,7 +24,7 @@ Use the `/browse` skill from gstack for all web browsing. Never use
 | Task | Skill |
 |------|-------|
 | New page, section or feature | `superpowers:brainstorming`, then `superpowers:writing-plans` |
-| Building UI | `auspharma-design-system` + `agent-protocols:frontend-ui-engineering` |
+| Building UI | `auspharma-design-system` + `example-skills:frontend-design` + `agent-protocols:frontend-ui-engineering` |
 | Framework/library questions | `agent-protocols:source-driven-development` (check official Next.js docs) |
 | Logic (forms, utilities) | `superpowers:test-driven-development` |
 | Visual check | Playwright: screenshot at 360px, 768px and 1280px |
