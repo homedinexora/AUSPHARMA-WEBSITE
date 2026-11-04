@@ -4,7 +4,7 @@ import { VerifyMedicine } from "@/components/site/VerifyMedicine";
 import { listCatalog } from "@/lib/data/catalog";
 import { formatPackDate } from "@/lib/scan-view";
 import { site } from "@/lib/site";
-import { therapies } from "@/lib/therapies";
+import { activeTherapies } from "@/lib/therapies";
 
 const promises = [
   "Made by WHO-GMP certified manufacturing partners",
@@ -61,6 +61,7 @@ const faqs = [
 
 export default async function Home() {
   const catalog = await listCatalog();
+  const areas = activeTherapies(catalog);
   const verifyOptions = catalog.map((p) => ({
     gtin: p.gtin,
     name: [p.brandName, p.packSize].filter(Boolean).join(" · "),
@@ -123,20 +124,26 @@ export default async function Home() {
           <h2 id="browse-title" className="text-3xl font-medium text-brand-600">
             Browse by therapy area
           </h2>
-          <p className="mt-2 text-ink-soft">Pick a therapy area, then open any medicine to see its pack details and test reports.</p>
-          <ul className="mt-8 flex flex-wrap gap-3">
-            {therapies.map((t) => (
-              <li key={t.slug}>
-                <Link
-                  href={`/therapy/${t.slug}`}
-                  className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-sm font-semibold text-ink hover:border-brand-600"
-                >
-                  <span className="size-2.5 rounded-full" style={{ backgroundColor: t.web }} aria-hidden="true" />
-                  {t.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          {areas.length > 0 && (
+            <>
+              <p className="mt-2 text-ink-soft">
+                Pick a therapy area, then open any medicine to see its pack details and test reports.
+              </p>
+              <ul className="mt-8 flex flex-wrap gap-3">
+                {areas.map((t) => (
+                  <li key={t.slug}>
+                    <Link
+                      href={`/therapy/${t.slug}`}
+                      className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-sm font-semibold text-ink hover:border-brand-600"
+                    >
+                      <span className="size-2.5 rounded-full" style={{ backgroundColor: t.web }} aria-hidden="true" />
+                      {t.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
           <div className="mt-10">
             {catalog.length > 0 ? (
               <ProductGrid items={catalog.slice(0, 6)} />

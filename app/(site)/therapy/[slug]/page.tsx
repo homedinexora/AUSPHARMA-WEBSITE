@@ -19,6 +19,7 @@ export default async function TherapyPage({ params }: PageProps<"/therapy/[slug]
   const t = getTherapy((await params).slug);
   if (!t) notFound();
   const items = (await listCatalog()).filter((p) => p.therapy === t.slug);
+  if (!items.length) notFound(); // empty areas are hidden from the menu and not served
   return (
     <>
       <section className="bg-brand-800 text-white">
@@ -38,13 +39,7 @@ export default async function TherapyPage({ params }: PageProps<"/therapy/[slug]
               {items.length} {items.length === 1 ? "product" : "products"}
             </span>
           </div>
-          {items.length ? (
-            <ProductGrid items={items} />
-          ) : (
-            <p className="rounded-md bg-white px-5 py-4 text-sm text-ink-soft shadow-card">
-              Product pages for this area are being published.
-            </p>
-          )}
+          <ProductGrid items={items} />
           <p className="rounded-md border border-brand-600 bg-brand-100 px-5 py-4 text-sm text-ink">
             <strong>Use medicines responsibly.</strong> Products marked Rx require a valid prescription. Always follow the
             advice of your registered medical practitioner or pharmacist.

@@ -32,6 +32,12 @@ export const therapies: readonly Therapy[] = [
   { slug: "cns-neuro", name: "CNS / Neuro", panel: "#6A2C91", web: "#6A2C91", tint: "#C5B4E3", status: "proposed" },
 ];
 
+/** Therapy areas that have at least one of the given (published) products, in menu order. Empty areas are hidden. */
+export function activeTherapies(items: readonly { therapy: string | null }[]): Therapy[] {
+  const used = new Set(items.map((i) => i.therapy));
+  return therapies.filter((t) => used.has(t.slug));
+}
+
 export function getTherapy(slug: string): Therapy | undefined {
   return therapies.find((t) => t.slug === slug);
 }

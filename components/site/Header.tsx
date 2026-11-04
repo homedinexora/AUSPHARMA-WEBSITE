@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { Logo } from "@/components/brand/Logo";
-import { therapies } from "@/lib/therapies";
+import { listCatalog } from "@/lib/data/catalog";
+import { activeTherapies } from "@/lib/therapies";
 
-export function Header() {
+export async function Header() {
+  // Only therapy areas with published products appear in the menu.
+  const areas = activeTherapies(await listCatalog());
   return (
     <header className="bg-brand-800 text-white">
       <a
@@ -47,20 +50,22 @@ export function Header() {
           </div>
         </form>
       </div>
-      <nav aria-label="Therapy areas" className="border-t border-white/15">
-        <ul className="mx-auto flex max-w-7xl gap-6 overflow-x-auto px-4 py-3 text-sm font-semibold whitespace-nowrap sm:px-6 lg:px-8">
-          {therapies.map((t) => (
-            <li key={t.slug}>
-              <Link
-                href={`/therapy/${t.slug}`}
-                className="rounded-sm text-white/90 hover:text-white hover:underline"
-              >
-                {t.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      {areas.length > 0 && (
+        <nav aria-label="Therapy areas" className="border-t border-white/15">
+          <ul className="mx-auto flex max-w-7xl gap-6 overflow-x-auto px-4 py-3 text-sm font-semibold whitespace-nowrap sm:px-6 lg:px-8">
+            {areas.map((t) => (
+              <li key={t.slug}>
+                <Link
+                  href={`/therapy/${t.slug}`}
+                  className="rounded-sm text-white/90 hover:text-white hover:underline"
+                >
+                  {t.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
     </header>
   );
 }
