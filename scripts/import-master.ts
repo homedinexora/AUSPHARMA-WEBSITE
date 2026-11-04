@@ -39,6 +39,15 @@ const SITES = [
     pinCode: "249403",
     licenceNumbers: "31/UA/2013",
   },
+  {
+    id: "MFR-MALIK",
+    legalName: "Malik Lifesciences Pvt. Ltd. (A subsidiary of Akums Drugs & Pharmaceuticals Ltd.)",
+    address: "Plot No. 16, Vardhman Indl. Estate, Vill- Bahadarpur Saini, N.H.58",
+    city: "Haridwar",
+    state: "Uttarakhand",
+    pinCode: "247667",
+    licenceNumbers: "48/UA/SC/P-2013",
+  },
 ];
 
 /** Per-SKU facts read from approved carton artwork (QR/barcode, licence, cautions) and inserts. */
@@ -48,8 +57,13 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
   AUS0095: { gtin: "8906219880032", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880032.webp" },
   AUS0092: { gtin: "8906219880049", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880049.webp" },
   AUS0098: { gtin: "8906219880063", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880063.webp" },
-  ACE0943: { manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
-  ACE0949: { manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
+  // Cartons received 2026-11-04 (barcode + QR decoded; licence/manufacturer/storage read from panels)
+  ACE0943: { gtin: "8906219880247", manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880247.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
+  ACE0949: { gtin: "8906219880254", manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "51/UA/SC/P-2013", schedule: "H", packImageBlob: "/packs/8906219880254.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
+  AUS0090: { gtin: "8906219880070", manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880070.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
+  AQU0447: { gtin: "8906219880186", manufacturerId: "MFR-MALIK", manufacturingLicenceNo: "48/UA/SC/P-2013", schedule: "H", packImageBlob: "/packs/8906219880186.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 25°C." },
+  AUS0099: { gtin: "8906219880148", manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "G", packImageBlob: "/packs/8906219880148.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
+  AUS0102: { manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "H", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." }, // from strip foil (no GTIN on foil)
 };
 
 const THERAPY: Record<string, string> = {
