@@ -27,7 +27,7 @@ export function PilSections({ pil, gtin, isOlderVersion }: { pil: ScanPil; gtin:
       {open.length > 0 ? <InsertSectionList sections={open} openFirst /> : null}
 
       {gated.length > 0 || (isPi && pil.hasPdf) ? (
-        <HcpGate>
+        <HcpGate patientInfoShown={open.length > 0}>
           <div className="space-y-4">
             {pil.hasPdf ? (
               <a

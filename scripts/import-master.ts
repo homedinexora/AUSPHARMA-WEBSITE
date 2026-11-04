@@ -62,8 +62,14 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
   AUS0098: { gtin: "8906219880063", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880063.webp" },
   // Cartons received 2026-11-04 (barcode + QR decoded; licence/manufacturer/storage read from panels).
   // ACEELO and ACEELO PS are NSAIDs (confirmed by AUSPHARMA); ACEELO's ERP category is MUSCLE RELAXANT.
-  ACE0943: { therapy: "pain-fever-inflammation", gtin: "8906219880247", manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880247.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
-  ACE0949: { therapy: "pain-fever-inflammation", gtin: "8906219880254", manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "51/UA/SC/P-2013", schedule: "H", packImageBlob: "/packs/8906219880254.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
+  ACE0943: {
+    therapy: "pain-fever-inflammation",
+    composition: "Each film coated tablet contains: Aceclofenac IP 100 mg; Paracetamol IP 325 mg; Chlorzoxazone USP 250 mg. Colours: Sunset Yellow FCF & Titanium Dioxide IP", // from the approved insert
+    gtin: "8906219880247", manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880247.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
+  ACE0949: {
+    therapy: "pain-fever-inflammation",
+    composition: "Each film coated tablet contains: Aceclofenac IP 100 mg; Paracetamol IP 325 mg; Serratiopeptidase IP 15 mg (as enteric coated granules equivalent to enzyme activity 30,000 units). Colours: Sunset Yellow FCF & Titanium Dioxide IP", // from the approved insert
+    gtin: "8906219880254", manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "51/UA/SC/P-2013", schedule: "H", packImageBlob: "/packs/8906219880254.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
   AUS0090: { gtin: "8906219880070", manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880070.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
   AQU0447: { gtin: "8906219880186", manufacturerId: "MFR-MALIK", manufacturingLicenceNo: "48/UA/SC/P-2013", schedule: "H", packImageBlob: "/packs/8906219880186.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 25°C." },
   AUS0099: { gtin: "8906219880148", manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "G", packImageBlob: "/packs/8906219880148.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },

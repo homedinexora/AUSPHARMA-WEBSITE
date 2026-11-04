@@ -9,7 +9,7 @@ const KEY = "auspharma-hcp-declared";
  * Medical Practitioner…". Not verification: it records the visitor's own declaration for
  * this browser session only (no personal data).
  */
-export function HcpGate({ children }: { children: ReactNode }) {
+export function HcpGate({ children, patientInfoShown }: { children: ReactNode; patientInfoShown: boolean }) {
   const [declared, setDeclared] = useState(false);
 
   useEffect(() => {
@@ -29,8 +29,9 @@ export function HcpGate({ children }: { children: ReactNode }) {
       <p className="font-semibold text-brand-800">For healthcare professionals</p>
       <p className="mt-1 text-sm text-ink">
         The full prescribing information is intended for registered medical practitioners, hospitals and
-        laboratories. If you are a patient, please read the patient counselling information above and speak to
-        your doctor or pharmacist.
+        laboratories. If you are a patient,{" "}
+        {patientInfoShown ? "please read the patient counselling information above and " : "please read the leaflet in your pack and "}
+        speak to your doctor or pharmacist.
       </p>
       <button
         type="button"
