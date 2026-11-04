@@ -43,7 +43,8 @@ scheme**, and keep old GTIN/batch URLs working forever.
 |------|-------|
 | New page, section or feature | `superpowers:brainstorming`, then `superpowers:writing-plans` |
 | Building UI | `auspharma-design-system` + `example-skills:frontend-design` + `agent-protocols:frontend-ui-engineering` |
-| React/Next.js code | `vercel-react-best-practices`, `vercel-composition-patterns` |
+| React/Next.js code | `vercel-plugin:react-best-practices`, `vercel-composition-patterns` |
+| Vercel platform (storage, env vars, functions, domains, auth) | `vercel-plugin` skills, e.g. `vercel-storage`, `env-vars`, `vercel-functions`, `domains` |
 | Framework/library questions | `agent-protocols:source-driven-development` (check official Next.js docs) |
 | Logic (forms, utilities) | `superpowers:test-driven-development` |
 | Visual check | Playwright: screenshot at 360px, 768px and 1280px |
@@ -54,7 +55,7 @@ scheme**, and keep old GTIN/batch URLs working forever.
 | Routes, metadata, sitemap, JSON-LD | `pharma-seo` |
 | Before merging | `agent-protocols:code-review-and-quality`, `agent-protocols:security-and-hardening`, `web-design-guidelines`, `pharma-content-compliance` checklist |
 | Before going live | `agent-protocols:shipping-and-launch`, `agent-protocols:performance-optimization` |
-| Deploying | `deploy-to-vercel` (confirm with the user before any deploy) |
+| Deploying | `/vercel-plugin:deploy` (preview by default; confirm with the user before any production deploy) |
 
 ## Content rules (India / CDSCO)
 
