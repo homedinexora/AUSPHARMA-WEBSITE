@@ -3,8 +3,9 @@ import { and, asc, desc, eq, inArray, isNotNull } from "drizzle-orm";
 import { cacheLife, cacheTag } from "next/cache";
 import { getDb, schema } from "@/db";
 import type { PilSection } from "@/db/schema";
+import type { PatientGuide } from "@/lib/patient-guide";
 
-const { products, manufacturers, batches, pilVersions } = schema;
+const { products, manufacturers, batches, pilVersions, patientGuides } = schema;
 
 /** Cache tag for everything shown on a product's scan page. Admin mutations call revalidateTag(productTag(gtin)). */
 export const productTag = (gtin: string) => `product:${gtin}`;
@@ -116,6 +117,8 @@ export interface ScanProduct {
     /** Certificate uploaded and valid-until date today or later. Never present an expired certificate as current. */
     whoGmpCurrent: boolean;
   } | null;
+  /** Published "Easy guide for patients", if any. */
+  guide: { id: number; version: string; content: PatientGuide; hasPdf: boolean } | null;
   /** Published + superseded PIL versions, newest first (older batches show the leaflet they were packed with). */
   pils: ScanPil[];
   /** Published and withdrawn batches (never drafts), newest first. */
@@ -138,14 +141,21 @@ export async function getScanProduct(gtin: string): Promise<ScanProduct | null> 
   if (!row) return null;
   const p = row.products;
 
-  const [pilRows, batchRows] = await Promise.all([
+  const [pilRows, batchRows, guideRows] = await Promise.all([
     db
       .select()
       .from(pilVersions)
       .where(and(eq(pilVersions.productId, p.itemId), inArray(pilVersions.status, ["published", "superseded"])))
       .orderBy(desc(pilVersions.publishedAt)),
     db.select().from(batches).where(eq(batches.productId, p.itemId)).orderBy(desc(batches.mfgDate)),
+    db
+      .select()
+      .from(patientGuides)
+      .where(and(eq(patientGuides.productId, p.itemId), eq(patientGuides.status, "published")))
+      .orderBy(desc(patientGuides.publishedAt))
+      .limit(1),
   ]);
+  const g = guideRows[0];
 
   const m = row.manufacturers;
   return {
@@ -181,6 +191,7 @@ export async function getScanProduct(gtin: string): Promise<ScanProduct | null> 
             m.whoGmpValidUntil >= new Date().toISOString().slice(0, 10),
         }
       : null,
+    guide: g ? { id: g.id, version: g.version, content: g.content, hasPdf: Boolean(g.pdfBlob) } : null,
     pils: pilRows.map((v) => ({
       id: v.id,
       kind: v.kind,
@@ -210,6 +221,7 @@ export async function getDocumentBlob(
   doc:
     | { kind: "coa"; gtin: string; batchNo: string }
     | { kind: "pil"; pilVersionId: number }
+    | { kind: "guide"; guideId: number }
     | { kind: "gmp"; manufacturerId: string },
 ): Promise<string | null> {
   const db = getDb();
@@ -231,6 +243,15 @@ export async function getDocumentBlob(
       .limit(1);
     // Superseded versions stay downloadable: older batches were packed with them.
     return v && v.status !== "draft" && v.productStatus === "published" ? v.blob : null;
+  }
+  if (doc.kind === "guide") {
+    const [v] = await db
+      .select({ blob: patientGuides.pdfBlob, status: patientGuides.status, productStatus: products.status })
+      .from(patientGuides)
+      .innerJoin(products, eq(patientGuides.productId, products.itemId))
+      .where(eq(patientGuides.id, doc.guideId))
+      .limit(1);
+    return v && v.status === "published" && v.productStatus === "published" ? v.blob : null;
   }
   const [m] = await db
     .select({ blob: manufacturers.whoGmpCertificateBlob })

@@ -7,6 +7,8 @@ import { getScanProduct, type ScanProduct } from "@/lib/data/catalog";
 import { parseScanPath } from "@/lib/gtin";
 import { formatInr, formatPackDate, isPrescription, resolveScanView, type ScanView } from "@/lib/scan-view";
 import { pvpi, site } from "@/lib/site";
+import { getTherapy } from "@/lib/therapies";
+import { PatientGuideView } from "@/components/scan/PatientGuideView";
 
 /** Resolves the scan URL and renders the product page. Awaited inside <Suspense> by the route. */
 export async function ProductScanView({ params }: { params: Promise<{ gtin: string; batch?: string }> }) {
@@ -42,48 +44,47 @@ function ScanPage({ product: p, view }: { product: ScanProduct; view: ScanView }
   const m = p.manufacturer;
   const expiry = formatPackDate(view.batch?.expiryDate ?? null);
   const mfg = formatPackDate(view.batch?.mfgDate ?? null);
+  const therapy = p.therapy ? getTherapy(p.therapy) : undefined;
+  const accent = therapy?.web ?? "#087f75";
 
   return (
     <div className="bg-canvas">
       <div className="mx-auto grid max-w-5xl gap-6 px-4 py-6 sm:px-6 md:py-10 lg:grid-cols-[1fr_20rem] lg:items-start">
-        {/* Identity */}
+        {/* Identity: carton look, kraft + therapy-colour panel */}
         <section
           aria-labelledby="product-title"
-          className="grid gap-5 rounded-lg bg-white p-5 shadow-card md:grid-cols-[minmax(0,18rem)_1fr] md:items-center md:p-6 lg:col-span-2"
+          className="grid overflow-hidden rounded-lg bg-kraft shadow-card md:grid-cols-[minmax(0,17rem)_1fr_auto] lg:col-span-2"
         >
           {p.packImage ? (
-            <Image
-              src={p.packImage}
-              alt={`${p.brandName} pack`}
-              width={1200}
-              height={900}
-              priority
-              sizes="(min-width: 768px) 18rem, 100vw"
-              className="mx-auto h-auto w-full max-w-xs rounded-md bg-brand-50"
-            />
+            <div className="flex items-center justify-center bg-kraft-50 p-4">
+              <Image
+                src={p.packImage}
+                alt={`${p.brandName} pack`}
+                width={1200}
+                height={900}
+                priority
+                sizes="(min-width: 768px) 17rem, 100vw"
+                className="h-auto w-full max-w-xs"
+              />
+            </div>
           ) : null}
-          <div>
-          <div className="flex flex-wrap gap-2">
-            <span className="rounded-full bg-brand-600 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+          <div className="p-5 md:p-6">
+            <span className="inline-block rounded-full bg-white px-3 py-1 text-xs font-semibold uppercase tracking-wide text-ink">
               AUS Pharma generic
             </span>
-            <span className="rounded-full border border-brand-600 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-700">
-              {rx ? "Prescription only" : "Over the counter"}
-            </span>
-          </div>
-          <h1 id="product-title" className="mt-4 text-2xl font-semibold tracking-tight text-ink md:text-4xl">
-            {p.brandName}
-          </h1>
-          <p className="mt-2 text-lg font-medium text-brand-700">{p.composition}</p>
-          <p className="mt-1 text-sm text-ink-soft">
-            {[p.packSize, p.dosageForm].filter(Boolean).join(" · ")}
-            {" · "}Marketed by {p.marketedBy}
-          </p>
-          {rx ? (
-            <p className="mt-4 rounded-sm bg-brand-100 px-4 py-3 text-sm text-brand-800">
-              <strong>Prescription medicine.</strong> Use only as directed by a registered medical practitioner.
+            <h1 id="product-title" className="mt-4 text-2xl font-semibold tracking-tight text-ink md:text-4xl">
+              {p.brandName}
+            </h1>
+            <p className="mt-2 text-lg font-medium text-ink">{p.composition}</p>
+            <p className="mt-1 text-sm text-ink">
+              {[p.packSize, p.dosageForm].filter(Boolean).join(" · ")}
+              {" · "}Marketed by {p.marketedBy}
             </p>
-          ) : null}
+          </div>
+          <div className="flex flex-col justify-center gap-2 p-5 text-white md:w-52 md:p-6" style={{ backgroundColor: accent }}>
+            <p className="text-xs font-bold uppercase tracking-wider">{rx ? "Rx · Prescription only" : "Over the counter"}</p>
+            {therapy ? <p className="text-lg font-semibold">{therapy.name}</p> : null}
+            {rx ? <p className="text-sm text-white/95">Use only as directed by a registered medical practitioner.</p> : null}
           </div>
         </section>
 
@@ -172,7 +173,8 @@ function ScanPage({ product: p, view }: { product: ScanProduct; view: ScanView }
         </section>
 
         {/* Quick links */}
-        <nav aria-label="On this page" className="grid grid-cols-3 gap-3 lg:col-start-1">
+        <nav aria-label="On this page" className={`grid gap-3 lg:col-start-1 ${p.guide ? "grid-cols-2 sm:grid-cols-4" : "grid-cols-3"}`}>
+          {p.guide ? <Tile href="#guide" label="Easy guide" /> : null}
           <Tile href="#pil" label="Package insert" />
           <Tile href="#manufacturer" label="Manufacturer & WHO-GMP" />
           <Tile href="/report-side-effect" label="Report a side effect" />
@@ -244,6 +246,16 @@ function ScanPage({ product: p, view }: { product: ScanProduct; view: ScanView }
         </section>
 
         {/* Leaflet */}
+        {p.guide ? (
+          <div id="guide" className="scroll-mt-6 lg:col-span-2">
+            <PatientGuideView
+              guide={p.guide.content}
+              accent={accent}
+              pdfHref={p.guide.hasPdf ? `/documents/guide/${p.guide.id}` : null}
+            />
+          </div>
+        ) : null}
+
         <div id="pil" className="scroll-mt-6 lg:col-start-1">
           {view.pil ? (
             <PilSections pil={view.pil} gtin={p.gtin} isOlderVersion={view.pilIsOlderVersion} />

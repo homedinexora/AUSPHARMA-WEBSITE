@@ -20,6 +20,10 @@
   --color-hero-from: #144764;
   --color-hero-to: #12677d;
 
+  /* Pack kraft (carton board) for the patient guide and product header; ink on kraft = 5.5:1 */
+  --color-kraft: #c69f73;
+  --color-kraft-50: #f6efe6;
+
   /* Neutrals */
   --color-ink: #173330;
   --color-ink-soft: #586d6b;

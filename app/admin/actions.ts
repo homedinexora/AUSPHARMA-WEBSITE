@@ -215,3 +215,76 @@ export async function toggleSectionPatientFacing(itemId: string, insertId: numbe
   await audit(staff, "insert.section_audience", "pil_versions", String(insertId), { key }, null);
   back(itemId, { ok: "Section updated" });
 }
+
+/* ------------------------------------------------------------------ patient guides */
+
+export async function saveGuide(itemId: string, guideId: number | null, form: FormData) {
+  const staff = await requireStaff("editor");
+  const { GUIDE_FIELDS, GuideFormatError, emptyGuide, parseBlock } = await import("@/lib/patient-guide");
+  const { patientGuides } = schema;
+  const version = str(form, "version");
+  if (!version) back(itemId, { error: "Guide: give a version, e.g. “v2 / Nov 2026”" });
+
+  const content = emptyGuide();
+  try {
+    for (const { field } of GUIDE_FIELDS) {
+      (content as unknown as Record<string, unknown>)[field] = parseBlock(field, String(form.get(`g_${field}`) ?? ""));
+    }
+  } catch (e) {
+    if (e instanceof GuideFormatError) back(itemId, { error: `Guide: ${e.message}` });
+    throw e;
+  }
+  if (!content.headline) back(itemId, { error: "Guide: the headline is required" });
+
+  const pdf = await readPdf(form, "guidePdf");
+  if (pdf && "error" in pdf) back(itemId, { error: `Guide PDF: ${pdf.error}` });
+  let pdfBlob: string | undefined;
+  if (pdf && "file" in pdf) {
+    const blob = await put(`guides/${itemId}/${version!.replace(/[^A-Za-z0-9.-]/g, "_")}.pdf`, pdf.file, {
+      access: "private",
+      contentType: "application/pdf",
+      allowOverwrite: true,
+    });
+    pdfBlob = blob.pathname;
+  }
+
+  if (guideId) {
+    const [g] = await getDb().select().from(patientGuides).where(eq(patientGuides.id, guideId)).limit(1);
+    if (!g || g.productId !== itemId) back(itemId, { error: "Guide not found" });
+    if (g!.status !== "draft") back(itemId, { error: "Only draft guides can be edited. Create a new version instead." });
+    await getDb()
+      .update(patientGuides)
+      .set({ version: version!, content, ...(pdfBlob ? { pdfBlob } : {}) })
+      .where(eq(patientGuides.id, guideId));
+    await audit(staff, "guide.update", "patient_guides", String(guideId), { version: g!.version }, { version });
+  } else {
+    const [row] = await getDb()
+      .insert(patientGuides)
+      .values({ productId: itemId, version: version!, content, pdfBlob, createdBy: staff.email })
+      .returning({ id: patientGuides.id });
+    await audit(staff, "guide.create", "patient_guides", String(row.id), null, { version });
+  }
+  back(itemId, { ok: `Guide ${version} saved as draft` });
+}
+
+export async function setGuidePublished(itemId: string, guideId: number, publish: boolean) {
+  const staff = await requireStaff("qa");
+  const { patientGuides } = schema;
+  const [g] = await getDb().select().from(patientGuides).where(eq(patientGuides.id, guideId)).limit(1);
+  if (!g || g.productId !== itemId) back(itemId, { error: "Guide not found" });
+  if (publish) {
+    await getDb()
+      .update(patientGuides)
+      .set({ status: "superseded" })
+      .where(and(eq(patientGuides.productId, itemId), eq(patientGuides.status, "published")));
+    await getDb()
+      .update(patientGuides)
+      .set({ status: "published", publishedAt: new Date(), approvedBy: staff.email })
+      .where(eq(patientGuides.id, guideId));
+  } else {
+    await getDb().update(patientGuides).set({ status: "draft" }).where(eq(patientGuides.id, guideId));
+  }
+  await audit(staff, publish ? "guide.publish" : "guide.unpublish", "patient_guides", String(guideId), { status: g!.status }, null);
+  refresh((await getProduct(itemId))?.gtin);
+  back(itemId, { ok: publish ? `Guide ${g!.version} published` : `Guide ${g!.version} unpublished` });
+}

@@ -12,12 +12,13 @@ import {
   uploadCoa,
 } from "@/app/admin/actions";
 import { Flash, NotAuthorised, StaffOnly, StatusBadge } from "@/components/admin/Guard";
+import { GuideEditor } from "@/components/admin/GuideEditor";
 import { getStaff } from "@/lib/admin/auth";
 import { InsertSectionList } from "@/components/scan/InsertSectionList";
 import { getDb, schema } from "@/db";
 import { hasRole } from "@/lib/admin/roles";
 
-const { products, manufacturers, batches, pilVersions } = schema;
+const { products, manufacturers, batches, pilVersions, patientGuides } = schema;
 
 const input = "w-full rounded-sm border border-line bg-white px-3 py-2 text-sm";
 const btn = "rounded-sm px-3 py-2 text-sm font-semibold";
@@ -52,10 +53,11 @@ async function Content({ params, searchParams }: PageProps<"/admin/products/[ite
   const db = getDb();
   const [p] = await db.select().from(products).where(eq(products.itemId, itemId)).limit(1);
   if (!p) notFound();
-  const [mfrs, bs, ins] = await Promise.all([
+  const [mfrs, bs, ins, guides] = await Promise.all([
     db.select({ id: manufacturers.id, legalName: manufacturers.legalName }).from(manufacturers).orderBy(asc(manufacturers.legalName)),
     db.select().from(batches).where(eq(batches.productId, itemId)).orderBy(desc(batches.createdAt)),
     db.select().from(pilVersions).where(eq(pilVersions.productId, itemId)).orderBy(desc(pilVersions.createdAt)),
+    db.select().from(patientGuides).where(eq(patientGuides.productId, itemId)).orderBy(desc(patientGuides.createdAt)),
   ]);
 
   return (
@@ -203,6 +205,10 @@ async function Content({ params, searchParams }: PageProps<"/admin/products/[ite
                 </Field>
                 <button className={`${btn} bg-brand-600 text-white`}>Add batch (draft)</button>
               </form>
+            </Card>
+
+            <Card title="Easy guide for patients">
+              <GuideEditor itemId={itemId} guides={guides} qa={qa} />
             </Card>
 
             <Card title="Package inserts">

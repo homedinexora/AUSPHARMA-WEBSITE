@@ -116,6 +116,26 @@ export const pilVersions = pgTable(
   (t) => [uniqueIndex("pil_versions_product_version_uq").on(t.productId, t.version)],
 );
 
+/** "Easy guide for patients" versions (plain-language, structured). Public only once QA publishes. */
+export const patientGuides = pgTable(
+  "patient_guides",
+  {
+    id: serial("id").primaryKey(),
+    productId: text("product_id")
+      .notNull()
+      .references(() => products.itemId),
+    version: text("version").notNull(),
+    content: jsonb("content").$type<import("../lib/patient-guide").PatientGuide>().notNull(),
+    pdfBlob: text("pdf_blob"),
+    status: pilStatus("status").notNull().default("draft"),
+    createdBy: text("created_by"),
+    approvedBy: text("approved_by"),
+    publishedAt: timestamp("published_at", { withTimezone: true }),
+    ...timestamps,
+  },
+  (t) => [uniqueIndex("patient_guides_product_version_uq").on(t.productId, t.version)],
+);
+
 /** Batches; the CoA PDF is shown publicly only when status = published. */
 export const batches = pgTable(
   "batches",

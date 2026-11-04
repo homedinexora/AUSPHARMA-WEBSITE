@@ -40,6 +40,7 @@ const product = (over: Partial<ScanProduct> = {}): ScanProduct => ({
   storage: null,
   packImage: null,
   manufacturer: null,
+  guide: null,
   pils: [pil(2, true), pil(1, false)],
   batches: [batch("AB2"), batch("AB1", { pilVersionId: 1 })],
   ...over,
