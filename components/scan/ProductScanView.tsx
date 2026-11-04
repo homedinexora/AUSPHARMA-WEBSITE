@@ -47,6 +47,17 @@ function ScanPage({ product: p, view }: { product: ScanProduct; view: ScanView }
   const mfg = formatPackDate(view.batch?.mfgDate ?? null);
   const therapy = p.therapy ? getTherapy(p.therapy) : undefined;
   const accent = therapy?.web ?? "#087f75";
+  // Until a batch report is published there is nothing to verify, so the scan lands on the package insert.
+  const insertFirst = Boolean(view.pil) && view.batchState === "none" && view.selectableBatches.length === 0;
+  const insertBlock = (
+    <div id="pil" className="scroll-mt-6 lg:col-start-1">
+      {view.pil ? (
+        <PilSections pil={view.pil} gtin={p.gtin} isOlderVersion={view.pilIsOlderVersion} />
+      ) : (
+        <p className="text-sm text-ink-soft">Please read the patient information leaflet inside your pack.</p>
+      )}
+    </div>
+  );
 
   return (
     <div className="bg-canvas">
@@ -96,6 +107,8 @@ function ScanPage({ product: p, view }: { product: ScanProduct; view: ScanView }
             {rx ? <p className="text-sm text-white/95">Use only as directed by a registered medical practitioner.</p> : null}
           </div>
         </section>
+
+        {insertFirst ? insertBlock : null}
 
         {/* Verify: CoA for the batch */}
         <section
@@ -265,13 +278,7 @@ function ScanPage({ product: p, view }: { product: ScanProduct; view: ScanView }
           </div>
         ) : null}
 
-        <div id="pil" className="scroll-mt-6 lg:col-start-1">
-          {view.pil ? (
-            <PilSections pil={view.pil} gtin={p.gtin} isOlderVersion={view.pilIsOlderVersion} />
-          ) : (
-            <p className="text-sm text-ink-soft">Please read the patient information leaflet inside your pack.</p>
-          )}
-        </div>
+        {insertFirst ? null : insertBlock}
 
         {/* Safety reporting */}
         <section aria-labelledby="safety-title" className="rounded-lg border border-line bg-white p-5 text-sm lg:col-start-1">
