@@ -1,6 +1,6 @@
 ---
 name: auspharma-brand-guidelines
-description: Use for anything carrying the AUSPHARMA / AUS Pharma brand on the website: logo and name usage, brand colours, therapy-area colours, typography (Inter), imagery, tone of voice, OG images and favicons. Source of truth is the approved website mockups and the Rx therapy colour guide in docs/design/. For AUSPHARMA, use this skill, not example-skills:brand-guidelines (that one is Anthropic's brand).
+description: Use for anything carrying the AUSPHARMA brand on the website: logo and name usage, brand colours, therapy-area colours, typography (Inter), imagery, tone of voice, OG images and favicons. Source of truth is the approved website mockups and the Rx therapy colour guide in docs/design/. For AUSPHARMA, use this skill, not example-skills:brand-guidelines (that one is Anthropic's brand).
 ---
 
 # AUSPHARMA Brand Guidelines
@@ -22,13 +22,12 @@ node .claude/skills/auspharma-brand-guidelines/contrast.mjs "<text hex>" "<backg
 
 | Use | Form |
 |---|---|
-| Brand / wordmark / headings | **AUS Pharma** |
+| Brand in all copy, headings, metadata and the wordmark | **AUSPHARMA** (always all caps, one word) |
 | Legal entity (footer, product pages, "Marketed by", CoA, legal pages) | **Auspharma Private Limited** |
 | Domain | auspharma.in (canonical host: confirm `www.auspharma.in` vs apex) |
 
-`TODO(brand):` the mockups use "AUS Pharma", "Auspharma Pvt Ltd" and the brief uses
-"Auspharma Private Limited". Confirm the final wordmark spelling with AUSPHARMA.
-Never write "Aus Pharma", "AusPharma" or "AUS-Pharma" in UI copy.
+Decided by AUSPHARMA (Nov 2026): use **AUSPHARMA** everywhere in copy; the mockups' "AUS Pharma" is retired.
+Never write "AUS Pharma", "Aus Pharma", "AusPharma", "Auspharma" (except in the legal name) or "AUS-Pharma" in UI copy.
 
 Strapline (from mockups): **"Quality generics you can verify"**.
 
@@ -40,7 +39,7 @@ manufacturing partners**. It does not run its own plant. Every claim must match 
 | Write | Never write |
 |---|---|
 | "Made by WHO-GMP certified manufacturing partners" | "Made at our WHO GMP plant" (mockup wording, must change) |
-| "Manufactured by: {partner name, address}. Marketed by: Auspharma Private Limited" | "Manufactured by AUS Pharma" |
+| "Manufactured by: {partner name, address}. Marketed by: Auspharma Private Limited" | "Manufactured by AUSPHARMA" |
 | "Each partner's WHO-GMP certificate is available to view" | "WHO-GMP certified company" (AUSPHARMA itself is not the certified site) |
 
 - Show the **specific manufacturer** and its **WHO-GMP certificate** (PDF, issuing
@@ -59,8 +58,6 @@ manufacturing partners**. It does not run its own plant. Every claim must match 
 - Rules: keep clear space of at least the cap height on every side. Minimum width 96 px on screen.
   Never stretch, outline, add effects, re-type it in another font, or recolour it outside ink, white or
   brand teal. Don't place it on a busy photo.
-- `TODO(brand):` running text currently says "AUS Pharma" (mockups); the logo and cartons say AUSPHARMA.
-  Confirm which spelling to use in sentences.
 
 ## 3. Brand colours (website)
 
@@ -135,7 +132,7 @@ export const inter = localFont({
 | Hero H1 | 48–56px, weight 500–600, white, tight leading |
 | Section H2 ("From Plant To Pack") | 28–32px, weight 500, `brand-600` |
 | Card / product title | 18–20px, weight 600, `ink` |
-| Eyebrow ("AUS PHARMA · QUALITY GENERICS", "STEP 1") | 12–13px, weight 600–700, uppercase, letter-spacing ~0.06em |
+| Eyebrow ("AUSPHARMA · QUALITY GENERICS", "STEP 1") | 12–13px, weight 600–700, uppercase, letter-spacing ~0.06em |
 | Body | 15–16px, weight 400, `ink-soft`, line-height 1.6 |
 | Field label ("COMPOSITION", "PACK SIZE") | 11–12px, weight 600, uppercase, `ink-soft` |
 

@@ -70,7 +70,7 @@ function ScanPage({ product: p, view }: { product: ScanProduct; view: ScanView }
           ) : null}
           <div className="p-5 md:p-6">
             <span className="inline-block rounded-full bg-white px-3 py-1 text-xs font-semibold uppercase tracking-wide text-ink">
-              AUS Pharma generic
+              AUSPHARMA generic
             </span>
             <h1 id="product-title" className="mt-4 text-2xl font-semibold tracking-tight text-ink md:text-4xl">
               {p.brandName}

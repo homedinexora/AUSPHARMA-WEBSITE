@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /*
- * AUS Pharma design tokens.
+ * AUSPHARMA design tokens.
  * Source of truth: .claude/skills/auspharma-design-system + auspharma-brand-guidelines.
  * Change values here only; components use the generated utilities (bg-brand-600, text-ink…).
  */

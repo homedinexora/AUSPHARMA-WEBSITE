@@ -15,7 +15,7 @@ const promises = [
 const steps = [
   {
     title: "Made at certified sites",
-    body: "Every AUS Pharma generic is made by a WHO-GMP certified manufacturing partner. The product page names the site.",
+    body: "Every AUSPHARMA generic is made by a WHO-GMP certified manufacturing partner. The product page names the site.",
   },
   {
     title: "Tested to standard",
@@ -50,7 +50,7 @@ const faqs = [
     a: "A Certificate of Analysis (CoA) is the laboratory report for one batch. It lists each test, the specification the batch must meet, and the result.",
   },
   {
-    q: "Who makes AUS Pharma medicines?",
+    q: "Who makes AUSPHARMA medicines?",
     a: `${site.legalName} markets medicines made by WHO-GMP certified manufacturing partners. Each product page shows the manufacturer's name, address and manufacturing licence number.`,
   },
   {
@@ -73,10 +73,10 @@ export default async function Home() {
       <section className="relative overflow-hidden bg-gradient-to-br from-hero-from to-hero-to text-white">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:py-20 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:px-8">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-wider text-white/80">AUS Pharma · Quality generics</p>
+            <p className="text-sm font-semibold uppercase tracking-wider text-white/80">AUSPHARMA · Quality generics</p>
             <h1 className="mt-4 text-4xl font-semibold tracking-tight md:text-6xl">Quality generics you can verify</h1>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/90">
-              AUS Pharma generics are made by WHO-GMP certified manufacturing partners and tested before they reach you.
+              AUSPHARMA generics are made by WHO-GMP certified manufacturing partners and tested before they reach you.
               Look up the test report for your own pack.
             </p>
             <ul className="mt-6 space-y-2">
@@ -100,7 +100,7 @@ export default async function Home() {
           <h2 id="steps-title" className="text-3xl font-medium text-brand-600">
             From plant to pack
           </h2>
-          <p className="mt-2 text-ink-soft">What happens before a strip of AUS Pharma reaches the shelf.</p>
+          <p className="mt-2 text-ink-soft">What happens before a strip of AUSPHARMA reaches the shelf.</p>
           <ol className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {steps.map((s, i) => (
               <li key={s.title} className="relative">
@@ -184,7 +184,7 @@ export default async function Home() {
             <h2 id="faq-title" className="text-3xl font-medium text-brand-600">
               Common questions
             </h2>
-            <p className="mt-3 text-ink-soft">Short answers about AUS Pharma generics and how to check them.</p>
+            <p className="mt-3 text-ink-soft">Short answers about AUSPHARMA generics and how to check them.</p>
           </div>
           <div className="space-y-3">
             {faqs.map((f) => (

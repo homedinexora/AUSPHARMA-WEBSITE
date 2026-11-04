@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: { default: `${site.brandName}: ${site.strapline}`, template: `%s | ${site.brandName}` },
   description:
-    "AUS Pharma markets generic medicines made by WHO-GMP certified manufacturing partners. Scan the QR code on your pack to check its batch Certificate of Analysis.",
+    "AUSPHARMA markets generic medicines made by WHO-GMP certified manufacturing partners. Scan the QR code on your pack to check its batch Certificate of Analysis.",
   alternates: { canonical: "/" },
   openGraph: { type: "website", locale: "en_IN", siteName: site.brandName },
   robots: { index: true, follow: true },

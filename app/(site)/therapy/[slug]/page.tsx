@@ -25,7 +25,7 @@ export default async function TherapyPage({ params }: PageProps<"/therapy/[slug]
         <div className="mx-auto flex max-w-7xl items-center gap-5 px-4 py-12 sm:px-6 md:py-16 lg:px-8">
           <span className="size-14 shrink-0 rounded-md" style={{ backgroundColor: t.web }} aria-hidden="true" />
           <div>
-            <p className="text-sm font-semibold uppercase tracking-wider text-white/80">AUS Pharma medicines</p>
+            <p className="text-sm font-semibold uppercase tracking-wider text-white/80">AUSPHARMA medicines</p>
             <h1 className="mt-1 text-3xl font-semibold tracking-tight md:text-5xl">{t.name}</h1>
           </div>
         </div>

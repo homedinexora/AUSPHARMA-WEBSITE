@@ -6,7 +6,7 @@ import { pvpi, site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Report a side effect",
   description:
-    "How to report a suspected side effect of an AUS Pharma medicine: call or email AUS Pharma, or report to the national Pharmacovigilance Programme of India (PvPI).",
+    "How to report a suspected side effect of an AUSPHARMA medicine: call or email AUSPHARMA, or report to the national Pharmacovigilance Programme of India (PvPI).",
   alternates: { canonical: "/report-side-effect" },
 };
 

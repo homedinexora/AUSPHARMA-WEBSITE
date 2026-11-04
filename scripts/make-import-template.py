@@ -259,7 +259,7 @@ ins = wb.create_sheet("Instructions", 0)
 ins.column_dimensions["A"].width = 4
 ins.column_dimensions["B"].width = 110
 rows = [
-    ("title", "AUS Pharma: product & batch import template"),
+    ("title", "AUSPHARMA: product & batch import template"),
     ("p", "Fill this in for the website's product database. The website team imports it into the admin; "
           "nothing goes live until QA approves it in the admin."),
     ("h", "Colour key"),

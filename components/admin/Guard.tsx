@@ -7,7 +7,7 @@ export function NotAuthorised() {
     <div className="rounded-lg bg-white p-6 shadow-card">
       <h1 className="text-xl font-semibold text-ink">Not authorised</h1>
       <p className="mt-2 text-sm text-ink-soft">
-        You are signed in, but this account isn&rsquo;t on the AUS Pharma staff list. Ask an administrator to add your
+        You are signed in, but this account isn&rsquo;t on the AUSPHARMA staff list. Ask an administrator to add your
         verified work email.
       </p>
     </div>

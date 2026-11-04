@@ -6,7 +6,7 @@
  * TODO(content): CIN, dedicated pharmacovigilance contact (if different from support).
  */
 export const site = {
-  brandName: "AUS Pharma",
+  brandName: "AUSPHARMA",
   legalName: "Auspharma Private Limited",
   strapline: "Quality generics you can verify",
   url: "https://www.auspharma.in",

@@ -5,7 +5,7 @@ Studied 2026-11-04 as **inspiration only**. Eurocross is another company's brand
 layout pixel-for-pixel. Screenshots: `eurocross-home.jpg` (desktop) and
 `eurocross-qr-landing-mobile.jpg` (QR scan landing, 390px).
 
-## What they do well (adopt the idea, in AUS Pharma's own design)
+## What they do well (adopt the idea, in AUSPHARMA's own design)
 
 1. **QR landing is mobile-first and action-led.** After a scan the page leads with
    one big card, "Verify the quality / Thank you for scanning", and a single primary
@@ -24,7 +24,7 @@ layout pixel-for-pixel. Screenshots: `eurocross-home.jpg` (desktop) and
    from WHO-GMP partners (see brand guidelines §1a).
 4. **Explains the pack.** An annotated pack graphic shows what each element on the
    box means (therapy icon, numbering, dosage tracker).
-   → Ours: an annotated AUS Pharma pack (therapy colour panel, QR code, batch
+   → Ours: an annotated AUSPHARMA pack (therapy colour panel, QR code, batch
    number, MRP, "+a" mark) under "Where do I find my batch number?".
 5. **Certificates are documents you can open**: "View EU-GMP Certificate" links to
    the actual certificate, not just a badge.
