@@ -12,8 +12,11 @@ Corporate website for AUSPHARMA, a pharmaceutical company operating in **India**
 
 ## Project skills
 
-- `auspharma-design-system` (`.claude/skills/auspharma-design-system/`): load before
-  building or reviewing any page or component. All styling follows its tokens and rules.
+- `auspharma-design-system`: load before building or reviewing any page or component.
+  All styling follows its tokens and rules.
+- `pharma-content-compliance`: load before writing or reviewing any public content,
+  product listing, form or metadata. Indian drug-advertising, pharmacovigilance and DPDP rules.
+- `pharma-seo`: load when adding routes, metadata, sitemap/robots, JSON-LD or OG images.
 
 ## Browser tools
 
@@ -35,12 +38,15 @@ Corporate website for AUSPHARMA, a pharmaceutical company operating in **India**
 | Confirm a change works in the running app | `next-dev-loop` (needs `next dev` running) |
 | Slow pages or large bundles | `next-bundle-optimizer`, `next-cache-components-*`, `next-partial-prefetching-*` |
 | Before claiming done | `superpowers:verification-before-completion` |
-| Before merging | `agent-protocols:code-review-and-quality`, `agent-protocols:security-and-hardening`, `web-design-guidelines` |
+| Writing any copy or product listing | `pharma-content-compliance` + `writing-guidelines` |
+| Routes, metadata, sitemap, JSON-LD | `pharma-seo` |
+| Before merging | `agent-protocols:code-review-and-quality`, `agent-protocols:security-and-hardening`, `web-design-guidelines`, `pharma-content-compliance` checklist |
 | Before going live | `agent-protocols:shipping-and-launch`, `agent-protocols:performance-optimization` |
 | Deploying | `deploy-to-vercel` (confirm with the user before any deploy) |
 
 ## Content rules (India / CDSCO)
 
+Summary only; `pharma-content-compliance` has the full rules and review checklist.
 The site is for a general audience, so:
 
 - **No promotion of prescription (Schedule H/H1/X) medicines to the public.** Product
