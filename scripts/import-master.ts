@@ -80,7 +80,7 @@ async function importProducts(rows: Row[]) {
     const values = {
       itemId,
       brand: r.BRAND,
-      division: /^AQU/i.test(itemId) || /^AQURIS\b/i.test(r.ITEMNAME ?? "") ? "aquris" : null,
+      division: "aquris", // all AUSPHARMA products belong to the +aquris division (confirmed Nov 2026)
       brandName: r.ITEMNAME!,
       composition: r.COMPOSITION!,
       classification: r.CLASSIFICATION,
