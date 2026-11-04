@@ -1,3 +1,30 @@
-.gstack/
-.vercel
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+/build
+
+# misc
+.DS_Store
+*.pem
+*.tsbuildinfo
+next-env.d.ts
+
+# debug
+npm-debug.log*
+
+# env files (secrets: never commit)
 .env*
+
+# vercel
+.vercel
+
+# local tool state
+.gstack/
