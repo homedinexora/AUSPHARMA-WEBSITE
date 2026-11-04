@@ -1,5 +1,5 @@
 {
-  "id": "b65d4579-2fcb-46d1-a3c2-a5d37876b969",
+  "id": "d29d82d0-9357-4672-ac1e-c33b8ae42edd",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -358,6 +358,14 @@
           "primaryKey": false,
           "notNull": true
         },
+        "kind": {
+          "name": "kind",
+          "type": "insert_kind",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'prescribing_information'"
+        },
         "version": {
           "name": "version",
           "type": "text",
@@ -668,6 +676,14 @@
         "X",
         "G",
         "OTC"
+      ]
+    },
+    "public.insert_kind": {
+      "name": "insert_kind",
+      "schema": "public",
+      "values": [
+        "prescribing_information",
+        "patient_leaflet"
       ]
     },
     "public.pil_status": {

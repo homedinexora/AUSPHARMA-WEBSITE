@@ -23,6 +23,9 @@ export const publishStatus = pgEnum("publish_status", ["draft", "published", "ar
 export const batchStatus = pgEnum("batch_status", ["draft", "published", "withdrawn"]);
 export const pilStatus = pgEnum("pil_status", ["draft", "published", "superseded"]);
 export const drugSchedule = pgEnum("drug_schedule", ["H", "H1", "X", "G", "OTC"]);
+/** prescribing_information = insert "for the use of a Registered Medical Practitioner…" (shown behind an HCP declaration);
+ *  patient_leaflet = written for patients (shown openly). */
+export const insertKind = pgEnum("insert_kind", ["prescribing_information", "patient_leaflet"]);
 
 const timestamps = {
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
@@ -80,9 +83,11 @@ export const products = pgTable(
 );
 
 export interface PilSection {
-  key: string;
+  key: string; // e.g. "4.1" for numbered inserts, or a slug
   title: string;
   body: string; // limited Markdown (bold, lists, tables)
+  /** Shown to everyone even on HCP-only inserts (e.g. "Patient counselling information"). */
+  patientFacing?: boolean;
 }
 
 /** Patient Information Leaflet versions; the approved PDF is the master, sections mirror it. */
@@ -93,6 +98,7 @@ export const pilVersions = pgTable(
     gtin: char("gtin", { length: 13 })
       .notNull()
       .references(() => products.gtin),
+    kind: insertKind("kind").notNull().default("prescribing_information"),
     version: text("version").notNull(), // as printed, e.g. "v2 / 03-2026"
     revisionDate: text("revision_date"),
     pdfBlob: text("pdf_blob"),

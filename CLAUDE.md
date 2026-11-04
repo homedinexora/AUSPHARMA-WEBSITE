@@ -23,10 +23,16 @@ Corporate website for AUSPHARMA, a pharmaceutical company operating in **India**
 
 ## Product verification system (core feature)
 
-Packs carry a QR code to `auspharma.in/{GTIN}` (GS1 GTIN-13, e.g. `8906219880070`),
-optionally `/{GTIN}/{batch}`. The product page shows label data, the approved package
-insert and the batch Certificate of Analysis, with a batch selector when no batch is
-in the URL. An authenticated `/admin` lets AUSPHARMA staff manage pack data and upload
+Packs carry a QR code to **`auspharma.in/{GTIN}` only** (GS1 GTIN-13, e.g. `8906219880070`).
+The QR never contains the batch: the customer **selects their batch on the page**, which then
+opens `/{GTIN}/{batch}` (also shareable). The product page shows label data, the approved package
+insert and the batch Certificate of Analysis.
+
+Package inserts are usually **prescribing information** headed "For the use of a Registered
+Medical Practitioner…" (CDSCO numbered format, e.g. 4.1 Indications … 9 Patient counselling
+information … 12 Date of revision). Patient-facing sections (e.g. section 9) are shown to everyone;
+the rest sits behind an "I am a healthcare professional" self-declaration. Samples:
+`docs/samples/inserts/`. An authenticated `/admin` lets AUSPHARMA staff manage pack data and upload
 CoA PDFs per GTIN + batch.
 
 AUSPHARMA is a **marketer**: products are made by **WHO-GMP certified manufacturing

@@ -23,6 +23,13 @@ export function Footer() {
             {site.registeredOffice ? <>, {site.registeredOffice}</> : null}
             {site.cin ? <> · CIN {site.cin}</> : null}
           </p>
+          {site.contactEmail || site.tollFree ? (
+            <p className="text-sm">
+              {site.tollFree ? <>Toll-free <a href={`tel:${site.tollFree.replaceAll(" ", "")}`} className="font-semibold text-white underline">{site.tollFree}</a></> : null}
+              {site.tollFree && site.contactEmail ? " · " : null}
+              {site.contactEmail ? <a href={`mailto:${site.contactEmail}`} className="font-semibold text-white underline">{site.contactEmail}</a> : null}
+            </p>
+          ) : null}
           <p className="text-sm">
             Report a suspected side effect to the national helpline (PvPI):{" "}
             <a href={`tel:${pvpi.helpline.replaceAll("-", "")}`} className="font-semibold text-white underline">

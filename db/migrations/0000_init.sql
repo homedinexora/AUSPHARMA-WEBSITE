@@ -1,5 +1,6 @@
 CREATE TYPE "public"."batch_status" AS ENUM('draft', 'published', 'withdrawn');--> statement-breakpoint
 CREATE TYPE "public"."drug_schedule" AS ENUM('H', 'H1', 'X', 'G', 'OTC');--> statement-breakpoint
+CREATE TYPE "public"."insert_kind" AS ENUM('prescribing_information', 'patient_leaflet');--> statement-breakpoint
 CREATE TYPE "public"."pil_status" AS ENUM('draft', 'published', 'superseded');--> statement-breakpoint
 CREATE TYPE "public"."publish_status" AS ENUM('draft', 'published', 'archived');--> statement-breakpoint
 CREATE TABLE "audit_log" (
@@ -51,6 +52,7 @@ CREATE TABLE "manufacturers" (
 CREATE TABLE "pil_versions" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"gtin" char(13) NOT NULL,
+	"kind" "insert_kind" DEFAULT 'prescribing_information' NOT NULL,
 	"version" text NOT NULL,
 	"revision_date" text,
 	"pdf_blob" text,
