@@ -17,6 +17,18 @@ Corporate website for AUSPHARMA, a pharmaceutical company operating in **India**
 - `pharma-content-compliance`: load before writing or reviewing any public content,
   product listing, form or metadata. Indian drug-advertising, pharmacovigilance and DPDP rules.
 - `pharma-seo`: load when adding routes, metadata, sitemap/robots, JSON-LD or OG images.
+- `auspharma-brand-guidelines`: name, logo, colours (incl. therapy colours), Inter font,
+  voice. Sources in `docs/design/` (mockups, therapy colour guide); fonts in `assets/fonts/`.
+  Use it instead of `example-skills:brand-guidelines` (Anthropic's brand).
+
+## Product verification system (core feature)
+
+Packs carry a QR code to `auspharma.in/{GTIN}` (GS1 GTIN-13, e.g. `8906219880070`),
+optionally `/{GTIN}/{batch}`. The product page shows label data, the approved package
+insert and the batch Certificate of Analysis, with a batch selector when no batch is
+in the URL. An authenticated `/admin` lets AUSPHARMA staff manage pack data and upload
+CoA PDFs per GTIN + batch. QR URLs are printed on packs: **never change this URL
+scheme**, and keep old GTIN/batch URLs working forever.
 
 ## Browser tools
 

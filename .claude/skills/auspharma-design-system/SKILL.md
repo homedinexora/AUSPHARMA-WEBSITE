@@ -15,51 +15,57 @@ token is missing, add it to the theme first and then use it.
 
 ## 1. Tokens
 
-Tokens live in `app/globals.css` in a Tailwind v4 `@theme` block. The brand
-palette is a **placeholder** until AUSPHARMA supplies official brand colours:
-change the values here only, never in components.
+Tokens live in `app/globals.css` in a Tailwind v4 `@theme` block. Values come from
+the approved mockups; `auspharma-brand-guidelines` explains each one. Change them
+here only, never in components.
 
 ```css
 @import "tailwindcss";
 
 @theme {
-  /* Brand: placeholder, swap for official values */
-  --color-brand-50:  #eef7f7;
-  --color-brand-100: #d5ecec;
-  --color-brand-500: #0f7c80;   /* primary: clinical teal */
-  --color-brand-600: #0b6467;   /* primary hover */
-  --color-brand-700: #0a4f52;
-  --color-brand-900: #062f31;
+  /* Brand teal (from mockups) */
+  --color-brand-50:  #f3f8f6;   /* alternate section bg */
+  --color-brand-100: #dff6ef;   /* mint: verify card, info boxes, chips */
+  --color-brand-600: #087f75;   /* primary: headings, links, buttons */
+  --color-brand-700: #076b63;   /* teal text on mint, pressed */
+  --color-brand-800: #08524c;   /* header, nav, dark cards */
+  --color-brand-900: #06403c;   /* footer */
 
-  --color-accent-500: #1f4fd1;  /* links, focus, secondary CTA */
+  --color-cta:        #ffb84d;  /* amber: one primary action per screen */
+  --color-verify-600: #0877ad;  /* CoA / batch verification */
+  --color-verify-50:  #e1f3ff;
+  --color-hero-from:  #144764;
+  --color-hero-to:    #12677d;
 
-  /* Neutrals: slightly cool greys */
-  --color-ink:      #0f1b24;    /* headings, body text */
-  --color-ink-soft: #46535e;    /* secondary text (≥4.5:1 on white) */
+  /* Neutrals */
+  --color-ink:      #173330;    /* headings, titles */
+  --color-ink-soft: #586d6b;    /* body text (AA on white, brand-50, brand-100) */
   --color-line:     #dfe5ea;    /* borders, dividers */
   --color-surface:  #ffffff;
-  --color-canvas:   #f6f8fa;    /* alternating section background */
+  --color-canvas:   #f3f8f6;
 
   /* Status */
   --color-success: #13795b;
   --color-warning: #a15c07;
   --color-danger:  #b42318;
 
-  /* Typography */
+  /* Typography: Inter only (supplied variable font) */
   --font-sans:    var(--font-inter), system-ui, sans-serif;
-  --font-display: var(--font-manrope), var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-inter), system-ui, sans-serif;
 
   /* Shape & depth */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --shadow-card: 0 1px 2px rgb(15 27 36 / 0.06), 0 4px 16px rgb(15 27 36 / 0.06);
+  --radius-sm: 8px;    /* inputs, buttons */
+  --radius-md: 12px;   /* cards */
+  --radius-lg: 16px;   /* large panels, verify card */
+  --shadow-card: 0 1px 2px rgb(23 51 48 / 0.06), 0 4px 16px rgb(23 51 48 / 0.06);
 }
 ```
 
-Load fonts with `next/font/google` in `app/layout.tsx` (Inter for body, Manrope
-for display), exposing `--font-inter` and `--font-manrope`. Never use a `<link>`
-tag to Google Fonts.
+Therapy-area colours live in `lib/therapies.ts` (see `auspharma-brand-guidelines` §4),
+not in the theme.
+
+Load Inter from `assets/fonts/` with `next/font/local` in `app/layout.tsx`, exposing
+`--font-inter` (snippet in `auspharma-brand-guidelines` §5). No Google Fonts requests.
 
 ## 2. Typography
 
@@ -93,18 +99,20 @@ tag to Google Fonts.
 
 Build these once in `components/ui/` and reuse them. Do not restyle one-offs inline.
 
-- **Button**: variants `primary` (bg-brand-500, white text, hover brand-600),
-  `secondary` (white, `border-line`, ink text), `ghost` (text only). Sizes `md`,
-  `lg`. Radius `rounded-md`. Always has a visible `focus-visible` ring
-  (`ring-2 ring-accent-500 ring-offset-2`). One primary button per view.
+- **Button**: variants `primary` (bg-brand-600, white text, hover brand-700),
+  `cta` (bg-cta, text-brand-800, for the single key action such as "Verify"/"Search
+  Now"), `verify` (bg-verify-600, white text, CoA actions only), `secondary`
+  (white, `border-line`, ink text), `ghost` (text only). Sizes `md`, `lg`. Radius
+  `rounded-sm`. Always has a visible `focus-visible` ring
+  (`ring-2 ring-brand-600 ring-offset-2`). One `cta` button per view.
 - **Card**: `bg-surface rounded-lg border border-line shadow-card p-6`. Hover lifts
   only when the whole card is a link.
 - **Section header**: eyebrow + H2 + one-sentence intro, left-aligned by default;
   centred only for the hero and closing CTA.
-- **Navbar**: sticky, white with bottom `border-line`, logo left, 5–6 links max,
-  one primary CTA ("Contact us"). Collapses to an accessible disclosure menu
-  under `md`.
-- **Footer**: dark (`bg-brand-900`, white/70 text). Holds company details, the
+- **Navbar** (per mockups): `bg-brand-800`, white logo left, product search centre,
+  then a second row of therapy categories. Collapses to an accessible disclosure menu
+  under `md`. No "Delivery address"/"Login" until compliance clears it (brand §7a).
+- **Footer**: dark (`bg-brand-900`, white/85 text). Holds company details, the
   regulatory/legal links (Privacy, Terms, Disclaimer) and the medical disclaimer line.
 - **Stat block**: large number (`font-display text-4xl text-brand-600`) + short
   label. Only use real, sourced numbers; never invent statistics.
@@ -119,7 +127,7 @@ Build these once in `components/ui/` and reuse them. Do not restyle one-offs inl
 - Use `next/image` with explicit `width`/`height` (or `fill` + `sizes`) and
   meaningful `alt`. Decorative images get `alt=""`.
 - Icons: `lucide-react`, stroke 1.75, `size-5` inline / `size-8` in feature cards,
-  coloured `text-brand-500`. One icon set only.
+  coloured `text-brand-600`. One icon set only.
 - Never use stock images that show a recognisable branded product from another company.
 
 ## 6. Accessibility (non-negotiable)

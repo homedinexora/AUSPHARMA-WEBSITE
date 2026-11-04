@@ -36,6 +36,22 @@ sentence, product page, image caption and meta description must pass this skill.
   Unknown → `TODO(content):`.
 - Numbers (years, products, countries, capacity): only from AUSPHARMA-supplied data.
 
+**QR product pages (`/{GTIN}` and `/{GTIN}/{batch}`)**
+
+Every pack carries a QR code that resolves here, so these pages are an extension of
+the **label**, not advertising. Show exactly the approved label data:
+brand name, composition, manufacturer and marketer (name + address), manufacturing
+licence number, pack size, MRP, the approved **package insert** (PDF, unmodified),
+and the batch's **Certificate of Analysis**.
+- No promotional copy, "uses" chips, benefit claims or cross-selling on these pages
+  for Rx products. The insert carries the medical information.
+- Every field comes from the admin database, entered by AUSPHARMA staff. Never
+  generated, paraphrased or filled with sample values in production.
+- An unknown GTIN or batch shows a clear "not found / not yet published" message with
+  the contact and side-effect reporting links. Never a guess or the nearest match.
+- `TODO(regulatory):` confirm the field list against the pack QR requirements that
+  apply to AUSPHARMA's products, and whether MRP must be shown per batch.
+
 **Product catalogue, public view**
 - Prescription (Schedule H/H1/X) products: list at most **brand name, generic name
   and strength, dosage form, pack**. **No** indications, benefits, efficacy, imagery

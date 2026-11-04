@@ -41,9 +41,13 @@ routes. Each page needs:
 ## 2. Crawl control
 
 - **`app/robots.ts`** returns `MetadataRoute.Robots`: allow `/`, disallow
-  `/hcp/` (gated professional content) and `/api/`, and point to the sitemap.
+  `/hcp/` (gated professional content), `/admin/` and `/api/`, and point to the sitemap.
 - **`app/sitemap.ts`** returns `MetadataRoute.Sitemap`: public pages only, with
-  `lastModified`. **Never** include HCP-gated product URLs.
+  `lastModified`. **Never** include HCP-gated URLs, `/admin`, or Rx QR product pages.
+- **QR product pages** (`/{GTIN}`, `/{GTIN}/{batch}`): **Rx products are `noindex`**.
+  They exist for people holding the pack, not for search. OTC products may be indexed
+  at `/{GTIN}` only. Batch URLs are always `noindex` with a canonical to `/{GTIN}`.
+- **`/admin`** is never indexed (`noindex` + auth); it is not a public page.
 - HCP-gated routes also set `robots: { index: false, follow: false }` in their
   metadata. `robots.txt` alone does not stop indexing.
 - Preview deployments must not be indexed. Vercel adds `X-Robots-Tag: noindex` to
