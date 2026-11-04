@@ -101,12 +101,13 @@ const THERAPY: Record<string, string> = {
 };
 
 /**
- * ERP CATEGORY overrides CLASSIFICATION: the ERP files pain relievers under C.N.S DRUGS, but AUSPHARMA
- * places them under Pain, fever & inflammation (confirmed Nov 2026).
+ * ERP CATEGORY overrides CLASSIFICATION: the ERP files pain relievers and anti-emetics under C.N.S DRUGS, but
+ * AUSPHARMA places them under Pain, fever & inflammation and Gastro (confirmed Nov 2026).
  */
 const CATEGORY_THERAPY: Record<string, string> = {
   "NSAID'S": "pain-fever-inflammation",
   "ANALGESICS & ANTIPYRETICS": "pain-fever-inflammation",
+  "ANTI EMETICS": "gastro", // e.g. AQURIS DOMONE-10
 };
 
 const titleCase = (s: string) => s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
