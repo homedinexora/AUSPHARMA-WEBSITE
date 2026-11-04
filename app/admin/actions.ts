@@ -6,7 +6,7 @@ import { updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { getDb, schema } from "@/db";
 import { requireStaff, type Staff } from "@/lib/admin/auth";
-import { productTag } from "@/lib/data/catalog";
+import { CATALOG_TAG, productTag } from "@/lib/data/catalog";
 import { isValidGtin13, normalizeBatch } from "@/lib/gtin";
 
 const { products, batches, pilVersions, auditLog } = schema;
@@ -31,6 +31,7 @@ async function getProduct(itemId: string) {
 
 function refresh(...gtins: (string | null | undefined)[]) {
   for (const g of new Set(gtins.filter(Boolean) as string[])) updateTag(productTag(g));
+  updateTag(CATALOG_TAG); // home, therapy and search lists
 }
 
 async function readPdf(f: FormData, key: string): Promise<{ file: File } | { error: string } | null> {

@@ -1,5 +1,5 @@
 import "server-only";
-import { and, desc, eq, inArray } from "drizzle-orm";
+import { and, asc, desc, eq, inArray, isNotNull } from "drizzle-orm";
 import { cacheLife, cacheTag } from "next/cache";
 import { getDb, schema } from "@/db";
 import type { PilSection } from "@/db/schema";
@@ -8,6 +8,61 @@ const { products, manufacturers, batches, pilVersions } = schema;
 
 /** Cache tag for everything shown on a product's scan page. Admin mutations call revalidateTag(productTag(gtin)). */
 export const productTag = (gtin: string) => `product:${gtin}`;
+/** Cache tag for lists of published products (home, therapy, search). */
+export const CATALOG_TAG = "catalog";
+
+export interface CatalogItem {
+  gtin: string;
+  brandName: string;
+  composition: string;
+  packSize: string | null;
+  dosageForm: string | null;
+  therapy: string | null;
+  prescription: boolean;
+  packImage: string | null;
+  /** Published batches, newest first (for the home verify card). */
+  batches: { batchNo: string; expiryDate: string | null }[];
+}
+
+/** Published products that have a GTIN, with their published batches. Public data only. */
+export async function listCatalog(): Promise<CatalogItem[]> {
+  "use cache";
+  cacheTag(CATALOG_TAG);
+  cacheLife("hours");
+  const db = getDb();
+  const rows = await db
+    .select({
+      itemId: products.itemId,
+      gtin: products.gtin,
+      brandName: products.brandName,
+      composition: products.composition,
+      packSize: products.packSize,
+      dosageForm: products.dosageForm,
+      therapy: products.therapy,
+      schedule: products.schedule,
+      packImage: products.packImageBlob,
+    })
+    .from(products)
+    .where(and(eq(products.status, "published"), isNotNull(products.gtin)))
+    .orderBy(asc(products.brandName));
+  if (rows.length === 0) return [];
+  const bs = await db
+    .select({ productId: batches.productId, batchNo: batches.batchNo, expiryDate: batches.expiryDate })
+    .from(batches)
+    .where(and(inArray(batches.productId, rows.map((r) => r.itemId)), eq(batches.status, "published")))
+    .orderBy(desc(batches.mfgDate));
+  return rows.map((r) => ({
+    gtin: r.gtin!,
+    brandName: r.brandName,
+    composition: r.composition,
+    packSize: r.packSize,
+    dosageForm: r.dosageForm,
+    therapy: r.therapy,
+    prescription: r.schedule !== "OTC",
+    packImage: r.packImage?.startsWith("/") ? r.packImage : null,
+    batches: bs.filter((b) => b.productId === r.itemId).map((b) => ({ batchNo: b.batchNo, expiryDate: b.expiryDate })),
+  }));
+}
 
 export interface ScanBatch {
   batchNo: string;
