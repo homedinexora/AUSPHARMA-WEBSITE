@@ -38,6 +38,7 @@ const product = (over: Partial<ScanProduct> = {}): ScanProduct => ({
   mrpPaise: 9900,
   mrpPer: "Strip",
   storage: null,
+  packImage: null,
   manufacturer: null,
   pils: [pil(2, true), pil(1, false)],
   batches: [batch("AB2"), batch("AB1", { pilVersionId: 1 })],

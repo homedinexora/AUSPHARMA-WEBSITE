@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BatchSelector } from "@/components/scan/BatchSelector";
@@ -46,7 +47,22 @@ function ScanPage({ product: p, view }: { product: ScanProduct; view: ScanView }
     <div className="bg-canvas">
       <div className="mx-auto grid max-w-5xl gap-6 px-4 py-6 sm:px-6 md:py-10 lg:grid-cols-[1fr_20rem] lg:items-start">
         {/* Identity */}
-        <section aria-labelledby="product-title" className="rounded-lg bg-white p-5 shadow-card md:p-6 lg:col-span-2">
+        <section
+          aria-labelledby="product-title"
+          className="grid gap-5 rounded-lg bg-white p-5 shadow-card md:grid-cols-[minmax(0,18rem)_1fr] md:items-center md:p-6 lg:col-span-2"
+        >
+          {p.packImage ? (
+            <Image
+              src={p.packImage}
+              alt={`${p.brandName} pack`}
+              width={1200}
+              height={900}
+              priority
+              sizes="(min-width: 768px) 18rem, 100vw"
+              className="mx-auto h-auto w-full max-w-xs rounded-md bg-brand-50"
+            />
+          ) : null}
+          <div>
           <div className="flex flex-wrap gap-2">
             <span className="rounded-full bg-brand-600 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
               AUS Pharma generic
@@ -68,6 +84,7 @@ function ScanPage({ product: p, view }: { product: ScanProduct; view: ScanView }
               <strong>Prescription medicine.</strong> Use only as directed by a registered medical practitioner.
             </p>
           ) : null}
+          </div>
         </section>
 
         {/* Verify: CoA for the batch */}

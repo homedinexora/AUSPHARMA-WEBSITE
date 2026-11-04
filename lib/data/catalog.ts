@@ -45,6 +45,8 @@ export interface ScanProduct {
   mrpPaise: number | null;
   mrpPer: string | null;
   storage: string | null;
+  /** Public pack shot path (e.g. /packs/{gtin}.webp), if any. */
+  packImage: string | null;
   manufacturer: {
     id: string;
     legalName: string;
@@ -105,6 +107,7 @@ export async function getScanProduct(gtin: string): Promise<ScanProduct | null> 
     mrpPaise: p.mrpPaise,
     mrpPer: p.mrpPer,
     storage: p.storage,
+    packImage: p.packImageBlob?.startsWith("/") ? p.packImageBlob : null,
     manufacturer: m
       ? {
           id: m.id,
