@@ -27,7 +27,13 @@ Packs carry a QR code to `auspharma.in/{GTIN}` (GS1 GTIN-13, e.g. `8906219880070
 optionally `/{GTIN}/{batch}`. The product page shows label data, the approved package
 insert and the batch Certificate of Analysis, with a batch selector when no batch is
 in the URL. An authenticated `/admin` lets AUSPHARMA staff manage pack data and upload
-CoA PDFs per GTIN + batch. QR URLs are printed on packs: **never change this URL
+CoA PDFs per GTIN + batch.
+
+AUSPHARMA is a **marketer**: products are made by **WHO-GMP certified manufacturing
+partners**. The data model therefore has a Manufacturer (name, address, manufacturing
+licence no., WHO-GMP certificate PDF + validity) linked to each product, and pages say
+"Manufactured by {partner} · Marketed by Auspharma Private Limited". Mobile-first QR
+landing inspired by eurocross.in (notes in `docs/design/reference/`). QR URLs are printed on packs: **never change this URL
 scheme**, and keep old GTIN/batch URLs working forever.
 
 ## Browser tools

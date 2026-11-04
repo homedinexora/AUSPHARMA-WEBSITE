@@ -31,9 +31,12 @@ sentence, product page, image caption and meta description must pass this skill.
 **Corporate pages** (About, Manufacturing, Quality, Careers, Contact, News)
 - Allowed: company history, facilities, capabilities, therapeutic *areas* in neutral
   terms ("we manufacture cardiovascular and anti-diabetic formulations").
-- Certifications (WHO-GMP, Schedule M, ISO, EU-GMP, USFDA): **only** ones AUSPHARMA
-  actually holds, named exactly as on the certificate, with the issuing body.
-  Unknown → `TODO(content):`.
+- Certifications (WHO-GMP, Schedule M, ISO, EU-GMP, USFDA): **only** ones actually
+  held, named exactly as on the certificate, with the issuing body, and attributed
+  to **whoever holds them**. AUSPHARMA sources from WHO-GMP certified
+  **manufacturers**, so WHO-GMP belongs to each manufacturing site, not to AUSPHARMA.
+  Show it per product with that manufacturer's certificate and validity date; never
+  as a company-wide badge. Unknown → `TODO(content):`.
 - Numbers (years, products, countries, capacity): only from AUSPHARMA-supplied data.
 
 **QR product pages (`/{GTIN}` and `/{GTIN}/{batch}`)**

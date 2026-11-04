@@ -32,6 +32,23 @@ Never write "Aus Pharma", "AusPharma" or "AUS-Pharma" in UI copy.
 
 Strapline (from mockups): **"Quality generics you can verify"**.
 
+## 1a. Business model: say it accurately
+
+AUSPHARMA **markets** medicines that are **manufactured by WHO-GMP certified
+manufacturing partners**. It does not run its own plant. Every claim must match that:
+
+| Write | Never write |
+|---|---|
+| "Made by WHO-GMP certified manufacturing partners" | "Made at our WHO GMP plant" (mockup wording, must change) |
+| "Manufactured by: {partner name, address}. Marketed by: Auspharma Private Limited" | "Manufactured by AUS Pharma" |
+| "Each partner's WHO-GMP certificate is available to view" | "WHO-GMP certified company" (AUSPHARMA itself is not the certified site) |
+
+- Show the **specific manufacturer** and its **WHO-GMP certificate** (PDF, issuing
+  authority, validity date) on each product page, from the admin database.
+- A certificate past its validity date must not be presented as current. Flag it in
+  the admin and hide the "certified" label until it's renewed.
+- Inspiration reference: `docs/design/reference/eurocross-notes.md`.
+
 ## 2. Logo
 
 - Mockup logo: a white rounded square holding a teal **"A"**, followed by the
