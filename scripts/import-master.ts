@@ -74,11 +74,13 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
       "Each film coated tablet contains: 1.25 g of Calcium Carbonate from an Organic Source (Oyster Shell) equivalent to Elemental Calcium 500 mg; Cholecalciferol IP (Vitamin D3) 250 IU (As Stabilized Form)",
     manufacturerId: "MFR-PURECURE",
     manufacturingLicenceNo: "51/UA/SC/P-2013",
+    schedule: "OTC", // confirmed by AUSPHARMA
     packImageBlob: "/packs/8906219880193.webp",
     storage: "Store protected from light & moisture, at a temperature not exceeding 25°C.",
   },
   "AQU-NEW-BPXT": {
     gtin: "8906219880223",
+    schedule: "OTC", // confirmed by AUSPHARMA
     manufacturerId: "MFR-PURECURE",
     manufacturingLicenceNo: "51/UA/SC/P-2013",
     packImageBlob: "/packs/8906219880223.webp",
@@ -96,6 +98,10 @@ const THERAPY: Record<string, string> = {
   "GASTRO ENTROLOGY": "gastro",
   // BONE DISORDERS, SKIN DISORDERS, GENITO URINARY: no colour-guide therapy yet (left null).
 };
+
+/** Brand spellings corrected by AUSPHARMA (the ERP master has older spellings). */
+const SPELLING: [RegExp, string][] = [[/\bAUSCILIN\b/g, "AUSCILLIN"]];
+const fixSpelling = (v: string | null) => (v ? SPELLING.reduce((acc, [re, to]) => acc.replace(re, to), v) : v);
 
 const titleCase = (s: string) => s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
 
@@ -134,9 +140,9 @@ async function importProducts(masterRows: Row[]) {
     const itemId = r.ITEMID!;
     const values = {
       itemId,
-      brand: r.BRAND,
+      brand: fixSpelling(r.BRAND),
       division: "aquris", // all AUSPHARMA products belong to the +aquris division (confirmed Nov 2026)
-      brandName: r.ITEMNAME!,
+      brandName: fixSpelling(r.ITEMNAME)!,
       composition: r.COMPOSITION!,
       classification: r.CLASSIFICATION,
       category: r.CATEGORY,
