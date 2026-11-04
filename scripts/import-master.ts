@@ -4,6 +4,9 @@
  * until QA publishes it in the admin.
  *
  * Usage: set -a; . ./.env.local; set +a; npx tsx scripts/import-master.ts <master.json> [--inserts]
+ *
+ * WARNING: re-running overwrites name, composition, pack and CONFIRMED fields of existing products
+ * (status is never changed). Once staff edit products in /admin, use the admin instead of this script.
  */
 import { readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
@@ -63,6 +66,24 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
   AUS0090: { gtin: "8906219880070", manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880070.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
   AQU0447: { gtin: "8906219880186", manufacturerId: "MFR-MALIK", manufacturingLicenceNo: "48/UA/SC/P-2013", schedule: "H", packImageBlob: "/packs/8906219880186.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 25°C." },
   AUS0099: { gtin: "8906219880148", manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "G", packImageBlob: "/packs/8906219880148.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
+  // Bone Plus 500 = CALVITD3 renamed on pack (confirmed by AUSPHARMA). Schedule not printed: left unset.
+  AQU0486: {
+    gtin: "8906219880193",
+    brandName: "AQURIS BONE PLUS 500 TAB 15'S",
+    composition:
+      "Each film coated tablet contains: 1.25 g of Calcium Carbonate from an Organic Source (Oyster Shell) equivalent to Elemental Calcium 500 mg; Cholecalciferol IP (Vitamin D3) 250 IU (As Stabilized Form)",
+    manufacturerId: "MFR-PURECURE",
+    manufacturingLicenceNo: "51/UA/SC/P-2013",
+    packImageBlob: "/packs/8906219880193.webp",
+    storage: "Store protected from light & moisture, at a temperature not exceeding 25°C.",
+  },
+  "AQU-NEW-BPXT": {
+    gtin: "8906219880223",
+    manufacturerId: "MFR-PURECURE",
+    manufacturingLicenceNo: "51/UA/SC/P-2013",
+    packImageBlob: "/packs/8906219880223.webp",
+    storage: "Store protected from light & moisture, at a temperature not exceeding 25°C.",
+  },
   AUS0102: { manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "H", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." }, // from strip foil (no GTIN on foil)
 };
 
@@ -84,7 +105,27 @@ function packSize(row: Row): string | null {
   return /TABLET|CAPSULE/i.test(row.PRODUCTFORM ?? "") ? `${n}'s` : n;
 }
 
-async function importProducts(rows: Row[]) {
+/**
+ * Products confirmed by AUSPHARMA but not (yet) in the ERP master. Temporary item IDs start "AQU-NEW-";
+ * replace with the ERP ITEMID when assigned.
+ */
+const EXTRA_ROWS: Row[] = [
+  {
+    ITEMID: "AQU-NEW-BPXT",
+    ITEMNAME: "AQURIS BONE PLUS XT TAB 15'S",
+    BRAND: "AQURIS BONE PLUS",
+    PACK: "15",
+    CLASSIFICATION: "BONE DISORDERS",
+    CATEGORY: "CALCIUM BALANCE",
+    PRODUCTFORM: "TABLET",
+    COMPOSITION:
+      "Each film coated tablet contains: Calcium Carbonate IP 1250 mg eq. to Elemental Calcium 500 mg; Vitamin D3 IP 2000 IU; Methylcobalamin IP 1500 mcg; L-Methylfolate Calcium 1 mg; Pyridoxal 5-Phosphate 20 mg",
+    PACKINGTYPE: "BLISTER",
+  },
+];
+
+async function importProducts(masterRows: Row[]) {
+  const rows = [...masterRows, ...EXTRA_ROWS];
   for (const s of SITES) {
     await db.insert(manufacturers).values(s).onConflictDoUpdate({ target: manufacturers.id, set: s });
   }
