@@ -80,6 +80,7 @@ async function importProducts(rows: Row[]) {
     const values = {
       itemId,
       brand: r.BRAND,
+      division: /^AQU/i.test(itemId) || /^AQURIS\b/i.test(r.ITEMNAME ?? "") ? "aquris" : null,
       brandName: r.ITEMNAME!,
       composition: r.COMPOSITION!,
       classification: r.CLASSIFICATION,

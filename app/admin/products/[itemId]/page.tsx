@@ -112,6 +112,12 @@ async function Content({ params, searchParams }: PageProps<"/admin/products/[ite
                     ))}
                   </select>
                 </Field>
+                <Field label="Division">
+                  <select name="division" defaultValue={p.division ?? ""} className={input}>
+                    <option value="">AUSPHARMA</option>
+                    <option value="aquris">+aquris (AUSPHARMA division)</option>
+                  </select>
+                </Field>
                 <Field label="Name as on pack">
                   <input name="brandName" defaultValue={p.brandName} required className={input} />
                 </Field>

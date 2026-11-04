@@ -15,6 +15,13 @@
       "when": 1793792606086,
       "tag": "0001_patient_guides",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793793310642,
+      "tag": "0002_product_division",
+      "breakpoints": true
     }
   ]
 }

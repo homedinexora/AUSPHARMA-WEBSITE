@@ -14,6 +14,7 @@ export const CATALOG_TAG = "catalog";
 
 export interface CatalogItem {
   gtin: string;
+  division: string | null;
   brandName: string;
   composition: string;
   packSize: string | null;
@@ -35,6 +36,7 @@ export async function listCatalog(): Promise<CatalogItem[]> {
     .select({
       itemId: products.itemId,
       gtin: products.gtin,
+      division: products.division,
       brandName: products.brandName,
       composition: products.composition,
       packSize: products.packSize,
@@ -54,6 +56,7 @@ export async function listCatalog(): Promise<CatalogItem[]> {
     .orderBy(desc(batches.mfgDate));
   return rows.map((r) => ({
     gtin: r.gtin!,
+    division: r.division,
     brandName: r.brandName,
     composition: r.composition,
     packSize: r.packSize,
@@ -89,6 +92,8 @@ export interface ScanPil {
 
 export interface ScanProduct {
   gtin: string;
+  /** "aquris" for the +aquris division; null = AUSPHARMA. */
+  division: string | null;
   brandName: string;
   composition: string;
   dosageForm: string | null;
@@ -160,6 +165,7 @@ export async function getScanProduct(gtin: string): Promise<ScanProduct | null> 
   const m = row.manufacturers;
   return {
     gtin,
+    division: p.division,
     brandName: p.brandName,
     composition: p.composition,
     dosageForm: p.dosageForm,

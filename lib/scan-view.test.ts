@@ -26,6 +26,7 @@ const batch = (batchNo: string, over: Partial<ScanBatch> = {}): ScanBatch => ({
 
 const product = (over: Partial<ScanProduct> = {}): ScanProduct => ({
   gtin: "8906219880070",
+  division: null,
   brandName: "Test 40 mg Tablet",
   composition: "Test 40 mg",
   dosageForm: null,

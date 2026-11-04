@@ -58,6 +58,7 @@ export const products = pgTable(
     itemId: text("item_id").primaryKey(), // ERP ITEMID, e.g. AUS0102
     gtin: char("gtin", { length: 13 }).unique(),
     brand: text("brand"), // e.g. AUSRASTIN
+    division: text("division"), // e.g. "aquris" (AUSPHARMA's +aquris division); null = AUSPHARMA
     brandName: text("brand_name").notNull(), // full pack name, e.g. AUSRASTIN GOLD 10 CAP 10'S
     classification: text("classification"), // ERP CLASSIFICATION / CATEGORY, kept for reference
     category: text("category"),

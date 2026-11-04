@@ -73,8 +73,12 @@ export async function updateProduct(itemId: string, form: FormData) {
   const schedule = str(form, "schedule");
   if (schedule && !["H", "H1", "X", "G", "OTC"].includes(schedule)) back(itemId, { error: "Unknown schedule" });
 
+  const division = str(form, "division");
+  if (division && division !== "aquris") back(itemId, { error: "Unknown division" });
+
   const changes = {
     gtin,
+    division,
     brandName: str(form, "brandName") ?? p.brandName,
     composition: str(form, "composition") ?? p.composition,
     dosageForm: str(form, "dosageForm"),

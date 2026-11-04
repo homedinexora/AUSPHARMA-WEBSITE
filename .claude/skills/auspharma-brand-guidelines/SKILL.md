@@ -59,6 +59,16 @@ manufacturing partners**. It does not run its own plant. Every claim must match 
   Never stretch, outline, add effects, re-type it in another font, or recolour it outside ink, white or
   brand teal. Don't place it on a busy photo.
 
+## 2a. Division: +aquris
+
+- **+aquris** is a division of AUSPHARMA (32 SKUs in the product master, item IDs `AQU…`, names
+  "AQURIS …"). Logo: `docs/design/aquris-logo.pdf` → `public/brand/aquris-logo.svg`, component
+  `components/brand/AqurisLogo.tsx` (`currentColor`). The **"+a" mark on the cartons** comes from it.
+- Products carry `division = "aquris"`; their QR page shows the +aquris logo with
+  "A division of AUSPHARMA", and catalogue cards show the small logo.
+- Always pair it with the AUSPHARMA master brand; never use +aquris alone as the company name.
+  Spell it in lowercase with the plus: "+aquris".
+
 ## 3. Brand colours (website)
 
 | Token | Hex | Use |

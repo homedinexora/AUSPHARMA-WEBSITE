@@ -9,6 +9,7 @@ import { formatInr, formatPackDate, isPrescription, resolveScanView, type ScanVi
 import { pvpi, site } from "@/lib/site";
 import { getTherapy } from "@/lib/therapies";
 import { PatientGuideView } from "@/components/scan/PatientGuideView";
+import { AqurisLogo } from "@/components/brand/AqurisLogo";
 
 /** Resolves the scan URL and renders the product page. Awaited inside <Suspense> by the route. */
 export async function ProductScanView({ params }: { params: Promise<{ gtin: string; batch?: string }> }) {
@@ -69,9 +70,17 @@ function ScanPage({ product: p, view }: { product: ScanProduct; view: ScanView }
             </div>
           ) : null}
           <div className="p-5 md:p-6">
-            <span className="inline-block rounded-full bg-white px-3 py-1 text-xs font-semibold uppercase tracking-wide text-ink">
-              AUSPHARMA generic
-            </span>
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="inline-block rounded-full bg-white px-3 py-1 text-xs font-semibold uppercase tracking-wide text-ink">
+                AUSPHARMA generic
+              </span>
+              {p.division === "aquris" ? (
+                <span className="flex items-center gap-2 text-ink">
+                  <AqurisLogo className="h-5 w-auto" />
+                  <span className="text-xs font-semibold">A division of AUSPHARMA</span>
+                </span>
+              ) : null}
+            </div>
             <h1 id="product-title" className="mt-4 text-2xl font-semibold tracking-tight text-ink md:text-4xl">
               {p.brandName}
             </h1>

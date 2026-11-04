@@ -35,6 +35,8 @@ the rest sits behind an "I am a healthcare professional" self-declaration. Sampl
 `docs/samples/inserts/`. An authenticated `/admin` lets AUSPHARMA staff manage pack data and upload
 CoA PDFs per GTIN + batch.
 
+Products may belong to the **+aquris** division (`products.division = 'aquris'`), shown as "+aquris · A division of AUSPHARMA".
+
 AUSPHARMA is a **marketer**: products are made by **WHO-GMP certified manufacturing
 partners**. The data model therefore has a Manufacturer (name, address, manufacturing
 licence no., WHO-GMP certificate PDF + validity) linked to each product, and pages say
