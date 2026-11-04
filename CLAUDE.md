@@ -14,6 +14,11 @@ Corporate website for AUSPHARMA, a pharmaceutical company operating in **India**
 - `auspharma-design-system` (`.claude/skills/auspharma-design-system/`): load before
   building or reviewing any page or component. All styling follows its tokens and rules.
 
+## gstack
+
+Use the `/browse` skill from gstack for all web browsing. Never use
+`mcp__claude-in-chrome__*` tools.
+
 ## Workflow: which skills to use when
 
 | Task | Skill |
