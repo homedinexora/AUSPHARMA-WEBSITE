@@ -15,10 +15,12 @@ Corporate website for AUSPHARMA, a pharmaceutical company operating in **India**
 - `auspharma-design-system` (`.claude/skills/auspharma-design-system/`): load before
   building or reviewing any page or component. All styling follows its tokens and rules.
 
-## gstack
+## Browser tools
 
-Use the `/browse` skill from gstack for all web browsing. Never use
-`mcp__claude-in-chrome__*` tools.
+- **Our own site (local `next dev` or a preview deployment):** use `agent-browser`, via
+  the `next-dev-loop` skill. Install if missing: `npm i -g agent-browser && agent-browser install`.
+- **Other websites (research, references):** use gstack's `/browse` skill.
+- Never use `mcp__claude-in-chrome__*` tools.
 
 ## Workflow: which skills to use when
 
