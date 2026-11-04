@@ -13,7 +13,6 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   const g = legal.grievanceOfficer;
-  const grievanceEmail = g?.email ?? site.contactEmail;
   return (
     <LegalPage
       title="Privacy Policy"
@@ -105,26 +104,32 @@ export default function PrivacyPage() {
 
       <section>
         <h2>7. Grievances and contact</h2>
-        <p>
-          {g ? (
-            <>
-              Grievance Officer: <strong>{g.name}</strong>
-              {", "}
-            </>
-          ) : null}
-          {grievanceEmail ? (
-            <>
-              email <a href={`mailto:${grievanceEmail}`}>{grievanceEmail}</a>
-            </>
-          ) : null}
-          {site.tollFree ? (
-            <>
-              {" "}
-              or call <a href={telHref(site.tollFree)}>{site.tollFree}</a> (toll-free)
-            </>
-          ) : null}
-          . We aim to respond within the time required by law. <Todo>named Grievance Officer / Data Protection Officer, if required.</Todo>
-        </p>
+        {g ? (
+          <p>
+            Grievance Officer: <strong>{g.name}</strong>
+            {g.phone ? (
+              <>
+                , reachable on <a href={telHref(g.phone)}>{g.phone}</a> (toll-free)
+              </>
+            ) : null}
+            {g.email ? (
+              <>
+                {" "}
+                or <a href={`mailto:${g.email}`}>{g.email}</a>
+              </>
+            ) : null}
+            . We aim to respond within the time required by law.
+          </p>
+        ) : (
+          <p>
+            {site.tollFree ? (
+              <>
+                Call <a href={telHref(site.tollFree)}>{site.tollFree}</a> (toll-free).
+              </>
+            ) : null}{" "}
+            <Todo>named Grievance Officer.</Todo>
+          </p>
+        )}
       </section>
 
       <section>
