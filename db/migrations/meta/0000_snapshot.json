@@ -1,5 +1,5 @@
 {
-  "id": "d29d82d0-9357-4672-ac1e-c33b8ae42edd",
+  "id": "fbcd0964-1abf-4f17-abc4-da94a01baba4",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -98,9 +98,9 @@
           "primaryKey": true,
           "notNull": true
         },
-        "gtin": {
-          "name": "gtin",
-          "type": "char(13)",
+        "product_id": {
+          "name": "product_id",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -188,11 +188,11 @@
         }
       },
       "indexes": {
-        "batches_gtin_batch_uq": {
-          "name": "batches_gtin_batch_uq",
+        "batches_product_batch_uq": {
+          "name": "batches_product_batch_uq",
           "columns": [
             {
-              "expression": "gtin",
+              "expression": "product_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -211,15 +211,15 @@
         }
       },
       "foreignKeys": {
-        "batches_gtin_products_gtin_fk": {
-          "name": "batches_gtin_products_gtin_fk",
+        "batches_product_id_products_item_id_fk": {
+          "name": "batches_product_id_products_item_id_fk",
           "tableFrom": "batches",
           "tableTo": "products",
           "columnsFrom": [
-            "gtin"
+            "product_id"
           ],
           "columnsTo": [
-            "gtin"
+            "item_id"
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
@@ -352,9 +352,9 @@
           "primaryKey": true,
           "notNull": true
         },
-        "gtin": {
-          "name": "gtin",
-          "type": "char(13)",
+        "product_id": {
+          "name": "product_id",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -433,11 +433,11 @@
         }
       },
       "indexes": {
-        "pil_versions_gtin_version_uq": {
-          "name": "pil_versions_gtin_version_uq",
+        "pil_versions_product_version_uq": {
+          "name": "pil_versions_product_version_uq",
           "columns": [
             {
-              "expression": "gtin",
+              "expression": "product_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -456,15 +456,15 @@
         }
       },
       "foreignKeys": {
-        "pil_versions_gtin_products_gtin_fk": {
-          "name": "pil_versions_gtin_products_gtin_fk",
+        "pil_versions_product_id_products_item_id_fk": {
+          "name": "pil_versions_product_id_products_item_id_fk",
           "tableFrom": "pil_versions",
           "tableTo": "products",
           "columnsFrom": [
-            "gtin"
+            "product_id"
           ],
           "columnsTo": [
-            "gtin"
+            "item_id"
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
@@ -480,17 +480,41 @@
       "name": "products",
       "schema": "",
       "columns": {
+        "item_id": {
+          "name": "item_id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
         "gtin": {
           "name": "gtin",
           "type": "char(13)",
-          "primaryKey": true,
-          "notNull": true
+          "primaryKey": false,
+          "notNull": false
+        },
+        "brand": {
+          "name": "brand",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "brand_name": {
           "name": "brand_name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "classification": {
+          "name": "classification",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "category": {
+          "name": "category",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "composition": {
           "name": "composition",
@@ -646,12 +670,20 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "products_gtin_unique": {
+          "name": "products_gtin_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "gtin"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {
         "gtin_13_digits": {
           "name": "gtin_13_digits",
-          "value": "\"products\".\"gtin\" ~ '^[0-9]{13}$'"
+          "value": "\"products\".\"gtin\" IS NULL OR \"products\".\"gtin\" ~ '^[0-9]{13}$'"
         }
       },
       "isRLSEnabled": false

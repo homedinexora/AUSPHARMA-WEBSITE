@@ -16,7 +16,7 @@ CREATE TABLE "audit_log" (
 --> statement-breakpoint
 CREATE TABLE "batches" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"gtin" char(13) NOT NULL,
+	"product_id" text NOT NULL,
 	"batch_no" text NOT NULL,
 	"mfg_date" date,
 	"expiry_date" date,
@@ -51,7 +51,7 @@ CREATE TABLE "manufacturers" (
 --> statement-breakpoint
 CREATE TABLE "pil_versions" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"gtin" char(13) NOT NULL,
+	"product_id" text NOT NULL,
 	"kind" "insert_kind" DEFAULT 'prescribing_information' NOT NULL,
 	"version" text NOT NULL,
 	"revision_date" text,
@@ -66,8 +66,12 @@ CREATE TABLE "pil_versions" (
 );
 --> statement-breakpoint
 CREATE TABLE "products" (
-	"gtin" char(13) PRIMARY KEY NOT NULL,
+	"item_id" text PRIMARY KEY NOT NULL,
+	"gtin" char(13),
+	"brand" text,
 	"brand_name" text NOT NULL,
+	"classification" text,
+	"category" text,
 	"composition" text NOT NULL,
 	"dosage_form" text,
 	"pack_size" text,
@@ -87,14 +91,15 @@ CREATE TABLE "products" (
 	"published_by" text,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
-	CONSTRAINT "gtin_13_digits" CHECK ("products"."gtin" ~ '^[0-9]{13}$')
+	CONSTRAINT "products_gtin_unique" UNIQUE("gtin"),
+	CONSTRAINT "gtin_13_digits" CHECK ("products"."gtin" IS NULL OR "products"."gtin" ~ '^[0-9]{13}$')
 );
 --> statement-breakpoint
-ALTER TABLE "batches" ADD CONSTRAINT "batches_gtin_products_gtin_fk" FOREIGN KEY ("gtin") REFERENCES "public"."products"("gtin") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "batches" ADD CONSTRAINT "batches_product_id_products_item_id_fk" FOREIGN KEY ("product_id") REFERENCES "public"."products"("item_id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "batches" ADD CONSTRAINT "batches_pil_version_id_pil_versions_id_fk" FOREIGN KEY ("pil_version_id") REFERENCES "public"."pil_versions"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "pil_versions" ADD CONSTRAINT "pil_versions_gtin_products_gtin_fk" FOREIGN KEY ("gtin") REFERENCES "public"."products"("gtin") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "pil_versions" ADD CONSTRAINT "pil_versions_product_id_products_item_id_fk" FOREIGN KEY ("product_id") REFERENCES "public"."products"("item_id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "products" ADD CONSTRAINT "products_manufacturer_id_manufacturers_id_fk" FOREIGN KEY ("manufacturer_id") REFERENCES "public"."manufacturers"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 CREATE INDEX "audit_entity_idx" ON "audit_log" USING btree ("entity","entity_id");--> statement-breakpoint
-CREATE UNIQUE INDEX "batches_gtin_batch_uq" ON "batches" USING btree ("gtin","batch_no");--> statement-breakpoint
-CREATE UNIQUE INDEX "pil_versions_gtin_version_uq" ON "pil_versions" USING btree ("gtin","version");--> statement-breakpoint
+CREATE UNIQUE INDEX "batches_product_batch_uq" ON "batches" USING btree ("product_id","batch_no");--> statement-breakpoint
+CREATE UNIQUE INDEX "pil_versions_product_version_uq" ON "pil_versions" USING btree ("product_id","version");--> statement-breakpoint
 CREATE INDEX "products_therapy_idx" ON "products" USING btree ("therapy");

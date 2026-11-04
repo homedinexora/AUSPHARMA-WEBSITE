@@ -79,20 +79,20 @@ export async function getScanProduct(gtin: string): Promise<ScanProduct | null> 
     .where(and(eq(products.gtin, gtin), eq(products.status, "published")))
     .limit(1);
   if (!row) return null;
+  const p = row.products;
 
   const [pilRows, batchRows] = await Promise.all([
     db
       .select()
       .from(pilVersions)
-      .where(and(eq(pilVersions.gtin, gtin), inArray(pilVersions.status, ["published", "superseded"])))
+      .where(and(eq(pilVersions.productId, p.itemId), inArray(pilVersions.status, ["published", "superseded"])))
       .orderBy(desc(pilVersions.publishedAt)),
-    db.select().from(batches).where(eq(batches.gtin, gtin)).orderBy(desc(batches.mfgDate)),
+    db.select().from(batches).where(eq(batches.productId, p.itemId)).orderBy(desc(batches.mfgDate)),
   ]);
 
-  const p = row.products;
   const m = row.manufacturers;
   return {
-    gtin: p.gtin,
+    gtin,
     brandName: p.brandName,
     composition: p.composition,
     dosageForm: p.dosageForm,
@@ -159,8 +159,8 @@ export async function getDocumentBlob(
     const [b] = await db
       .select({ blob: batches.coaBlob, status: batches.status, productStatus: products.status })
       .from(batches)
-      .innerJoin(products, eq(batches.gtin, products.gtin))
-      .where(and(eq(batches.gtin, doc.gtin), eq(batches.batchNo, doc.batchNo)))
+      .innerJoin(products, eq(batches.productId, products.itemId))
+      .where(and(eq(products.gtin, doc.gtin), eq(batches.batchNo, doc.batchNo)))
       .limit(1);
     return b && b.status === "published" && b.productStatus === "published" ? b.blob : null;
   }
@@ -168,7 +168,7 @@ export async function getDocumentBlob(
     const [v] = await db
       .select({ blob: pilVersions.pdfBlob, status: pilVersions.status, productStatus: products.status })
       .from(pilVersions)
-      .innerJoin(products, eq(pilVersions.gtin, products.gtin))
+      .innerJoin(products, eq(pilVersions.productId, products.itemId))
       .where(eq(pilVersions.id, doc.pilVersionId))
       .limit(1);
     // Superseded versions stay downloadable: older batches were packed with them.

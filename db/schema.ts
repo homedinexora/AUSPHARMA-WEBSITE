@@ -51,12 +51,16 @@ export const manufacturers = pgTable("manufacturers", {
   ...timestamps,
 });
 
-/** One row per pack / GTIN-13. */
+/** One row per pack (SKU). Keyed by the ERP item ID; the GTIN-13 is added when assigned and drives the QR URL. */
 export const products = pgTable(
   "products",
   {
-    gtin: char("gtin", { length: 13 }).primaryKey(),
-    brandName: text("brand_name").notNull(),
+    itemId: text("item_id").primaryKey(), // ERP ITEMID, e.g. AUS0102
+    gtin: char("gtin", { length: 13 }).unique(),
+    brand: text("brand"), // e.g. AUSRASTIN
+    brandName: text("brand_name").notNull(), // full pack name, e.g. AUSRASTIN GOLD 10 CAP 10'S
+    classification: text("classification"), // ERP CLASSIFICATION / CATEGORY, kept for reference
+    category: text("category"),
     composition: text("composition").notNull(),
     dosageForm: text("dosage_form"),
     packSize: text("pack_size"),
@@ -77,7 +81,7 @@ export const products = pgTable(
     ...timestamps,
   },
   (t) => [
-    check("gtin_13_digits", sql`${t.gtin} ~ '^[0-9]{13}$'`),
+    check("gtin_13_digits", sql`${t.gtin} IS NULL OR ${t.gtin} ~ '^[0-9]{13}$'`),
     index("products_therapy_idx").on(t.therapy),
   ],
 );
@@ -95,9 +99,9 @@ export const pilVersions = pgTable(
   "pil_versions",
   {
     id: serial("id").primaryKey(),
-    gtin: char("gtin", { length: 13 })
+    productId: text("product_id")
       .notNull()
-      .references(() => products.gtin),
+      .references(() => products.itemId),
     kind: insertKind("kind").notNull().default("prescribing_information"),
     version: text("version").notNull(), // as printed, e.g. "v2 / 03-2026"
     revisionDate: text("revision_date"),
@@ -109,7 +113,7 @@ export const pilVersions = pgTable(
     publishedAt: timestamp("published_at", { withTimezone: true }),
     ...timestamps,
   },
-  (t) => [uniqueIndex("pil_versions_gtin_version_uq").on(t.gtin, t.version)],
+  (t) => [uniqueIndex("pil_versions_product_version_uq").on(t.productId, t.version)],
 );
 
 /** Batches; the CoA PDF is shown publicly only when status = published. */
@@ -117,9 +121,9 @@ export const batches = pgTable(
   "batches",
   {
     id: serial("id").primaryKey(),
-    gtin: char("gtin", { length: 13 })
+    productId: text("product_id")
       .notNull()
-      .references(() => products.gtin),
+      .references(() => products.itemId),
     batchNo: text("batch_no").notNull(), // stored uppercase, [A-Z0-9-]
     mfgDate: date("mfg_date"),
     expiryDate: date("expiry_date"),
@@ -134,7 +138,7 @@ export const batches = pgTable(
     ...timestamps,
   },
   (t) => [
-    uniqueIndex("batches_gtin_batch_uq").on(t.gtin, t.batchNo),
+    uniqueIndex("batches_product_batch_uq").on(t.productId, t.batchNo),
     check("batch_no_format", sql`${t.batchNo} ~ '^[A-Z0-9-]{1,40}$'`),
   ],
 );
