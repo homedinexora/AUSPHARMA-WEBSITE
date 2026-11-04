@@ -4,7 +4,8 @@ Corporate website for AUSPHARMA, a pharmaceutical company operating in **India**
 
 ## Stack
 
-- **Next.js** (App Router, TypeScript, React Server Components by default)
+- **Next.js 16.3+** (App Router, TypeScript, React Server Components by default). 16.3+ makes
+  `next dev` generate version-matched agent docs; follow them.
 - **Tailwind CSS v4** with design tokens in `app/globals.css`
 - **Deployment:** Vercel
 - Package manager: npm
@@ -29,6 +30,8 @@ Use the `/browse` skill from gstack for all web browsing. Never use
 | Framework/library questions | `agent-protocols:source-driven-development` (check official Next.js docs) |
 | Logic (forms, utilities) | `superpowers:test-driven-development` |
 | Visual check | Playwright: screenshot at 360px, 768px and 1280px |
+| Confirm a change works in the running app | `next-dev-loop` (needs `next dev` running) |
+| Slow pages or large bundles | `next-bundle-optimizer`, `next-cache-components-*`, `next-partial-prefetching-*` |
 | Before claiming done | `superpowers:verification-before-completion` |
 | Before merging | `agent-protocols:code-review-and-quality`, `agent-protocols:security-and-hardening`, `web-design-guidelines` |
 | Before going live | `agent-protocols:shipping-and-launch`, `agent-protocols:performance-optimization` |
