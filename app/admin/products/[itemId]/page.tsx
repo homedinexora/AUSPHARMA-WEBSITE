@@ -10,9 +10,11 @@ import {
   toggleSectionPatientFacing,
   updateProduct,
   uploadCoa,
+  uploadInsert,
 } from "@/app/admin/actions";
 import { Flash, NotAuthorised, StaffOnly, StatusBadge } from "@/components/admin/Guard";
 import { GuideEditor } from "@/components/admin/GuideEditor";
+import { SubmitButton } from "@/components/admin/SubmitButton";
 import { getStaff } from "@/lib/admin/auth";
 import { InsertSectionList } from "@/components/scan/InsertSectionList";
 import { getDb, schema } from "@/db";
@@ -266,6 +268,24 @@ async function Content({ params, searchParams }: PageProps<"/admin/products/[ite
                   </details>
                 </div>
               ))}
+              <form action={uploadInsert.bind(null, itemId)} className="grid gap-3 rounded-md bg-brand-50 p-4 md:grid-cols-4 md:items-end">
+                <Field label="Insert PDF (max 4 MB)">
+                  <input name="insert" type="file" accept="application/pdf" required className="text-xs" />
+                </Field>
+                <Field label="Type">
+                  <select name="kind" defaultValue="auto" className={input}>
+                    <option value="auto">Detect from the PDF</option>
+                    <option value="prescribing_information">Prescribing information (HCP)</option>
+                    <option value="patient_leaflet">Patient leaflet</option>
+                  </select>
+                </Field>
+                <Field label="Version (optional)" hint="Blank: date of revision, else v1, v2…">
+                  <input name="version" maxLength={40} placeholder="e.g. Rev. 01/2027" className={input} />
+                </Field>
+                <SubmitButton pending="Uploading and reading…" className={`${btn} bg-brand-600 text-white`}>
+                  Upload insert (draft)
+                </SubmitButton>
+              </form>
             </Card>
           </div>
         );

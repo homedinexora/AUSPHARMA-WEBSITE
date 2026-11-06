@@ -8,6 +8,9 @@ import { getDb, schema } from "@/db";
 import { requireStaff, type Staff } from "@/lib/admin/auth";
 import { CATALOG_TAG, productTag } from "@/lib/data/catalog";
 import { isValidGtin13, normalizeBatch } from "@/lib/gtin";
+import { insertVersionName } from "@/lib/admin/insert-version";
+import { parseInsert } from "@/lib/insert-parser";
+import { extractPdfText } from "@/lib/pdf-text";
 
 const { products, batches, pilVersions, auditLog } = schema;
 const MAX_PDF = 4 * 1024 * 1024;
@@ -207,6 +210,80 @@ export async function setInsertPublished(itemId: string, insertId: number, publi
   await audit(staff, publish ? "insert.publish" : "insert.unpublish", "pil_versions", String(insertId), { status: v!.status }, null);
   refresh((await getProduct(itemId))?.gtin);
   back(itemId, { ok: publish ? `Insert ${v!.version} published` : `Insert ${v!.version} unpublished` });
+}
+
+/**
+ * Upload an approved package-insert PDF as a new DRAFT version. Its text is parsed into sections as a
+ * pre-fill; QA checks them against the PDF and publishes. A draft with the same version name is replaced;
+ * a published or superseded version is never overwritten.
+ */
+export async function uploadInsert(itemId: string, form: FormData) {
+  const staff = await requireStaff("editor");
+  const p = await getProduct(itemId);
+  if (!p) back(itemId, { error: "Product not found" });
+  const pdf = await readPdf(form, "insert");
+  if (!pdf) back(itemId, { error: "Choose the insert PDF" });
+  if (pdf && "error" in pdf) back(itemId, { error: `Insert: ${pdf.error}` });
+  const typed = str(form, "version");
+  if (typed && !/^[A-Za-z0-9 ./_-]{1,40}$/.test(typed)) {
+    back(itemId, { error: "Version may use letters, digits, spaces and . / _ - (max 40)" });
+  }
+  const kindChoice = str(form, "kind");
+
+  const file = (pdf as { file: File }).file;
+  const bytes = new Uint8Array(await file.arrayBuffer());
+  let text = "";
+  try {
+    text = await extractPdfText(bytes);
+  } catch {
+    back(itemId, { error: "Insert: this PDF could not be read. Export it again from the artwork file." });
+  }
+  const parsed = text ? parseInsert(text) : null;
+  const kind =
+    kindChoice === "prescribing_information" || kindChoice === "patient_leaflet"
+      ? kindChoice
+      : (parsed?.kind ?? "prescribing_information"); // no text (scanned PDF): treat as HCP-only
+
+  const db = getDb();
+  const existing = await db.select().from(pilVersions).where(eq(pilVersions.productId, itemId));
+  const version = insertVersionName({
+    typed,
+    revisionDate: parsed?.revisionDate ?? null,
+    existing: existing.map((v) => v.version),
+  });
+  const same = existing.find((v) => v.version === version);
+  if (same && same.status !== "draft") {
+    back(itemId, { error: `Version "${version}" is ${same.status}. Type a new version name for this upload.` });
+  }
+
+  const blob = await put(`inserts/${itemId}/${version.replace(/[^A-Za-z0-9.-]/g, "_")}.pdf`, file, {
+    access: "private",
+    contentType: "application/pdf",
+    allowOverwrite: true,
+  });
+  const values = {
+    kind,
+    revisionDate: parsed?.revisionDate ?? null,
+    pdfBlob: blob.pathname,
+    sections: parsed?.sections ?? [],
+  };
+  const [row] = await db
+    .insert(pilVersions)
+    .values({ productId: itemId, version, status: "draft", createdBy: staff.email, ...values })
+    .onConflictDoUpdate({ target: [pilVersions.productId, pilVersions.version], set: values })
+    .returning({ id: pilVersions.id });
+  await audit(staff, same ? "insert.reupload" : "insert.upload", "pil_versions", String(row.id), null, {
+    itemId,
+    version,
+    kind,
+    sections: values.sections.length,
+    pdfBlob: blob.pathname,
+  });
+  back(itemId, {
+    ok: values.sections.length
+      ? `Insert ${version} uploaded as a draft with ${values.sections.length} sections. Check them against the PDF before publishing.`
+      : `Insert ${version} uploaded as a draft. No text was found (scanned PDF?), so the page will offer the PDF only.`,
+  });
 }
 
 export async function toggleSectionPatientFacing(itemId: string, insertId: number, key: string) {
