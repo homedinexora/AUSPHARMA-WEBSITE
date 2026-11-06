@@ -23,9 +23,11 @@ export function cleanExtractedText(raw: string): string {
 
 const RMP_HEADER = /^for the use of a registered medical practitioner/i;
 const NUMBERED = /^(\d{1,2}(?:\.\d{1,2})?)\.?\s+([A-Za-z][A-Za-z ,&/()'’-]{2,90})$/;
-const CAPS = /^[A-Z][A-Z ,&/()'’-]{3,60}$/;
+const CAPS = /^([A-Z][A-Z ,&/()'’-]{3,60}?)\s*:?$/; // may end in a colon, e.g. "COMPOSITION :"
 const COLON = /^([A-Z][a-z]+(?: [a-z]+)?):$/; // one or two words, e.g. "Composition:", "Marketed by:"
 const SUBLABEL = /^([A-Z][A-Za-z ,&/()'’-]{1,40}):$/; // in-section label, e.g. "Renal:", "Risk factors:"
+/** Wingdings-style bullet that PDFs extract onto a line of its own, before the item text. */
+const LONE_BULLET = /^[-•●▪Ÿ§]$/;
 
 interface Heading {
   key: string | null;
@@ -44,12 +46,16 @@ function numberedHeading(line: string): Heading | null {
  * Numbered (CDSCO-format) inserts: only numbered headings, plus the closing "Marketed by:", start sections.
  * Other inserts: ALL-CAPS lines and short colon labels start sections.
  */
-function detectHeading(line: string, numbered: boolean): Heading | null {
+function detectHeading(line: string, numbered: boolean, inSection: boolean): Heading | null {
   const n = numberedHeading(line);
   if (n) return n;
-  if (numbered) return /^marketed by:$/i.test(line) ? { key: null, title: "Marketed by" } : null;
-  if (CAPS.test(line) && /[A-Z]{3}/.test(line)) return { key: null, title: line.trim() };
-  const c = COLON.exec(line);
+  if (/^marketed by\s*:$/i.test(line)) return { key: null, title: "Marketed by" };
+  if (numbered) return null;
+  const caps = CAPS.exec(line);
+  if (caps && /[A-Z]{3}/.test(line)) return { key: null, title: caps[1].trim() };
+  // A short "Label:" line opens a section only before the first heading (e.g. "Composition:");
+  // inside a section it is a sub-heading such as "Renal impairment:".
+  const c = inSection ? null : COLON.exec(line);
   if (c) return { key: null, title: c[1] };
   return null;
 }
@@ -70,16 +76,24 @@ function slug(t: string): string {
 /** Join wrapped PDF lines into Markdown paragraphs and list items. */
 function toMarkdown(lines: string[]): string {
   const out: string[] = [];
+  let pendingBullet = false;
   for (const rawLine of lines) {
     const line = rawLine.replace(/\s*\.{4,}\s*/g, ": ").trim();
     if (!line) continue;
-    const bullet = /^[-•●▪]\s*/.test(line);
+    if (LONE_BULLET.test(line)) {
+      pendingBullet = true;
+      continue;
+    }
+    const bullet = pendingBullet || /^[-•●▪]\s*/.test(line);
+    pendingBullet = false;
     const text = bullet ? `- ${line.replace(/^[-•●▪]\s*/, "")}` : line;
     const prev = out[out.length - 1];
     const startNew =
       !prev ||
       bullet ||
       /[.:;]$/.test(prev) ||
+      // a composition line ends at its dose, unless the next line continues it, e.g. "(as … granules)"
+      (/: \d[\d.,]*\s*(mg|mcg|g|IU|ml|mL)$/.test(prev) && /^[A-Z]/.test(text)) ||
       /^\*\*.*\*\*$/.test(prev) ||
       /^\*\*/.test(text) ||
       /^[A-Z][A-Za-z ]{1,40}:/.test(line) ||
@@ -102,7 +116,7 @@ export function parseInsert(raw: string): ParsedInsert {
   for (const rawLine of lines) {
     const line = rawLine.trim();
     if (!line || RMP_HEADER.test(line)) continue;
-    const h = detectHeading(line, numbered);
+    const h = detectHeading(line, numbered, blocks.length > 0);
     if (h) {
       blocks.push({ heading: h, lines: [] });
       continue;

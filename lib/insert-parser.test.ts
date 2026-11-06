@@ -74,3 +74,35 @@ describe("parseInsert: heading format (ACEELO-PS)", () => {
     expect(r.sections.filter((x) => x.patientFacing)).toHaveLength(0);
   });
 });
+
+describe("parseInsert: heading format with spaced colons and glyph bullets (AQURIS AMOXICLA)", () => {
+  const r = parseInsert(fixture("AQURIS-AMOXICLA"));
+  const section = (title: string) => r.sections.find((x) => x.title === title);
+
+  it("detects prescribing information and the generic title", () => {
+    expect(r.kind).toBe("prescribing_information");
+    expect(r.title).toBe("Amoxycillin and Potassium Clavulanate Tablets IP 625 mg");
+  });
+  it('reads an ALL-CAPS heading written "COMPOSITION :"', () => {
+    expect(r.sections[0].title).toBe("Composition");
+    expect(section("Composition")?.body).toContain("Eq. to Amoxycillin: 500 mg");
+    expect(section("Composition")?.body).toContain("Eq. to Clavulanic Acid: 125 mg");
+    expect(section("Composition")?.body).not.toContain("500 mg Potassium");
+  });
+  it("keeps a colon sub-heading such as Renal impairment inside its section", () => {
+    expect(section("Renal impairment")).toBeUndefined();
+    const dosage = section("Dosage and administration");
+    expect(dosage?.body).toContain("**Renal impairment**");
+    expect(dosage?.body).toContain("glomerular filtration rate");
+  });
+  it("turns a bullet glyph on its own line into a list item", () => {
+    const ue = section("Undesirable effects")?.body ?? "";
+    expect(ue).toContain("- Anaphylactic reactions (see Warnings and Precautions)");
+    expect(ue).not.toMatch(/Ÿ/);
+  });
+  it("restores ligatures and has unique keys", () => {
+    expect(section("Effects on the ability to drive and use machines")?.body).toContain("influence");
+    const keys = r.sections.map((x) => x.key);
+    expect(new Set(keys).size).toBe(keys.length);
+  });
+});
