@@ -84,9 +84,10 @@ function toMarkdown(lines: string[]): string {
       pendingBullet = true;
       continue;
     }
-    const bullet = pendingBullet || /^[-•●▪]\s*/.test(line);
+    const glyph = /^(?:[-•●▪]\s*|[Ÿ§]\s+)/; // § and Ÿ are Wingdings bullets
+    const bullet = pendingBullet || glyph.test(line);
     pendingBullet = false;
-    const text = bullet ? `- ${line.replace(/^[-•●▪]\s*/, "")}` : line;
+    const text = bullet ? `- ${line.replace(glyph, "")}` : line;
     const prev = out[out.length - 1];
     const startNew =
       !prev ||
@@ -99,6 +100,8 @@ function toMarkdown(lines: string[]): string {
       /^[A-Z][A-Za-z ]{1,40}:/.test(line) ||
       /: \d/.test(line);
     if (startNew) out.push(text);
+    // A word hyphenated across lines ("life-" + "threatening") keeps its hyphen and no space.
+    else if (/[A-Za-z0-9']-$/.test(prev) && /^[A-Za-z0-9]/.test(text)) out[out.length - 1] = `${prev}${text}`;
     else out[out.length - 1] = `${prev} ${text}`;
   }
   return out.map((p) => (p.startsWith("- ") ? p : `${p}\n`)).join("\n").trim();

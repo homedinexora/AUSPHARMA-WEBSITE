@@ -4,17 +4,17 @@
  *
  * Usage: set -a; . ./.env.local; set +a; npx tsx scripts/import-insert.ts <ITEMID> <insert.pdf> [version]
  *   version defaults to "Rev. <date of revision>" when the insert has one, else "v1".
- * Needs `pdftotext` (poppler-utils). Re-running for the same version refreshes a draft; it never touches a
- * published version.
+ * Uses the same PDF reader as the admin's "Upload insert" button. Re-running for the same version refreshes a
+ * draft; it never touches a published version. Staff can do the same from /admin without this script.
  */
 import { readFileSync } from "node:fs";
-import { execFileSync } from "node:child_process";
 import { put } from "@vercel/blob";
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import { and, eq } from "drizzle-orm";
 import * as schema from "../db/schema";
 import { parseInsert } from "../lib/insert-parser";
+import { extractPdfText } from "../lib/pdf-text";
 
 const db = drizzle(neon(process.env.DATABASE_URL!), { schema });
 const { products, pilVersions, auditLog } = schema;
@@ -27,7 +27,7 @@ async function main() {
   const [product] = await db.select().from(products).where(eq(products.itemId, itemId)).limit(1);
   if (!product) throw new Error(`No product ${itemId}`);
 
-  const parsed = parseInsert(execFileSync("pdftotext", [pdf, "-"], { encoding: "utf8" }));
+  const parsed = parseInsert(await extractPdfText(new Uint8Array(readFileSync(pdf))));
   const version = versionArg ?? (parsed.revisionDate ? `Rev. ${parsed.revisionDate}` : "v1");
 
   const [existing] = await db

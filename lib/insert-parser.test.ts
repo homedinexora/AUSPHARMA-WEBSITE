@@ -13,6 +13,22 @@ describe("cleanExtractedText", () => {
   });
 });
 
+describe("parseInsert: line joining", () => {
+  const body = (lines: string) =>
+    parseInsert(`For the use of a Registered Medical Practitioner\nTitle\nWARNINGS\n${lines}`).sections[0].body;
+
+  it("joins a word hyphenated across lines without adding a space", () => {
+    expect(body("use with ACE-\ninhibitors and a life-\nthreatening overdose")).toBe(
+      "use with ACE-inhibitors and a life-threatening overdose",
+    );
+  });
+  it("treats a Wingdings bullet at the start of a line as a list item", () => {
+    expect(body("The following are discussed in more detail in other sections of the labeling:\nŸ Anaphylactic reactions\nŸ Hepatic dysfunction")).toBe(
+      "The following are discussed in more detail in other sections of the labeling:\n\n- Anaphylactic reactions\n- Hepatic dysfunction",
+    );
+  });
+});
+
 describe("parseInsert: numbered CDSCO format (ACEELO)", () => {
   const r = parseInsert(fixture("ACEELO"));
 
