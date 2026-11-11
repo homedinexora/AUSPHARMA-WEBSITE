@@ -113,7 +113,7 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
   },
   "AQU-NEW-BPXT": {
     gtin: "8906219880223",
-    schedule: "OTC", // confirmed by AUSPHARMA
+    schedule: "RX", // Rx + prescription caution, as on Shelcal-XT (same composition); not Schedule H
     manufacturerId: "MFR-PURECURE",
     manufacturingLicenceNo: "51/UA/SC/P-2013",
     packImageBlob: "/packs/8906219880223.webp",
