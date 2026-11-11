@@ -119,6 +119,23 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
     packImageBlob: "/packs/8906219880223.webp",
     storage: "Store protected from light & moisture, at a temperature not exceeding 25°C.",
   },
+  // Bone Plus CT and HD: foil, mono and outer carton received 2026-11-11; barcode + QR decoded.
+  "AQU-NEW-BPCT": {
+    gtin: "8906219880216",
+    schedule: "RX", // Rx + prescription caution, as on Shelcal CT (same composition and blister layout)
+    manufacturerId: "MFR-PURECURE",
+    manufacturingLicenceNo: "51/UA/SC/P-2013",
+    packImageBlob: "/packs/8906219880216.webp",
+    storage: "Store protected from light & moisture, at a temperature not exceeding 25°C.",
+  },
+  "AQU-NEW-BPHD": {
+    gtin: "8906219880209",
+    schedule: "OTC", // calcium + D3 only and no caution on the pack, like Bone Plus 500
+    manufacturerId: "MFR-PURECURE",
+    manufacturingLicenceNo: "51/UA/SC/P-2013",
+    packImageBlob: "/packs/8906219880209.webp",
+    storage: "Store protected from light & moisture, at a temperature not exceeding 25°C.",
+  },
   // Outer carton + digital insert received 2026-11-11 (barcode + QR decoded). Carton prints the Schedule G box and the
   // prescription caution (G_RX, as on Mankind's DYNAGLIPT-M);
   // the ERP says metformin SR but the approved carton/insert say a plain film coated tablet.
@@ -229,6 +246,30 @@ const EXTRA_ROWS: Row[] = [
     PRODUCTFORM: "TABLET",
     COMPOSITION:
       "Each film coated tablet contains: Calcium Carbonate IP 1250 mg eq. to Elemental Calcium 500 mg; Vitamin D3 IP 2000 IU; Methylcobalamin IP 1500 mcg; L-Methylfolate Calcium 1 mg; Pyridoxal 5-Phosphate 20 mg",
+    PACKINGTYPE: "BLISTER",
+  },
+  {
+    ITEMID: "AQU-NEW-BPCT",
+    ITEMNAME: "AQURIS BONE PLUS CT TAB 15'S",
+    BRAND: "AQURIS BONE PLUS",
+    PACK: "15",
+    CLASSIFICATION: "BONE DISORDERS",
+    CATEGORY: "CALCIUM BALANCE",
+    PRODUCTFORM: "TABLET",
+    COMPOSITION:
+      "Each film coated tablet contains: 1250 mg Calcium Carbonate from an organic source (Oyster Shell) equivalent to Elemental Calcium 500 mg; Calcitriol IP 0.25 mcg. Colour: Titanium Dioxide IP",
+    PACKINGTYPE: "BLISTER",
+  },
+  {
+    ITEMID: "AQU-NEW-BPHD",
+    ITEMNAME: "AQURIS BONE PLUS HD TAB 15'S",
+    BRAND: "AQURIS BONE PLUS",
+    PACK: "15",
+    CLASSIFICATION: "BONE DISORDERS",
+    CATEGORY: "CALCIUM BALANCE",
+    PRODUCTFORM: "TABLET",
+    COMPOSITION:
+      "Each film coated tablet contains: 1.25 g of Calcium Carbonate from an Organic Source (Oyster Shell) equivalent to Elemental Calcium 500 mg; Cholecalciferol IP (Vitamin D3) 500 IU (As Stabilized Form). Colour: Titanium Dioxide IP",
     PACKINGTYPE: "BLISTER",
   },
 ];
