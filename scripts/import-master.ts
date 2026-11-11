@@ -153,6 +153,16 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
     packImageBlob: "/packs/8906219880087.webp",
     storage: "Store protected from light & moisture, at a temperature not exceeding 30°C.",
   },
+  // AUSRASTIN F: foil, mono and outer carton received 2026-11-11; barcode + QR decoded; Rx + Schedule H box.
+  AUS0091: {
+    gtin: "8906219880094",
+    composition: "Each film coated tablet contains: Rosuvastatin Calcium IP eq. to Rosuvastatin 10 mg; Fenofibrate IP (Micronized) 160 mg. Colour: Titanium Dioxide IP", // from the approved cartons
+    manufacturerId: "MFR-PURECURE",
+    manufacturingLicenceNo: "31/UA/2013",
+    schedule: "H",
+    packImageBlob: "/packs/8906219880094.webp",
+    storage: "Store protected from light & moisture, at a temperature not exceeding 30°C.",
+  },
   // AUSRASTIN GOLD 20: foil, mono and outer carton received 2026-11-12; barcode + QR decoded; Rx + Schedule H box.
   AUS0088: {
     gtin: "8906219880124",
