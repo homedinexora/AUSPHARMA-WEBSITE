@@ -130,7 +130,7 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
   },
   "AQU-NEW-BPHD": {
     gtin: "8906219880209",
-    schedule: "OTC", // calcium + D3 only and no caution on the pack, like Bone Plus 500
+    schedule: "RX", // Rx + prescription caution, as on Shelcal HD (same composition and blister layout)
     manufacturerId: "MFR-PURECURE",
     manufacturingLicenceNo: "51/UA/SC/P-2013",
     packImageBlob: "/packs/8906219880209.webp",
