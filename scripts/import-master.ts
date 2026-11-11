@@ -67,7 +67,11 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
     composition: "Each uncoated bilayered tablet contains: Teneligliptin Hydrobromide Hydrate IP equivalent to Teneligliptin 20 mg; Metformin Hydrochloride IP 500 mg (as prolonged-release form). Colour: Ferric Oxide Yellow USP-NF (in Teneligliptin layer)", // from the approved carton
     storage: "Store protected from light & moisture, at a temperature not exceeding 25°C.",
   },
-  AUS0098: { gtin: "8906219880063", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "RX", packImageBlob: "/packs/8906219880063.webp" },
+  AUS0098: {
+    gtin: "8906219880063", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "RX", packImageBlob: "/packs/8906219880063.webp",
+    composition: "Each uncoated tablet contains: Vildagliptin IP 50 mg", // from the approved carton
+    storage: "Store protected from light & moisture, at a temperature not exceeding 25°C.",
+  },
   // Cartons received 2026-11-04 (barcode + QR decoded; licence/manufacturer/storage read from panels).
   // ACEELO and ACEELO PS are NSAIDs (confirmed by AUSPHARMA); ACEELO's ERP category is MUSCLE RELAXANT.
   ACE0943: {
