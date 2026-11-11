@@ -7,8 +7,8 @@ import numpy as np
 from PIL import Image, ImageFilter
 
 DPI = 200
-SRC = sys.argv[1]
-OUTDIR = sys.argv[2]
+SRC = sys.argv[1] if len(sys.argv) > 1 else "."
+OUTDIR = sys.argv[2] if len(sys.argv) > 2 else "."
 
 JOBS = [
     # slug, pdf, page
@@ -95,6 +95,14 @@ def build(slug, pdf, page):
         ty0 -= 1
     flap_h = min(depth, y0 - ty0)
     top = crop_inset(img, (fx0, y0 - flap_h, fx1, y0)) if flap_h > depth * 0.6 else Image.new("RGB", (fx1 - fx0, depth), (198, 159, 115))
+    render_3d(front, side, top, slug)
+    print(slug, "front", front.size, "depth", depth, "flap_h", flap_h)
+
+
+def render_3d(front, side, top, slug, outdir=None):
+    """Compose a 3/4 carton view from flat front, right-side and top faces; writes <slug>.png/.webp and <slug>-front.webp."""
+    outdir = outdir or OUTDIR
+    depth = side.size[0]
 
     # Canvas geometry (front-on with a slight 3/4 view)
     W, H = 1600, 1200
@@ -125,14 +133,14 @@ def build(slug, pdf, page):
     canvas.alpha_composite(warp(front, F, (W, H)))
     bbox = canvas.getbbox()
     out = canvas.crop((max(0, bbox[0] - 40), max(0, bbox[1] - 40), min(W, bbox[2] + 40), min(H, bbox[3] + 40)))
-    out.save(f"{OUTDIR}/{slug}.png", optimize=True)
-    out.save(f"{OUTDIR}/{slug}.webp", quality=88, method=6)
-    front.convert("RGB").save(f"{OUTDIR}/{slug}-front.webp", quality=88, method=6)
-    print(slug, "front", front.size, "depth", depth, "flap_h", flap_h, "->", out.size)
+    out.save(f"{outdir}/{slug}.png", optimize=True)
+    out.save(f"{outdir}/{slug}.webp", quality=88, method=6)
+    front.convert("RGB").save(f"{outdir}/{slug}-front.webp", quality=88, method=6)
+    return out
 
 
-if len(sys.argv) > 4:
-    JOBS = [(sys.argv[3], sys.argv[4], int(sys.argv[5]) if len(sys.argv) > 5 else 1)]
-
-for job in JOBS:
-    build(*job)
+if __name__ == "__main__":
+    if len(sys.argv) > 4:
+        JOBS = [(sys.argv[3], sys.argv[4], int(sys.argv[5]) if len(sys.argv) > 5 else 1)]
+    for job in JOBS:
+        build(*job)
