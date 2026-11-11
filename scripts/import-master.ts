@@ -57,7 +57,9 @@ const SITES = [
 // Windlas label classes as printed (set Nov 2026): Austeneptin M / Ausvilda M = G_RX, Ausdapa 10 / Ausvilda 50 = RX,
 // Ausglimer MV1 / MV2 = H (they print the Schedule H box).
 const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
-  AUS0093: { gtin: "8906219880018", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "RX", packImageBlob: "/packs/8906219880018.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 25°C." },
+  AUS0093: {
+    composition: "Each film coated tablet contains: Dapagliflozin Propanediol Monohydrate IP eq. to Dapagliflozin 10 mg. Colour: Ferric Oxide Yellow USP-NF & Titanium Dioxide IP", // from the approved carton
+    gtin: "8906219880018", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "RX", packImageBlob: "/packs/8906219880018.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 25°C." },
   AUS0094: { gtin: "8906219880025", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880025.webp" },
   AUS0095: { gtin: "8906219880032", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880032.webp" },
   AUS0092: {
