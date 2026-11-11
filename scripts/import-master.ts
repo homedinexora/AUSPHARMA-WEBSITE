@@ -60,7 +60,11 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
   AUS0093: { gtin: "8906219880018", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "RX", packImageBlob: "/packs/8906219880018.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 25°C." },
   AUS0094: { gtin: "8906219880025", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880025.webp" },
   AUS0095: { gtin: "8906219880032", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880032.webp" },
-  AUS0092: { gtin: "8906219880049", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "G_RX", packImageBlob: "/packs/8906219880049.webp" },
+  AUS0092: {
+    gtin: "8906219880049", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "G_RX", packImageBlob: "/packs/8906219880049.webp",
+    composition: "Each uncoated bilayered tablet contains: Teneligliptin Hydrobromide Hydrate IP equivalent to Teneligliptin 20 mg; Metformin Hydrochloride IP 500 mg (as prolonged-release form). Colour: Ferric Oxide Yellow USP-NF (in Teneligliptin layer)", // from the approved carton
+    storage: "Store protected from light & moisture, at a temperature not exceeding 25°C.",
+  },
   AUS0098: { gtin: "8906219880063", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "RX", packImageBlob: "/packs/8906219880063.webp" },
   // Cartons received 2026-11-04 (barcode + QR decoded; licence/manufacturer/storage read from panels).
   // ACEELO and ACEELO PS are NSAIDs (confirmed by AUSPHARMA); ACEELO's ERP category is MUSCLE RELAXANT.
