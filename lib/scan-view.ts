@@ -51,6 +51,60 @@ export function isPrescription(schedule: ScanProduct["schedule"]): boolean {
   return schedule !== "OTC";
 }
 
+export interface ScheduleLabel {
+  /** Symbol Rule 97 puts at the top left of the label (Rx / XRx), if any. */
+  symbol: "Rx" | "XRx" | null;
+  /** Short badge for catalogue cards. */
+  badge: string;
+  heading: string;
+  cautions: string[];
+}
+
+const NOT_WITHOUT_RX = "Not to be sold by retail without the prescription of a Registered Medical Practitioner.";
+
+/**
+ * Cautionary label text per schedule, mirroring Drugs and Cosmetics Rules 1945, Rule 97(1)(a)–(e) as substituted by
+ * the Fifth Amendment Rules 2018 (in force 1 Nov 2018). The QR page is an extension of the pack label, so it repeats
+ * the statutory wording rather than paraphrasing it. NDPS (NRx) products are not in the range.
+ */
+export function scheduleLabel(schedule: ScanProduct["schedule"]): ScheduleLabel {
+  switch (schedule) {
+    case "G":
+      return {
+        symbol: null,
+        badge: "Sch. G",
+        heading: "Schedule G prescription drug – caution",
+        cautions: ["It is dangerous to take this preparation except under medical supervision."],
+      };
+    case "H":
+      return { symbol: "Rx", badge: "Rx", heading: "Schedule H prescription drug – caution", cautions: [NOT_WITHOUT_RX] };
+    case "H1":
+      return {
+        symbol: "Rx",
+        badge: "Rx",
+        heading: "Schedule H1 prescription drug – caution",
+        cautions: ["It is dangerous to take this preparation except in accordance with the medical advice.", NOT_WITHOUT_RX],
+      };
+    case "X":
+      return {
+        symbol: "XRx",
+        badge: "XRx",
+        heading: "Schedule X prescription drug – warning",
+        cautions: ["To be sold by retail on the prescription of a Registered Medical Practitioner only."],
+      };
+    case "OTC":
+      return { symbol: null, badge: "OTC", heading: "Over the counter", cautions: [] };
+    default:
+      // Schedule not entered yet: treat as prescription (safe default) without quoting a schedule it may not have.
+      return {
+        symbol: "Rx",
+        badge: "Rx",
+        heading: "Prescription medicine",
+        cautions: ["Use only as directed by a registered medical practitioner."],
+      };
+  }
+}
+
 const dateFmt = new Intl.DateTimeFormat("en-IN", { month: "short", year: "numeric", timeZone: "UTC" });
 
 /** Pack-style date ("Dec 2027") from an ISO date string. */

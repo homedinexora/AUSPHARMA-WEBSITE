@@ -5,7 +5,7 @@ import { BatchSelector } from "@/components/scan/BatchSelector";
 import { PilSections } from "@/components/scan/PilSections";
 import { getScanProduct, type ScanProduct } from "@/lib/data/catalog";
 import { parseScanPath } from "@/lib/gtin";
-import { formatInr, formatPackDate, isPrescription, resolveScanView, type ScanView } from "@/lib/scan-view";
+import { formatInr, formatPackDate, resolveScanView, scheduleLabel, type ScanView } from "@/lib/scan-view";
 import { pvpi, site } from "@/lib/site";
 import { getTherapy } from "@/lib/therapies";
 import { PatientGuideView } from "@/components/scan/PatientGuideView";
@@ -41,7 +41,7 @@ function UnknownBatch({ gtin }: { gtin: string }) {
 }
 
 function ScanPage({ product: p, view }: { product: ScanProduct; view: ScanView }) {
-  const rx = isPrescription(p.schedule);
+  const label = scheduleLabel(p.schedule);
   const m = p.manufacturer;
   const expiry = formatPackDate(view.batch?.expiryDate ?? null);
   const mfg = formatPackDate(view.batch?.mfgDate ?? null);
@@ -102,9 +102,17 @@ function ScanPage({ product: p, view }: { product: ScanProduct; view: ScanView }
             </p>
           </div>
           <div className="flex flex-col justify-center gap-2 p-5 text-white md:w-52 md:p-6" style={{ backgroundColor: accent }}>
-            <p className="text-xs font-bold uppercase tracking-wider">{rx ? "Rx · Prescription only" : "Over the counter"}</p>
+            {/* Cautionary wording per Rule 97(1), Drugs and Cosmetics Rules 1945 (see scheduleLabel) */}
+            <p className="text-xs font-bold uppercase tracking-wider">
+              {label.symbol ? `${label.symbol} · ` : ""}
+              {label.heading}
+            </p>
             {therapy ? <p className="text-lg font-semibold">{therapy.name}</p> : null}
-            {rx ? <p className="text-sm text-white/95">Use only as directed by a registered medical practitioner.</p> : null}
+            {label.cautions.map((c) => (
+              <p key={c} className="text-sm text-white/95">
+                {c}
+              </p>
+            ))}
           </div>
         </section>
 

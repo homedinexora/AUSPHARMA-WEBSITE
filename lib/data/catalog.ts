@@ -20,7 +20,7 @@ export interface CatalogItem {
   packSize: string | null;
   dosageForm: string | null;
   therapy: string | null;
-  prescription: boolean;
+  schedule: "H" | "H1" | "X" | "G" | "OTC" | null;
   packImage: string | null;
   /** Published batches, newest first (for the home verify card). */
   batches: { batchNo: string; expiryDate: string | null }[];
@@ -62,7 +62,7 @@ export async function listCatalog(): Promise<CatalogItem[]> {
     packSize: r.packSize,
     dosageForm: r.dosageForm,
     therapy: r.therapy,
-    prescription: r.schedule !== "OTC",
+    schedule: r.schedule,
     packImage: r.packImage?.startsWith("/") ? r.packImage : null,
     batches: bs.filter((b) => b.productId === r.itemId).map((b) => ({ batchNo: b.batchNo, expiryDate: b.expiryDate })),
   }));

@@ -41,8 +41,9 @@ export default async function TherapyPage({ params }: PageProps<"/therapy/[slug]
           </div>
           <ProductGrid items={items} />
           <p className="rounded-md border border-brand-600 bg-brand-100 px-5 py-4 text-sm text-ink">
-            <strong>Use medicines responsibly.</strong> Products marked Rx require a valid prescription. Always follow the
-            advice of your registered medical practitioner or pharmacist.
+            <strong>Use medicines responsibly.</strong> Products marked Rx are sold only on the prescription of a
+            registered medical practitioner. Products marked Sch. G (Schedule G) should be taken only under medical
+            supervision. Always follow the advice of your registered medical practitioner or pharmacist.
           </p>
         </div>
       </section>
