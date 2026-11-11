@@ -110,6 +110,16 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
     packImageBlob: "/packs/8906219880100.webp",
     storage: "Store protected from light & moisture, at a temperature not exceeding 30°C.",
   },
+  // Windlas artwork (outer carton, unit carton, foil) received 2026-11-11; barcode + QR decoded. Schedule left unset:
+  // the artwork carries both the Schedule G box and the Rx caution, pending regulatory confirmation.
+  AUS0096: {
+    gtin: "8906219880056",
+    composition: "Each film coated tablet contains: Vildagliptin IP 50 mg; Metformin Hydrochloride IP 500 mg. Colours: Ferric Oxide Red USP-NF, Ferric Oxide Yellow USP-NF & Titanium Dioxide IP", // from the approved carton
+    manufacturerId: "MFR-WINDLAS-P2",
+    manufacturingLicenceNo: "34/UA/2013",
+    packImageBlob: "/packs/8906219880056.webp",
+    storage: "Store protected from light & moisture, at a temperature not exceeding 25°C.",
+  },
   AUS0102: { manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "H", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." }, // from strip foil (no GTIN on foil)
 };
 
