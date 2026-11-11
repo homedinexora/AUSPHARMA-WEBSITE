@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AqurisLogo } from "@/components/brand/AqurisLogo";
 import type { CatalogItem } from "@/lib/data/catalog";
+import { scheduleLabel } from "@/lib/scan-view";
 
 /** Catalogue card: identity only (no uses/claims), per pharma-content-compliance. */
 export function ProductCard({ p }: { p: CatalogItem }) {
@@ -26,7 +27,7 @@ export function ProductCard({ p }: { p: CatalogItem }) {
       </div>
       <div className="mt-3 flex items-center gap-2 text-xs font-semibold text-ink-soft">
         {p.packSize ? <span>{p.packSize}</span> : null}
-        <span className="rounded-full border border-brand-600 px-2 py-0.5 text-brand-700">{p.prescription ? "Rx" : "OTC"}</span>
+        <span className="rounded-full border border-brand-600 px-2 py-0.5 text-brand-700">{scheduleLabel(p.schedule).badge}</span>
         {p.division === "aquris" ? <AqurisLogo className="ml-auto h-3.5 w-auto text-ink" /> : null}
       </div>
       <h3 className="mt-1 text-base font-semibold text-ink">{p.brandName}</h3>

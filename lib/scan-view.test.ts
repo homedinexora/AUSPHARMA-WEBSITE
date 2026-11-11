@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { ScanBatch, ScanPil, ScanProduct } from "./data/catalog";
-import { formatInr, isPrescription, resolveScanView } from "./scan-view";
+import { formatInr, isPrescription, resolveScanView, scheduleLabel } from "./scan-view";
 
 const pil = (id: number, current: boolean): ScanPil => ({
   id,
@@ -118,5 +118,53 @@ describe("isPrescription", () => {
     expect(isPrescription("G")).toBe(true);
     expect(isPrescription(null)).toBe(true);
     expect(isPrescription("OTC")).toBe(false);
+  });
+});
+
+// Drugs and Cosmetics Rules 1945, Rule 97(1) as substituted by the Fifth Amendment Rules 2018 (in force 1 Nov 2018).
+describe("scheduleLabel", () => {
+  it("Schedule G: 'prescription drug' caution box, medical supervision, no Rx symbol (clause a)", () => {
+    expect(scheduleLabel("G")).toEqual({
+      symbol: null,
+      badge: "Sch. G",
+      heading: "Schedule G prescription drug – caution",
+      cautions: ["It is dangerous to take this preparation except under medical supervision."],
+    });
+  });
+  it("Schedule H: Rx symbol, not to be sold without prescription (clause b)", () => {
+    expect(scheduleLabel("H")).toEqual({
+      symbol: "Rx",
+      badge: "Rx",
+      heading: "Schedule H prescription drug – caution",
+      cautions: ["Not to be sold by retail without the prescription of a Registered Medical Practitioner."],
+    });
+  });
+  it("Schedule H1: Rx symbol and both cautions (clause e)", () => {
+    const l = scheduleLabel("H1");
+    expect(l.symbol).toBe("Rx");
+    expect(l.heading).toBe("Schedule H1 prescription drug – caution");
+    expect(l.cautions).toEqual([
+      "It is dangerous to take this preparation except in accordance with the medical advice.",
+      "Not to be sold by retail without the prescription of a Registered Medical Practitioner.",
+    ]);
+  });
+  it("Schedule X: XRx symbol and warning (clause d)", () => {
+    expect(scheduleLabel("X")).toEqual({
+      symbol: "XRx",
+      badge: "XRx",
+      heading: "Schedule X prescription drug – warning",
+      cautions: ["To be sold by retail on the prescription of a Registered Medical Practitioner only."],
+    });
+  });
+  it("OTC: no caution box", () => {
+    expect(scheduleLabel("OTC")).toEqual({ symbol: null, badge: "OTC", heading: "Over the counter", cautions: [] });
+  });
+  it("unknown schedule: treated as prescription (safe default) without quoting a schedule it may not have", () => {
+    expect(scheduleLabel(null)).toEqual({
+      symbol: "Rx",
+      badge: "Rx",
+      heading: "Prescription medicine",
+      cautions: ["Use only as directed by a registered medical practitioner."],
+    });
   });
 });
