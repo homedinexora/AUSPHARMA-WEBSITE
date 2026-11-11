@@ -1,5 +1,6 @@
 """Build 3D carton pack shots from flat CorelDRAW dielines (front + right side + top flap)."""
-# Usage: python3 scripts/make-packshots.py <dir with carton PDFs> <out dir>. Edit JOBS for new cartons.
+# Usage: python3 scripts/make-packshots.py <dir with carton PDFs> <out dir> [<slug> <pdf> [page]]
+#   With slug + pdf, builds just that carton; otherwise builds every entry in JOBS.
 import subprocess
 import sys
 import numpy as np
@@ -129,6 +130,9 @@ def build(slug, pdf, page):
     front.convert("RGB").save(f"{OUTDIR}/{slug}-front.webp", quality=88, method=6)
     print(slug, "front", front.size, "depth", depth, "flap_h", flap_h, "->", out.size)
 
+
+if len(sys.argv) > 4:
+    JOBS = [(sys.argv[3], sys.argv[4], int(sys.argv[5]) if len(sys.argv) > 5 else 1)]
 
 for job in JOBS:
     build(*job)

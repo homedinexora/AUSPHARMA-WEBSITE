@@ -95,6 +95,17 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
     packImageBlob: "/packs/8906219880223.webp",
     storage: "Store protected from light & moisture, at a temperature not exceeding 25°C.",
   },
+  // Outer carton + digital insert received 2026-11-11 (barcode + QR decoded). Carton prints "SCHEDULE G" and the Rx caution;
+  // the ERP says metformin SR but the approved carton/insert say a plain film coated tablet.
+  AUS0097: {
+    gtin: "8906219880100",
+    composition: "Each film coated tablet contains: Metformin Hydrochloride IP 500 mg; Sitagliptin Phosphate Monohydrate IP eq. to Sitagliptin 50 mg. Colours: Ferric Oxide USPNF Red, Black Oxide of Iron & Titanium Dioxide IP", // from the approved carton
+    manufacturerId: "MFR-PURECURE",
+    manufacturingLicenceNo: "31/UA/2013",
+    schedule: "G",
+    packImageBlob: "/packs/8906219880100.webp",
+    storage: "Store protected from light & moisture, at a temperature not exceeding 30°C.",
+  },
   AUS0102: { manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "H", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." }, // from strip foil (no GTIN on foil)
 };
 
@@ -183,6 +194,7 @@ async function importInserts() {
     { itemId: "ACE0943", pdf: "docs/samples/inserts/ACEELO_insert.pdf" },
     { itemId: "ACE0949", pdf: "docs/samples/inserts/ACEELO-PS_insert.pdf" },
     { itemId: "AQU0447", pdf: "docs/samples/inserts/AQURIS-AMOXICLA_insert.pdf" },
+    { itemId: "AUS0097", pdf: "docs/samples/inserts/AUSITA-M_insert.pdf" },
   ];
   for (const ins of inserts) {
     const text = execFileSync("pdftotext", [ins.pdf, "-"], { encoding: "utf8" });
