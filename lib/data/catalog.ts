@@ -2,7 +2,7 @@ import "server-only";
 import { and, asc, desc, eq, inArray, isNotNull } from "drizzle-orm";
 import { cacheLife, cacheTag } from "next/cache";
 import { getDb, schema } from "@/db";
-import type { PilSection } from "@/db/schema";
+import type { DrugSchedule, PilSection } from "@/db/schema";
 import type { PatientGuide } from "@/lib/patient-guide";
 
 const { products, manufacturers, batches, pilVersions, patientGuides } = schema;
@@ -20,7 +20,7 @@ export interface CatalogItem {
   packSize: string | null;
   dosageForm: string | null;
   therapy: string | null;
-  schedule: "H" | "H1" | "X" | "G" | "OTC" | null;
+  schedule: DrugSchedule | null;
   packImage: string | null;
   /** Published batches, newest first (for the home verify card). */
   batches: { batchNo: string; expiryDate: string | null }[];
@@ -99,7 +99,7 @@ export interface ScanProduct {
   dosageForm: string | null;
   packSize: string | null;
   packType: string | null;
-  schedule: "H" | "H1" | "X" | "G" | "OTC" | null;
+  schedule: DrugSchedule | null;
   therapy: string | null;
   manufacturingLicenceNo: string | null;
   marketedBy: string;

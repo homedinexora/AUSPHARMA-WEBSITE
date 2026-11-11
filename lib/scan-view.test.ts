@@ -168,3 +168,24 @@ describe("scheduleLabel", () => {
     });
   });
 });
+
+// Products not listed in Schedule H but prescription-only under their marketing permission (e.g. newer molecules),
+// labelled with the prescription caution alone or alongside a Schedule G box (as on Mankind's DYNAGLIPT-M).
+describe("scheduleLabel: prescription caution without a Schedule H listing", () => {
+  const RX = "Not to be sold by retail without the prescription of a Registered Medical Practitioner.";
+  it("RX: prescription caution only, no Rx symbol or schedule heading (as printed on the pack)", () => {
+    expect(scheduleLabel("RX")).toEqual({ symbol: null, badge: "Rx", heading: "Prescription only – caution", cautions: [RX] });
+  });
+  it("G_RX: Schedule G box plus the prescription caution", () => {
+    expect(scheduleLabel("G_RX")).toEqual({
+      symbol: null,
+      badge: "Rx",
+      heading: "Schedule G prescription drug – caution",
+      cautions: ["It is dangerous to take this preparation except under medical supervision.", RX],
+    });
+  });
+  it("both stay prescription products (noindex, HCP gate)", () => {
+    expect(isPrescription("RX")).toBe(true);
+    expect(isPrescription("G_RX")).toBe(true);
+  });
+});

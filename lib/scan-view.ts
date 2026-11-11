@@ -92,6 +92,18 @@ export function scheduleLabel(schedule: ScanProduct["schedule"]): ScheduleLabel 
         heading: "Schedule X prescription drug – warning",
         cautions: ["To be sold by retail on the prescription of a Registered Medical Practitioner only."],
       };
+    case "RX":
+      // Prescription-only under its marketing permission, not listed in Schedule H: the pack carries the
+      // prescription caution only (no Rx symbol, no schedule heading), so the page does the same.
+      return { symbol: null, badge: "Rx", heading: "Prescription only – caution", cautions: [NOT_WITHOUT_RX] };
+    case "G_RX":
+      // Schedule G box plus the prescription caution, e.g. a gliptin + metformin combination.
+      return {
+        symbol: null,
+        badge: "Rx",
+        heading: "Schedule G prescription drug – caution",
+        cautions: ["It is dangerous to take this preparation except under medical supervision.", NOT_WITHOUT_RX],
+      };
     case "OTC":
       return { symbol: null, badge: "OTC", heading: "Over the counter", cautions: [] };
     default:
