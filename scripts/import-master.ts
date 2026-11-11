@@ -72,7 +72,7 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
     gtin: "8906219880254", manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "51/UA/SC/P-2013", schedule: "H", packImageBlob: "/packs/8906219880254.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
   AUS0090: {
     composition: "Each film coated tablet contains: Cilnidipine IP 10 mg. Colour: Titanium Dioxide IP", // from the approved mono carton (Nov 2026)
-    gtin: "8906219880070", manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880070.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
+    gtin: "8906219880070", manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "RX", packImageBlob: "/packs/8906219880070.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
   AQU0447: {
     composition: "Each film coated tablet contains: Amoxycillin Trihydrate IP eq. to Amoxycillin 500 mg; Potassium Clavulanate Diluted IP eq. to Clavulanic Acid 125 mg. Colour: Titanium Dioxide IP", // from the approved insert
     gtin: "8906219880186", manufacturerId: "MFR-MALIK", manufacturingLicenceNo: "48/UA/SC/P-2013", schedule: "H", packImageBlob: "/packs/8906219880186.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 25°C." },
@@ -99,14 +99,15 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
     packImageBlob: "/packs/8906219880223.webp",
     storage: "Store protected from light & moisture, at a temperature not exceeding 25°C.",
   },
-  // Outer carton + digital insert received 2026-11-11 (barcode + QR decoded). Carton prints "SCHEDULE G" and the Rx caution;
+  // Outer carton + digital insert received 2026-11-11 (barcode + QR decoded). Carton prints the Schedule G box and the
+  // prescription caution (G_RX, as on Mankind's DYNAGLIPT-M);
   // the ERP says metformin SR but the approved carton/insert say a plain film coated tablet.
   AUS0097: {
     gtin: "8906219880100",
     composition: "Each film coated tablet contains: Metformin Hydrochloride IP 500 mg; Sitagliptin Phosphate Monohydrate IP eq. to Sitagliptin 50 mg. Colours: Ferric Oxide USPNF Red, Black Oxide of Iron & Titanium Dioxide IP", // from the approved carton
     manufacturerId: "MFR-PURECURE",
     manufacturingLicenceNo: "31/UA/2013",
-    schedule: "G",
+    schedule: "G_RX",
     packImageBlob: "/packs/8906219880100.webp",
     storage: "Store protected from light & moisture, at a temperature not exceeding 30°C.",
   },

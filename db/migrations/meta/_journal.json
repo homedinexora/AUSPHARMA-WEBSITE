@@ -29,6 +29,13 @@
       "when": 1793793456522,
       "tag": "0003_division_default",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1794427304119,
+      "tag": "0004_schedule_rx_labels",
+      "breakpoints": true
     }
   ]
 }

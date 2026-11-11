@@ -25,8 +25,8 @@ export default function DisclaimerPage() {
       <section>
         <h2>2. Prescription medicines</h2>
         <p>
-          Medicines marked Rx (Schedule H, H1 or X) may be sold only on the prescription of a registered medical
-          practitioner and must be used only as directed by one. Medicines marked Sch. G (Schedule G) carry the
+          Medicines marked Rx may be sold only on the prescription of a registered medical practitioner and must be
+          used only as directed by one. Medicines marked Sch. G (Schedule G) carry the
           caution that it is dangerous to take them except under medical supervision. Each product page shows the
           cautionary wording printed on the pack. Information about these medicines is provided to people who already
           have the medicine (for example by scanning the pack) and to healthcare professionals; it is not an

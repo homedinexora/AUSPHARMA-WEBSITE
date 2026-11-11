@@ -19,6 +19,7 @@ import { getStaff } from "@/lib/admin/auth";
 import { InsertSectionList } from "@/components/scan/InsertSectionList";
 import { getDb, schema } from "@/db";
 import { hasRole } from "@/lib/admin/roles";
+import { SCHEDULE_OPTIONS } from "@/lib/schedules";
 
 const { products, manufacturers, batches, pilVersions, patientGuides } = schema;
 
@@ -104,12 +105,12 @@ async function Content({ params, searchParams }: PageProps<"/admin/products/[ite
                 <Field label="GTIN-13" hint={p.status === "published" ? "Locked while published (printed in the QR)." : "13 digits from the pack barcode."}>
                   <input name="gtin" defaultValue={p.gtin ?? ""} inputMode="numeric" pattern="\d{13}" readOnly={p.status === "published"} className={`${input} font-mono`} />
                 </Field>
-                <Field label="Schedule">
+                <Field label="Schedule / label caution" hint="Choose what the approved pack prints; the QR page repeats it.">
                   <select name="schedule" defaultValue={p.schedule ?? ""} className={input}>
                     <option value="">Not set (treated as prescription)</option>
-                    {["H", "H1", "X", "G", "OTC"].map((s) => (
-                      <option key={s} value={s}>
-                        {s === "OTC" ? "OTC (non-scheduled)" : `Schedule ${s}`}
+                    {SCHEDULE_OPTIONS.map((o) => (
+                      <option key={o.value} value={o.value}>
+                        {o.label}
                       </option>
                     ))}
                   </select>

@@ -9,6 +9,7 @@ import { requireStaff, type Staff } from "@/lib/admin/auth";
 import { CATALOG_TAG, productTag } from "@/lib/data/catalog";
 import { isValidGtin13, normalizeBatch } from "@/lib/gtin";
 import { insertVersionName } from "@/lib/admin/insert-version";
+import { isDrugSchedule } from "@/lib/schedules";
 import { parseInsert } from "@/lib/insert-parser";
 import { extractPdfText } from "@/lib/pdf-text";
 
@@ -74,7 +75,7 @@ export async function updateProduct(itemId: string, form: FormData) {
     mrpPaise = Math.round(Number(mrpRaw) * 100);
   }
   const schedule = str(form, "schedule");
-  if (schedule && !["H", "H1", "X", "G", "OTC"].includes(schedule)) back(itemId, { error: "Unknown schedule" });
+  if (schedule && !isDrugSchedule(schedule)) back(itemId, { error: "Unknown schedule" });
 
   const division = str(form, "division");
   if (division && division !== "aquris") back(itemId, { error: "Unknown division" });
