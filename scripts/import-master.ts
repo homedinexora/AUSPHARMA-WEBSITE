@@ -142,7 +142,16 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
     packImageBlob: "/packs/8906219880056.webp",
     storage: "Store protected from light & moisture, at a temperature not exceeding 25°C.",
   },
-  AUS0102: { manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "H", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." }, // from strip foil (no GTIN on foil)
+  // Foil, mono and outer carton received 2026-11-12: barcode + QR on the cartons decoded; Rx + Schedule H box.
+  AUS0102: {
+    gtin: "8906219880117",
+    composition: "Each hard gelatin capsule contains: Rosuvastatin Calcium IP eq. to Rosuvastatin 10 mg (as film coated tablet; colour: Titanium Dioxide IP); Aspirin IP 75 mg (as gastro-resistant tablet; colours: Red Oxide of Iron & Titanium Dioxide IP); Clopidogrel Bisulphate IP eq. to Clopidogrel 75 mg (as film coated tablet; colours: Red Oxide of Iron & Titanium Dioxide IP). Approved colours used in capsule shells.", // from the approved cartons
+    manufacturerId: "MFR-PURECURE",
+    manufacturingLicenceNo: "31/UA/2013",
+    schedule: "H",
+    packImageBlob: "/packs/8906219880117.webp",
+    storage: "Store protected from light & moisture, at a temperature not exceeding 30°C.",
+  },
 };
 
 const THERAPY: Record<string, string> = {
