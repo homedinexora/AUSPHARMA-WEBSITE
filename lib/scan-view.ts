@@ -78,6 +78,17 @@ export function scheduleLabel(schedule: ScanProduct["schedule"]): ScheduleLabel 
       };
     case "H":
       return { symbol: "Rx", badge: "Rx", heading: "Schedule H prescription drug – caution", cautions: [NOT_WITHOUT_RX] };
+    case "H_G":
+      // A Schedule H drug combined with a Schedule G one (e.g. voglibose + metformin): both boxes, as printed.
+      return {
+        symbol: "Rx",
+        badge: "Rx",
+        heading: "Schedule H prescription drug – caution",
+        cautions: [
+          NOT_WITHOUT_RX,
+          "Schedule G prescription drug – caution: It is dangerous to take this preparation except under medical supervision.",
+        ],
+      };
     case "H1":
       return {
         symbol: "Rx",

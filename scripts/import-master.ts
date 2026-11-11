@@ -55,13 +55,13 @@ const SITES = [
 
 /** Per-SKU facts read from approved carton artwork (QR/barcode, licence, cautions) and inserts. */
 // Windlas label classes as printed (set Nov 2026): Austeneptin M / Ausvilda M = G_RX, Ausdapa 10 / Ausvilda 50 = RX,
-// Ausglimer MV1 / MV2 = H (they print the Schedule H box).
+// Ausglimer MV1 / MV2 = H_G (Rx + Schedule H box + Schedule G box, as on GLUCOBIT-GM 2).
 const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
   AUS0093: {
     composition: "Each film coated tablet contains: Dapagliflozin Propanediol Monohydrate IP eq. to Dapagliflozin 10 mg. Colour: Ferric Oxide Yellow USP-NF & Titanium Dioxide IP", // from the approved carton
     gtin: "8906219880018", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "RX", packImageBlob: "/packs/8906219880018.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 25°C." },
-  AUS0094: { gtin: "8906219880025", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880025.webp" },
-  AUS0095: { gtin: "8906219880032", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880032.webp" },
+  AUS0094: { gtin: "8906219880025", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "H_G", packImageBlob: "/packs/8906219880025.webp" },
+  AUS0095: { gtin: "8906219880032", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "H_G", packImageBlob: "/packs/8906219880032.webp" },
   AUS0092: {
     gtin: "8906219880049", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "G_RX", packImageBlob: "/packs/8906219880049.webp",
     composition: "Each uncoated bilayered tablet contains: Teneligliptin Hydrobromide Hydrate IP equivalent to Teneligliptin 20 mg; Metformin Hydrochloride IP 500 mg (as prolonged-release form). Colour: Ferric Oxide Yellow USP-NF (in Teneligliptin layer)", // from the approved carton
