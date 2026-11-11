@@ -21,8 +21,9 @@ img = Image.open(src).convert("RGB"); a = np.asarray(img).astype(int)
 r, g, b = a[..., 0], a[..., 1], a[..., 2]
 printed = ((r > 150) & (r < 225) & (g > 110) & (g < 185) & (b > 60) & (b < 150) & (r - b > 45)) \
     | ((b > 150) & (r < 90) & (g > 90)) | ((b > 70) & (r < 70) & (g < 90)) \
-    | ((r > 170) & (g < 90) & (b < 110)) | ((r > 200) & (g > 110) & (g < 200) & (b > 150))
-# kraft (incl. the lighter Bone Plus tan) | brand blue | navy | therapy red | pink "+a" tint
+    | ((r > 170) & (g < 90) & (b < 110)) | ((r > 200) & (g > 110) & (g < 200) & (b > 150)) \
+    | ((g > r + 40) & (g > b + 40))
+# kraft (incl. the lighter Bone Plus tan) | brand blue | navy | therapy red | pink "+a" tint | anti-infectives green
 Lp, Wp, Hp = (round(v * PX) for v in (L, W, H))
 
 # main column: the x-range of width L with the most printed pixels
