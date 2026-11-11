@@ -2,7 +2,8 @@
  * Therapy areas and their colours (Rx therapy colour guide, docs/design/therapy-colour-guide.docx).
  * `panel` is the pack colour; `web` is the text-safe variant for white text (AA ≥ 4.5:1);
  * `tint` is the light "+a" tint (use ink text on it).
- * TODO(brand): five therapies are "Proposed" in the guide; confirm before launch.
+ * TODO(brand): five therapies are "Proposed" in the guide; confirm before launch. Bone health is not in the guide:
+ * its panel is the Pantone 281 C navy printed on the Bone Plus packs; its tint is proposed.
  */
 export type TherapySlug =
   | "cardiology"
@@ -11,7 +12,8 @@ export type TherapySlug =
   | "pain-fever-inflammation"
   | "respiratory-allergy"
   | "gastro"
-  | "cns-neuro";
+  | "cns-neuro"
+  | "bone-health";
 
 export interface Therapy {
   slug: TherapySlug;
@@ -30,6 +32,7 @@ export const therapies: readonly Therapy[] = [
   { slug: "respiratory-allergy", name: "Respiratory & anti-allergy", panel: "#007F75", web: "#007F75", tint: "#7CE0D3", status: "proposed" },
   { slug: "gastro", name: "Gastro", panel: "#D0006F", web: "#D0006F", tint: "#F1A7DC", status: "proposed" },
   { slug: "cns-neuro", name: "CNS / Neuro", panel: "#6A2C91", web: "#6A2C91", tint: "#C5B4E3", status: "proposed" },
+  { slug: "bone-health", name: "Bone health", panel: "#00205B", web: "#00205B", tint: "#C3D7EE", status: "proposed" },
 ];
 
 /** Therapy areas that have at least one of the given (published) products, in menu order. Empty areas are hidden. */

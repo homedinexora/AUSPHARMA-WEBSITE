@@ -15,6 +15,13 @@ describe("activeTherapies", () => {
     expect(activeTherapies([{ therapy: null }, { therapy: "dermatology" }])).toEqual([]);
   });
 
+  it("lists Bone health last, after the colour-guide therapies", () => {
+    expect(activeTherapies([{ therapy: "bone-health" }, { therapy: "cardiology" }]).map((t) => t.name)).toEqual([
+      "Cardiology",
+      "Bone health",
+    ]);
+  });
+
   it("can return every area", () => {
     expect(activeTherapies(therapies.map((t) => ({ therapy: t.slug })))).toEqual(therapies);
   });

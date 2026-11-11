@@ -192,7 +192,8 @@ const THERAPY: Record<string, string> = {
   "INFECTIONS & INFESTATION": "anti-infectives",
   "ANTI ALLERGIC DRUGS": "respiratory-allergy",
   "GASTRO ENTROLOGY": "gastro",
-  // BONE DISORDERS, SKIN DISORDERS, GENITO URINARY: no colour-guide therapy yet (left null).
+  "BONE DISORDERS": "bone-health", // Bone Plus range (added Nov 2026; navy from the packs)
+  // SKIN DISORDERS, GENITO URINARY: no colour-guide therapy yet (left null).
 };
 
 /**
