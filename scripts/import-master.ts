@@ -76,7 +76,9 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
   AQU0447: {
     composition: "Each film coated tablet contains: Amoxycillin Trihydrate IP eq. to Amoxycillin 500 mg; Potassium Clavulanate Diluted IP eq. to Clavulanic Acid 125 mg. Colour: Titanium Dioxide IP", // from the approved insert
     gtin: "8906219880186", manufacturerId: "MFR-MALIK", manufacturingLicenceNo: "48/UA/SC/P-2013", schedule: "H", packImageBlob: "/packs/8906219880186.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 25°C." },
-  AUS0099: { gtin: "8906219880148", manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "G", packImageBlob: "/packs/8906219880148.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
+  AUS0099: {
+    composition: "Each uncoated sustained release tablet contains: Metformin Hydrochloride IP 1000 mg", // from the approved mono carton (Nov 2026)
+    gtin: "8906219880148", manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "G", packImageBlob: "/packs/8906219880148.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
   // Bone Plus 500 = CALVITD3 renamed on pack (confirmed by AUSPHARMA). Schedule not printed: left unset.
   AQU0486: {
     gtin: "8906219880193",
