@@ -54,12 +54,24 @@ const SITES = [
 ];
 
 /** Per-SKU facts read from approved carton artwork (QR/barcode, licence, cautions) and inserts. */
+// Windlas label classes as printed (set Nov 2026): Austeneptin M / Ausvilda M = G_RX, Ausdapa 10 / Ausvilda 50 = RX,
+// Ausglimer MV1 / MV2 = H_G (Rx + Schedule H box + Schedule G box, as on GLUCOBIT-GM 2).
 const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
-  AUS0093: { gtin: "8906219880018", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880018.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 25°C." },
-  AUS0094: { gtin: "8906219880025", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880025.webp" },
-  AUS0095: { gtin: "8906219880032", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880032.webp" },
-  AUS0092: { gtin: "8906219880049", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880049.webp" },
-  AUS0098: { gtin: "8906219880063", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880063.webp" },
+  AUS0093: {
+    composition: "Each film coated tablet contains: Dapagliflozin Propanediol Monohydrate IP eq. to Dapagliflozin 10 mg. Colour: Ferric Oxide Yellow USP-NF & Titanium Dioxide IP", // from the approved carton
+    gtin: "8906219880018", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "RX", packImageBlob: "/packs/8906219880018.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 25°C." },
+  AUS0094: { gtin: "8906219880025", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "H_G", packImageBlob: "/packs/8906219880025.webp" },
+  AUS0095: { gtin: "8906219880032", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "H_G", packImageBlob: "/packs/8906219880032.webp" },
+  AUS0092: {
+    gtin: "8906219880049", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "G_RX", packImageBlob: "/packs/8906219880049.webp",
+    composition: "Each uncoated bilayered tablet contains: Teneligliptin Hydrobromide Hydrate IP equivalent to Teneligliptin 20 mg; Metformin Hydrochloride IP 500 mg (as prolonged-release form). Colour: Ferric Oxide Yellow USP-NF (in Teneligliptin layer)", // from the approved carton
+    storage: "Store protected from light & moisture, at a temperature not exceeding 25°C.",
+  },
+  AUS0098: {
+    gtin: "8906219880063", manufacturerId: "MFR-WINDLAS-P2", manufacturingLicenceNo: "34/UA/2013", schedule: "RX", packImageBlob: "/packs/8906219880063.webp",
+    composition: "Each uncoated tablet contains: Vildagliptin IP 50 mg", // from the approved carton
+    storage: "Store protected from light & moisture, at a temperature not exceeding 25°C.",
+  },
   // Cartons received 2026-11-04 (barcode + QR decoded; licence/manufacturer/storage read from panels).
   // ACEELO and ACEELO PS are NSAIDs (confirmed by AUSPHARMA); ACEELO's ERP category is MUSCLE RELAXANT.
   ACE0943: {
@@ -111,12 +123,13 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
     packImageBlob: "/packs/8906219880100.webp",
     storage: "Store protected from light & moisture, at a temperature not exceeding 30°C.",
   },
-  // Windlas artwork (outer carton, unit carton, foil) received 2026-11-11; barcode + QR decoded. Schedule left unset:
-  // the artwork carries both the Schedule G box and the Rx caution, pending regulatory confirmation.
+  // Windlas artwork (outer carton, unit carton, foil) received 2026-11-11; barcode + QR decoded. Label class as printed:
+  // Schedule G box + prescription caution (G_RX).
   AUS0096: {
     gtin: "8906219880056",
     composition: "Each film coated tablet contains: Vildagliptin IP 50 mg; Metformin Hydrochloride IP 500 mg. Colours: Ferric Oxide Red USP-NF, Ferric Oxide Yellow USP-NF & Titanium Dioxide IP", // from the approved carton
     manufacturerId: "MFR-WINDLAS-P2",
+    schedule: "G_RX",
     manufacturingLicenceNo: "34/UA/2013",
     packImageBlob: "/packs/8906219880056.webp",
     storage: "Store protected from light & moisture, at a temperature not exceeding 25°C.",

@@ -189,3 +189,19 @@ describe("scheduleLabel: prescription caution without a Schedule H listing", () 
     expect(isPrescription("G_RX")).toBe(true);
   });
 });
+
+// Combinations with a Schedule H drug and metformin (Schedule G) print both boxes, e.g. GLUCOBIT-GM 2 and AUSGLIMER MV1/MV2.
+describe("scheduleLabel: Schedule H + Schedule G", () => {
+  it("H_G: Rx symbol, Schedule H caution and the Schedule G caution", () => {
+    expect(scheduleLabel("H_G")).toEqual({
+      symbol: "Rx",
+      badge: "Rx",
+      heading: "Schedule H prescription drug – caution",
+      cautions: [
+        "Not to be sold by retail without the prescription of a Registered Medical Practitioner.",
+        "Schedule G prescription drug – caution: It is dangerous to take this preparation except under medical supervision.",
+      ],
+    });
+    expect(isPrescription("H_G")).toBe(true);
+  });
+});

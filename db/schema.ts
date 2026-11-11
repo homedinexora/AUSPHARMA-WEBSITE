@@ -26,8 +26,9 @@ export const pilStatus = pgEnum("pil_status", ["draft", "published", "superseded
  * Label class of a product, as printed on its pack (Drugs and Cosmetics Rules 1945, Rule 97).
  * RX: prescription-only under its marketing permission but not listed in Schedule H (prescription caution only).
  * G_RX: Schedule G box plus that prescription caution (e.g. a gliptin + metformin combination).
+ * H_G: Rx + Schedule H box + Schedule G box (a Schedule H drug combined with metformin, e.g. voglibose + metformin).
  */
-export const drugSchedule = pgEnum("drug_schedule", ["H", "H1", "X", "G", "OTC", "RX", "G_RX"]);
+export const drugSchedule = pgEnum("drug_schedule", ["H", "H1", "X", "G", "OTC", "RX", "G_RX", "H_G"]);
 export type DrugSchedule = (typeof drugSchedule.enumValues)[number];
 /** prescribing_information = insert "for the use of a Registered Medical Practitioner…" (shown behind an HCP declaration);
  *  patient_leaflet = written for patients (shown openly). */

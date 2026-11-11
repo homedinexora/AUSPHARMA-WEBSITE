@@ -1,0 +1,1 @@
+ALTER TYPE "public"."drug_schedule" ADD VALUE 'H_G';
