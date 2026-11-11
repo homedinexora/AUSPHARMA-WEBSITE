@@ -142,6 +142,17 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
     packImageBlob: "/packs/8906219880056.webp",
     storage: "Store protected from light & moisture, at a temperature not exceeding 25°C.",
   },
+  // AUSCILIN T: foil, mono and outer carton received 2026-11-12; barcode + QR decoded; Rx + Schedule H box.
+  // Cartons print "auscillin T"; the brand is AUSCILIN (pack shot shows the corrected spelling).
+  AUS0100: {
+    gtin: "8906219880087",
+    composition: "Each film coated tablet contains: Cilnidipine IP 10 mg; Telmisartan IP 40 mg. Colours: Red Oxide of Iron & Titanium Dioxide IP", // from the approved cartons
+    manufacturerId: "MFR-PURECURE",
+    manufacturingLicenceNo: "31/UA/2013",
+    schedule: "H",
+    packImageBlob: "/packs/8906219880087.webp",
+    storage: "Store protected from light & moisture, at a temperature not exceeding 30°C.",
+  },
   // AUSRASTIN GOLD 20: foil, mono and outer carton received 2026-11-12; barcode + QR decoded; Rx + Schedule H box.
   AUS0088: {
     gtin: "8906219880124",
