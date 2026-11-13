@@ -51,6 +51,16 @@ const SITES = [
     pinCode: "247667",
     licenceNumbers: "48/UA/SC/P-2013",
   },
+  {
+    // Akums' own loan licence (LL), made at the Pure & Cure SIDCUL plant; Bone Plus XT from Nov 2026.
+    id: "MFR-AKUMS-LL",
+    legalName: "Akums Drugs & Pharmaceuticals Ltd.",
+    address: "Plot No. 26A, 27-30, Sector-8A, I.I.E., SIDCUL, Ranipur",
+    city: "Haridwar",
+    state: "Uttarakhand",
+    pinCode: "249403",
+    licenceNumbers: "8/UA/LL/SC/P-2014",
+  },
 ];
 
 /** Per-SKU facts read from approved carton artwork (QR/barcode, licence, cautions) and inserts. */
@@ -111,11 +121,14 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
     packImageBlob: "/packs/8906219880193.webp",
     storage: "Store protected from light & moisture, at a temperature not exceeding 25°C.",
   },
+  // Revised foil, mono and outer carton (2026-11-13): made by Akums under loan licence 8/UA/LL/SC/P-2014.
   "AQU-NEW-BPXT": {
     gtin: "8906219880223",
     schedule: "RX", // Rx + prescription caution, as on Shelcal-XT (same composition); not Schedule H
-    manufacturerId: "MFR-PURECURE",
-    manufacturingLicenceNo: "51/UA/SC/P-2013",
+    composition:
+      "Each film coated tablet contains: Calcium Carbonate IP 1250 mg eq. to Elemental Calcium 500 mg; Vitamin D3 IP 2000 IU; Mecobalamin IP (Methylcobalamin) 1500 mcg; L-Methylfolate Calcium 1 mg; Pyridoxal-5-Phosphate 20 mg. Colours: Red Oxide of Iron & Titanium Dioxide IP", // from the revised cartons
+    manufacturerId: "MFR-AKUMS-LL",
+    manufacturingLicenceNo: "8/UA/LL/SC/P-2014",
     packImageBlob: "/packs/8906219880223.webp",
     storage: "Store protected from light & moisture, at a temperature not exceeding 25°C.",
   },
