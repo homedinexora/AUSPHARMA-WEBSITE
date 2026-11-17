@@ -198,7 +198,8 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
   AUS0101: {
     gtin: "8906219880131",
     brand: "AQURIS",
-    brandName: "AQURIS TELARTAN BETA TAB 10'S",
+    brandName: "+Aquris Telartan Beta", // name as instructed by AUSPHARMA (2026-11-17)
+    packSize: "15's", // AUSPHARMA: 15 per strip (current artworks still print 1 x 10)
     composition:
       "Each film coated bilayered tablet contains: Telmisartan IP 40 mg; Metoprolol Succinate IP 23.75 mg eq. to Metoprolol Tartrate 25 mg (as Extended Release Form). Colours: Red Oxide of Iron & Titanium Dioxide IP", // from the cartons
     manufacturerId: "MFR-PURECURE",
