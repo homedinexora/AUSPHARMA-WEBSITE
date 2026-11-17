@@ -193,6 +193,20 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
     packImageBlob: "/packs/8906219880094.webp",
     storage: "Store protected from light & moisture, at a temperature not exceeding 30°C.",
   },
+  // AUSTEL BETA in the ERP, printed as "+aquris Telartan Beta": foil, mono and outer carton received 2026-11-16;
+  // barcode + QR decoded; Rx + Schedule H box + telmisartan pregnancy warning.
+  AUS0101: {
+    gtin: "8906219880131",
+    brand: "AQURIS",
+    brandName: "AQURIS TELARTAN BETA TAB 10'S",
+    composition:
+      "Each film coated bilayered tablet contains: Telmisartan IP 40 mg; Metoprolol Succinate IP 23.75 mg eq. to Metoprolol Tartrate 25 mg (as Extended Release Form). Colours: Red Oxide of Iron & Titanium Dioxide IP", // from the cartons
+    manufacturerId: "MFR-PURECURE",
+    manufacturingLicenceNo: "31/UA/2013",
+    schedule: "H",
+    packImageBlob: "/packs/8906219880131.webp",
+    storage: "Store protected from light & moisture, at a temperature not exceeding 30°C.",
+  },
   // AUSRASTIN GOLD 20: foil, mono and outer carton received 2026-11-12; barcode + QR decoded; Rx + Schedule H box.
   AUS0088: {
     gtin: "8906219880124",
