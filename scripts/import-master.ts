@@ -55,7 +55,7 @@ const SITES = [
     // Akums' own loan licence (LL), made at the Pure & Cure SIDCUL plant; Bone Plus XT from Nov 2026.
     id: "MFR-AKUMS-LL",
     legalName: "Akums Drugs & Pharmaceuticals Ltd.",
-    address: "Plot No. 26A, 27-30, Sector-8A, I.I.E., SIDCUL, Ranipur",
+    address: "At: Plot No. 26A, 27-30, Sector-8A, I.I.E., SIDCUL, Ranipur", // "At:" as printed on the loan-licence cartons
     city: "Haridwar",
     state: "Uttarakhand",
     pinCode: "249403",
