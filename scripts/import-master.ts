@@ -124,7 +124,7 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
   // Revised foil, mono and outer carton (2026-11-13): made by Akums under loan licence 8/UA/LL/SC/P-2014.
   "AQU-NEW-BPXT": {
     gtin: "8906219880223",
-    schedule: "RX", // Rx + prescription caution, as on Shelcal-XT (same composition); not Schedule H
+    schedule: "OTC", // AUSPHARMA sells the Bone health range OTC (2026-11-17)
     composition:
       "Each film coated tablet contains: Calcium Carbonate IP 1250 mg eq. to Elemental Calcium 500 mg; Vitamin D3 IP 2000 IU; Mecobalamin IP (Methylcobalamin) 1500 mcg; L-Methylfolate Calcium 1 mg; Pyridoxal-5-Phosphate 20 mg. Colours: Red Oxide of Iron & Titanium Dioxide IP", // from the revised cartons
     manufacturerId: "MFR-AKUMS-LL",
@@ -135,7 +135,7 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
   // Bone Plus CT and HD: foil, mono and outer carton received 2026-11-11; barcode + QR decoded.
   "AQU-NEW-BPCT": {
     gtin: "8906219880216",
-    schedule: "RX", // Rx + prescription caution, as on Shelcal CT (same composition and blister layout)
+    schedule: "OTC", // AUSPHARMA sells the Bone health range OTC (2026-11-17)
     manufacturerId: "MFR-PURECURE",
     manufacturingLicenceNo: "51/UA/SC/P-2013",
     packImageBlob: "/packs/8906219880216.webp",
@@ -143,7 +143,7 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
   },
   "AQU-NEW-BPHD": {
     gtin: "8906219880209",
-    schedule: "RX", // Rx + prescription caution, as on Shelcal HD (same composition and blister layout)
+    schedule: "OTC", // AUSPHARMA sells the Bone health range OTC (2026-11-17)
     manufacturerId: "MFR-PURECURE",
     manufacturingLicenceNo: "51/UA/SC/P-2013",
     packImageBlob: "/packs/8906219880209.webp",
