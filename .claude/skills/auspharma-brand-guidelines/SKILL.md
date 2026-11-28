@@ -110,6 +110,8 @@ the brand teal for buttons, links or headings. Same therapy, same colour, everyw
 | Respiratory & anti-allergy | `#007F75` | same | `#7CE0D3` | Proposed |
 | Gastro | `#D0006F` | same | `#F1A7DC` | Proposed |
 | CNS / Neuro | `#6A2C91` | same | `#C5B4E3` | Proposed |
+| Dermatology | `#1D252D` (Pantone 433 C, charcoal) | same | `#E5BEAE` (Pantone 7520 C, skin beige) | Proposed |
+| Bone health | `#00205B` (Pantone 281 C, from the Bone Plus packs) | same | `#C3D7EE` | Website only, not in the colour guide |
 
 - Text on tints: always `ink` (all ≥ 7:1).
 - Hex values are screen conversions; **Pantone is the master** for print. Don't
@@ -120,6 +122,38 @@ the brand teal for buttons, links or headings. Same therapy, same colour, everyw
   Anti-Inflammatory", "Anti-Infectives & Antibiotics", "Gastrointestinal Medicines",
   "Respiratory & Allergy Medicines") don't map 1:1 to the colour guide (Diabetes and
   CNS have no nav item yet). `TODO(brand):` confirm the final category list.
+
+Print specification for packs: `docs/design/therapy-colour-guide-cyber-oak.docx` (ITC Cyber Oak
+board, 29 Oct 2026): mono cartons UV with double-hit white underlay, outer cartons conventional
+(no white, so panels print darker; tints are knocked out). Eight colours is the limit that stays
+distinct on brown board.
+
+### 4a. Pack artwork and mock-ups (rules from AUSPHARMA)
+
+- **Brand name a little smaller than the generic name.** The generic name is the largest text on the
+  front; the "+aquris™ Brand" line sits just below it at about 21:24 of the generic size (the
+  manufacturers' spec boxes use generic 24 pt, brand 21 pt). Apply this to every carton, foil and
+  mock-up we make or review. (AUSPHARMA, 28 Nov 2026)
+- Strength box shows the active ingredients only (no preservatives), with lowercase units ("40 mg + 25 mg").
+- Use "™ – Trademark under Registration", not ®, unless the registration is confirmed. Registration
+  status: `docs/design/trademark-status.md` (from the IP India word-mark report). "AQURIS" on its own is
+  not yet registered, so the division mark stays "+aquris™".
+- **Website mock-ups** (AUSPHARMA, 28 Nov 2026):
+  - Take the look from the pack shots already live on auspharma.in: kraft board, full-height therapy
+    panel on the right with the white WHO-GMP seal at the top and the "+a" in the tint colour at the
+    bottom corner (kept on the panel), Rx box, generic name, brand line, strength | pack box bottom left,
+    brand set vertically on the side and across the top flap.
+  - Take the wording from the product's previous artwork, and put ® / ™ where it has them
+    (e.g. "aquris OMZOLE®D", "aquris HYTREMOM®"); no mark where the artwork has none.
+  - Write "aquris" in lowercase before the product name. The word marks are registered as
+    "AQURIS OMZOLE" etc., and a change of case keeps the same mark, but the ® must sit on the full
+    registered mark, never straight after "aquris" (AQURIS alone is not yet registered).
+  - **Outer cartons never carry the colour patch** (AUSPHARMA, 28 Nov 2026): kraft only, black WHO-GMP
+    seal, "+a" in the full therapy colour on the board, as on the live ACEELO outer. Today: ACEELO,
+    ACEELO PS, ACEELO MR, ACEELO SP, Omzole D (`panel.outer` in the spec).
+  - **Mono cartons, tube cartons and syrup stickers keep the patch** (white seal and "+a" tint on it).
+    Today: Azithcin (mono), Hytremom (tube carton), Parasyp 250 (bottle sticker), plus the live monos.
+  - Generator: `scripts/make-mockup.py <spec.json> <outdir>`; specs in `scripts/mockup-specs/`.
 
 ## 5. Typography
 

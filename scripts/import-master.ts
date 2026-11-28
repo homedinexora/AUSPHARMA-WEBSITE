@@ -149,6 +149,24 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
     packImageBlob: "/packs/8906219880209.webp",
     storage: "Store protected from light & moisture, at a temperature not exceeding 25°C.",
   },
+  // GTINs issued by GS1 (pending approval) on 2026-11-28; packs to carry the barcode + QR from AUSPHARMA.
+  // Website mock-ups (scripts/make-mockup.py, specs in scripts/mockup-specs/) laid out from the previous artworks.
+  AQU0448: { gtin: "8906219880315", packImageBlob: "/packs/8906219880315.webp" },
+  AQU0483: { gtin: "8906219880308", packImageBlob: "/packs/8906219880308.webp" },
+  AQU0457: { gtin: "8906219880292", packImageBlob: "/packs/8906219880292.webp" },
+  AQU0424: { gtin: "8906219880285", packImageBlob: "/packs/8906219880285.webp" }, // pack shot from Malik mono carton R3 (150 x 15 x 90)
+  // Renamed SKUs (Nov 2026): same formula and manufacturer as ACEELO / ACEELO PS, which stay live for packs in the
+  // market. Temporary item IDs until the ERP assigns them; inserts copied from the parent products.
+  "ACE-NEW-MR": {
+    therapy: "pain-fever-inflammation",
+    composition: "Each film coated tablet contains: Aceclofenac IP 100 mg; Paracetamol IP 325 mg; Chlorzoxazone USP 250 mg. Colours: Sunset Yellow FCF & Titanium Dioxide IP",
+    gtin: "8906219880162", manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "H", packImageBlob: "/packs/8906219880162.webp",
+    storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
+  "ACE-NEW-SP": {
+    therapy: "pain-fever-inflammation",
+    composition: "Each film coated tablet contains: Aceclofenac IP 100 mg; Paracetamol IP 325 mg; Serratiopeptidase IP 15 mg (as enteric coated granules equivalent to enzyme activity 30,000 units). Colours: Sunset Yellow FCF & Titanium Dioxide IP",
+    gtin: "8906219880278", manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "51/UA/SC/P-2013", schedule: "H",
+    packImageBlob: "/packs/8906219880278.webp", storage: "Store protected from light & moisture, at a temperature not exceeding 30°C." },
   // Outer carton + digital insert received 2026-11-11 (barcode + QR decoded). Carton prints the Schedule G box and the
   // prescription caution (G_RX, as on Mankind's DYNAGLIPT-M);
   // the ERP says metformin SR but the approved carton/insert say a plain film coated tablet.
@@ -299,6 +317,28 @@ const EXTRA_ROWS: Row[] = [
     COMPOSITION:
       "Each film coated tablet contains: 1.25 g of Calcium Carbonate from an Organic Source (Oyster Shell) equivalent to Elemental Calcium 500 mg; Cholecalciferol IP (Vitamin D3) 500 IU (As Stabilized Form). Colour: Titanium Dioxide IP",
     PACKINGTYPE: "BLISTER",
+  },
+  {
+    ITEMID: "ACE-NEW-MR",
+    ITEMNAME: "ACEELO MR TAB 10'S",
+    BRAND: "ACEELO",
+    PACK: "10",
+    CLASSIFICATION: "C.N.S DRUGS",
+    CATEGORY: "MUSCLE RELAXANT",
+    PRODUCTFORM: "TABLET",
+    COMPOSITION: "Each film coated tablet contains: Aceclofenac IP 100 mg; Paracetamol IP 325 mg; Chlorzoxazone USP 250 mg. Colours: Sunset Yellow FCF & Titanium Dioxide IP",
+    PACKINGTYPE: "STRIP",
+  },
+  {
+    ITEMID: "ACE-NEW-SP",
+    ITEMNAME: "ACEELO SP TAB 10'S",
+    BRAND: "ACEELO",
+    PACK: "10",
+    CLASSIFICATION: "C.N.S DRUGS",
+    CATEGORY: "NSAID'S",
+    PRODUCTFORM: "TABLET",
+    COMPOSITION: "Each film coated tablet contains: Aceclofenac IP 100 mg; Paracetamol IP 325 mg; Serratiopeptidase IP 15 mg (as enteric coated granules equivalent to enzyme activity 30,000 units). Colours: Sunset Yellow FCF & Titanium Dioxide IP",
+    PACKINGTYPE: "STRIP",
   },
 ];
 

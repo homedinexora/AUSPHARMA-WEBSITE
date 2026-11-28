@@ -1,0 +1,30 @@
+{
+ "slug": "hytremom",
+ "kind": "carton",
+ "L": 132,
+ "W": 22,
+ "H": 33,
+ "rx": true,
+ "seal": true,
+ "generic": [
+  "Hydroquinone, Tretinoin & Mometasone Furoate Cream"
+ ],
+ "brand": [
+  [
+   "aquris HYTREMOM",
+   ""
+  ],
+  [
+   "®",
+   "sup"
+  ]
+ ],
+ "brand_sub": "SKIN CREAM",
+ "pack": "15 g",
+ "panel": {
+  "color": "#1D252D",
+  "tint": "#E5BEAE",
+  "frac": 0.27
+ },
+ "strength": "2% + 0.025% + 0.1% w/w"
+}

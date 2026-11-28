@@ -1,0 +1,53 @@
+{
+ "slug": "omzole-d",
+ "kind": "carton",
+ "L": 150,
+ "W": 90,
+ "H": 94,
+ "rx": true,
+ "seal": true,
+ "generic": [
+  "Omeprazole and",
+  "Domperidone Capsules IP"
+ ],
+ "brand": [
+  [
+   "aquris OMZOLE",
+   ""
+  ],
+  [
+   "®",
+   "sup"
+  ],
+  [
+   "D",
+   ""
+  ]
+ ],
+ "pack": "20 x 10 Capsules",
+ "panel": {
+  "color": "#D0006F",
+  "outer": true
+ },
+ "strength": "20 mg + 10 mg",
+ "side": {
+  "lines": [
+   "Each hard gelatin capsule contains:",
+   "Omeprazole IP                          20 mg",
+   "(as enteric coated granules)",
+   "Domperidone IP                        10 mg",
+   "Approved colours used in capsule shell",
+   "",
+   "Dosage: As directed by the Physician.",
+   "Storage: Store protected from light & moisture,",
+   "at a temperature not exceeding 30°C.",
+   "Capsule should be swallowed whole",
+   "and not to be opened, chewed or crushed."
+  ],
+  "box": [
+   "SCHEDULE H PRESCRIPTION DRUG - CAUTION",
+   "Not to be sold by retail without the prescription",
+   "of a Registered Medical Practitioner."
+  ]
+ }
+}
