@@ -143,8 +143,8 @@ distinct on brown board.
     panel on the right with the white WHO-GMP seal at the top and the "+a" in the tint colour at the
     bottom corner (kept on the panel), Rx box, generic name, brand line, strength | pack box bottom left,
     brand set vertically on the side and across the top flap.
-  - Take the wording from the product's previous artwork, and put ® / ™ where it has them
-    (e.g. "aquris Omzole®D", "aquris Hytremom®"); no mark where the artwork has none.
+  - Take the wording from the product's previous artwork. Put ® right after the last word of the registered mark
+    (e.g. "aquris Omzole D®", "aquris Hytremom®", "aquris Azithcin 250®"); no mark where the artwork has none.
   - Write "aquris" in lowercase and the product name in sentence case ("aquris Azithcin 250",
     "aquris Omzole D"), never in capitals (AUSPHARMA, 28 Nov 2026). The word marks are registered as
     "AQURIS OMZOLE" etc., and a change of case keeps the same mark, but the ® must sit on the full
