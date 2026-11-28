@@ -132,7 +132,7 @@ def front(spec, Lmm, Hmm):
         a = Image.open(os.path.join(ASSETS, "plus-a.png")).convert("L")
         ah = min(H * 0.5, W * 0.28 * a.height / a.width)  # same size as on the live ACEELO outer
         a = a.resize((round(a.width * ah / a.height), round(ah)), Image.LANCZOS)
-        stamp(img, a, hexrgb(p["color"]), W - a.width * 1.02, H - a.height * 0.86)
+        stamp(img, a, hexrgb(p["color"]), W - a.width * 1.02, H - a.height * 0.95)  # ~5% bleeds off the bottom, as on the patch packs
     else:
         img.paste(Image.new("RGB", (pw, H), hexrgb(p["color"])), (px0, 0))
     if p.get("lines"):
