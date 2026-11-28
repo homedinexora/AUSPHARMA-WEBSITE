@@ -13,6 +13,7 @@ export type TherapySlug =
   | "respiratory-allergy"
   | "gastro"
   | "cns-neuro"
+  | "dermatology"
   | "bone-health";
 
 export interface Therapy {
@@ -32,6 +33,8 @@ export const therapies: readonly Therapy[] = [
   { slug: "respiratory-allergy", name: "Respiratory & anti-allergy", panel: "#007F75", web: "#007F75", tint: "#7CE0D3", status: "proposed" },
   { slug: "gastro", name: "Gastro", panel: "#D0006F", web: "#D0006F", tint: "#F1A7DC", status: "proposed" },
   { slug: "cns-neuro", name: "CNS / Neuro", panel: "#6A2C91", web: "#6A2C91", tint: "#C5B4E3", status: "proposed" },
+  // Cyber Oak guide (docs/design/therapy-colour-guide-cyber-oak.docx): Pantone 433 C charcoal, "+a" in 7520 C.
+  { slug: "dermatology", name: "Dermatology", panel: "#1D252D", web: "#1D252D", tint: "#E5BEAE", status: "proposed" },
   { slug: "bone-health", name: "Bone health", panel: "#00205B", web: "#00205B", tint: "#C3D7EE", status: "proposed" },
 ];
 

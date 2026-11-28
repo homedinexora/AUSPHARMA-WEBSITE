@@ -12,7 +12,12 @@ describe("activeTherapies", () => {
   });
 
   it("ignores products without a therapy or with an unknown one", () => {
-    expect(activeTherapies([{ therapy: null }, { therapy: "dermatology" }])).toEqual([]);
+    expect(activeTherapies([{ therapy: null }, { therapy: "womens-health" }])).toEqual([]);
+  });
+
+  it("lists Dermatology after the other colour-guide therapies and before Bone health", () => {
+    const items = [{ therapy: "bone-health" }, { therapy: "dermatology" }, { therapy: "gastro" }];
+    expect(activeTherapies(items).map((t) => t.name)).toEqual(["Gastro", "Dermatology", "Bone health"]);
   });
 
   it("lists Bone health last, after the colour-guide therapies", () => {

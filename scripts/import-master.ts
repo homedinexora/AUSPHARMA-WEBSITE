@@ -61,6 +61,16 @@ const SITES = [
     pinCode: "249403",
     licenceNumbers: "8/UA/LL/SC/P-2014",
   },
+  {
+    // Akums' own plant, as printed on the AQURIS PARASYP 250 label (Nov 2026).
+    id: "MFR-AKUMS-P22",
+    legalName: "Akums Drugs & Pharmaceuticals Ltd.",
+    address: "Plot No. 22, Sector-6A, I.I.E., SIDCUL, Ranipur",
+    city: "Haridwar",
+    state: "Uttarakhand",
+    pinCode: "249403",
+    licenceNumbers: "123/UA/2007",
+  },
 ];
 
 /** Per-SKU facts read from approved carton artwork (QR/barcode, licence, cautions) and inserts. */
@@ -151,10 +161,17 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
   },
   // GTINs issued by GS1 (pending approval) on 2026-11-28; packs to carry the barcode + QR from AUSPHARMA.
   // Website mock-ups (scripts/make-mockup.py, specs in scripts/mockup-specs/) laid out from the previous artworks.
-  AQU0448: { gtin: "8906219880315", packImageBlob: "/packs/8906219880315.webp" },
-  AQU0483: { gtin: "8906219880308", packImageBlob: "/packs/8906219880308.webp" },
-  AQU0457: { gtin: "8906219880292", packImageBlob: "/packs/8906219880292.webp" },
-  AQU0424: { gtin: "8906219880285", packImageBlob: "/packs/8906219880285.webp" }, // pack shot from Malik mono carton R3 (150 x 15 x 90)
+  // Manufacturer, licence and schedule as printed on the artworks; published 2026-11-28.
+  AQU0448: { gtin: "8906219880315", packImageBlob: "/packs/8906219880315.webp", // label prints no schedule
+    manufacturerId: "MFR-AKUMS-P22", manufacturingLicenceNo: "123/UA/2007" },
+  AQU0483: { gtin: "8906219880308", packImageBlob: "/packs/8906219880308.webp", therapy: "dermatology",
+    manufacturerId: "MFR-MALIK", manufacturingLicenceNo: "48/UA/SC/P-2013", schedule: "H" },
+  AQU0457: { gtin: "8906219880292", packImageBlob: "/packs/8906219880292.webp",
+    manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "H" },
+  // Pack shot from Malik mono carton R3 (150 x 15 x 90). Its "Manufactured by" block names Pure & Cure,
+  // 51/UA/SC/P-2013; another panel prints 48/UA/SC/P-2013 (open with the vendor).
+  AQU0424: { gtin: "8906219880285", packImageBlob: "/packs/8906219880285.webp",
+    manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "51/UA/SC/P-2013", schedule: "H" },
   // Renamed SKUs (Nov 2026): same formula and manufacturer as ACEELO / ACEELO PS, which stay live for packs in the
   // market. Temporary item IDs until the ERP assigns them; inserts copied from the parent products.
   "ACE-NEW-MR": {
@@ -256,7 +273,8 @@ const THERAPY: Record<string, string> = {
   "ANTI ALLERGIC DRUGS": "respiratory-allergy",
   "GASTRO ENTROLOGY": "gastro",
   "BONE DISORDERS": "bone-health", // Bone Plus range (added Nov 2026; navy from the packs)
-  // SKIN DISORDERS, GENITO URINARY: no colour-guide therapy yet (left null).
+  "SKIN DISORDERS": "dermatology", // e.g. AQURIS HYTREMOM (added Nov 2026)
+  // GENITO URINARY: no colour-guide therapy yet (left null).
 };
 
 /**
