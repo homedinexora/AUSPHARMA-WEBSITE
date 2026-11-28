@@ -142,8 +142,11 @@ distinct on brown board.
   - Mono-carton treatment (solid therapy panel over white) only for products that have a mono carton
     (today: Azithcin). Everything else gets the outer treatment: bare kraft, one therapy panel, black text.
   - No "+a" mark unless the previous artwork carries it.
-  - Put ® / ™ exactly where the previous artwork has it (e.g. "AQURIS OMZOLE®D", "AQURIS HYTREMOM®");
-    no mark where the artwork has none. Don't add a WHO-GMP seal the artwork doesn't have.
+  - Put ® / ™ exactly where the previous artwork has it (e.g. "aquris OMZOLE®D", "aquris HYTREMOM®");
+    no mark where the artwork has none.
+  - Write "aquris" in lowercase before the product name (AUSPHARMA, 28 Nov 2026). The word marks are
+    registered as "AQURIS OMZOLE" etc., and a change of case keeps the same mark, but the ® must sit on
+    the full registered mark, never straight after "aquris" (AQURIS alone is not yet registered). Don't add a WHO-GMP seal the artwork doesn't have.
   - Generator: `scripts/make-mockup.py <spec.json> <outdir>`.
 
 ## 5. Typography
