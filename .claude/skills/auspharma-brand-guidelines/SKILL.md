@@ -138,16 +138,18 @@ distinct on brown board.
 - Use "™ – Trademark under Registration", not ®, unless the registration is confirmed. Registration
   status: `docs/design/trademark-status.md` (from the IP India word-mark report). "AQURIS" on its own is
   not yet registered, so the division mark stays "+aquris™".
-- **Mock-ups follow the product's previous artwork** (AUSPHARMA, 28 Nov 2026):
-  - Mono-carton treatment (solid therapy panel over white) only for products that have a mono carton
-    (today: Azithcin). Everything else gets the outer treatment: bare kraft, one therapy panel, black text.
-  - No "+a" mark unless the previous artwork carries it.
-  - Put ® / ™ exactly where the previous artwork has it (e.g. "aquris OMZOLE®D", "aquris HYTREMOM®");
-    no mark where the artwork has none.
-  - Write "aquris" in lowercase before the product name (AUSPHARMA, 28 Nov 2026). The word marks are
-    registered as "AQURIS OMZOLE" etc., and a change of case keeps the same mark, but the ® must sit on
-    the full registered mark, never straight after "aquris" (AQURIS alone is not yet registered). Don't add a WHO-GMP seal the artwork doesn't have.
-  - Generator: `scripts/make-mockup.py <spec.json> <outdir>`.
+- **Website mock-ups** (AUSPHARMA, 28 Nov 2026):
+  - Take the look from the pack shots already live on auspharma.in: kraft board, full-height therapy
+    panel on the right with the white WHO-GMP seal at the top and the "+a" in the tint colour at the
+    bottom corner (kept on the panel), Rx box, generic name, brand line, strength | pack box bottom left,
+    brand set vertically on the side and across the top flap.
+  - Take the wording from the product's previous artwork, and put ® / ™ where it has them
+    (e.g. "aquris OMZOLE®D", "aquris HYTREMOM®"); no mark where the artwork has none.
+  - Write "aquris" in lowercase before the product name. The word marks are registered as
+    "AQURIS OMZOLE" etc., and a change of case keeps the same mark, but the ® must sit on the full
+    registered mark, never straight after "aquris" (AQURIS alone is not yet registered).
+  - Printed cartons are a separate matter: only Azithcin has a mono carton.
+  - Generator: `scripts/make-mockup.py <spec.json> <outdir>`; specs in `scripts/mockup-specs/`.
 
 ## 5. Typography
 

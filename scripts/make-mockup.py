@@ -1,9 +1,10 @@
-"""Website pack mock-ups in the outer-carton treatment of the therapy colour guide, laid out from a product's
-previous artwork.
+"""Website pack mock-ups. With panel.tint set, they follow the pack shots live on auspharma.in (therapy panel
+with white WHO-GMP seal and "+a" tint, strength | pack box); without it, the plain outer treatment below.
+Wording and (R)/(TM) positions come from the product's previous artwork.
 
 Outer treatment (docs/design/therapy-colour-guide-cyber-oak.docx): bare kraft board, one solid therapy panel,
-text in black, panel text knocked out to board colour. Only add elements the previous artwork has: keep its
-wording, its (R)/(TM) position and leave out the "+a" mark unless that artwork carries it. Mono cartons
+text in black, panel text knocked out to board colour, "+a" in the full panel colour on bare board
+(spec "plus_a": {"h": fraction of front height}). Keep the previous artwork's wording and (R)/(TM) position. Mono cartons
 (solid panel over white) are a separate treatment, used only where the product has a mono carton.
 Brand line is a little smaller than the generic name (21:24); strength shows actives only, lowercase units.
 
@@ -122,14 +123,25 @@ def panel_text(img, spec, x0, pw, H):
 def front(spec, Lmm, Hmm):
     W, H = round(Lmm * PX), round(Hmm * PX)
     img = Image.new("RGB", (W, H), KRAFT)
-    pw = round(W * spec["panel"]["frac"])
+    p = spec["panel"]
+    pw = round(min(W * p["frac"], H * 1.05))
     px0 = W - pw
-    img.paste(Image.new("RGB", (pw, H), hexrgb(spec["panel"]["color"])), (px0, 0))
-    panel_text(img, spec, px0, pw, H)
+    img.paste(Image.new("RGB", (pw, H), hexrgb(p["color"])), (px0, 0))
+    if p.get("lines"):
+        panel_text(img, spec, px0, pw, H)
+    site = bool(p.get("tint"))  # website pack style: seal + "+a" tint on the panel, as on the live pack shots
+    if site:
+        a = Image.open(os.path.join(ASSETS, "plus-a.png")).convert("L")
+        ah = min(H * 0.62, pw * 0.98 * a.height / a.width)  # keep it on the panel, as on the live packs
+        a = a.resize((round(a.width * ah / a.height), round(ah)), Image.LANCZOS)
+        stamp(img, a, hexrgb(p["tint"]), W - a.width + a.width * 0.06, H - a.height + a.height * 0.05)
+        if spec.get("seal"):
+            s = seal(min(pw * 0.56, H * 0.32))
+            stamp(img, s, (255, 255, 255), px0 + (pw - s.width) / 2, H * 0.06)
 
     m = max(24, min(W, H) * 0.07)
     left_w = px0 - 2 * m
-    seal_h = min(H * 0.30, left_w * 0.2) if spec.get("seal") else 0
+    seal_h = min(H * 0.30, left_w * 0.2) if spec.get("seal") and not site else 0
     lines = spec["generic"]
     has_sub = bool(spec.get("brand_sub"))
     # fit the generic size to the width and the stack to the height
@@ -139,7 +151,7 @@ def front(spec, Lmm, Hmm):
         gw = max(tmask(l, font(g))[0].width for l in lines)
         bw = brand_mask(spec["brand"], g * 21 / 24).width
         stack = (rx_h + g * 0.2 if rx_h else 0) + len(lines) * g * 1.12 + g * 0.3 + g * 0.9 + (g * 0.55 if has_sub else 0)
-        stack += g * 0.6 + g * 0.55 * 1.2
+        stack += g * 0.6 + g * 1.05
         first_w = left_w - (seal_h * 1.15 if seal_h else 0)
         if gw <= first_w and bw <= left_w and stack + 2 * m <= H:
             break
@@ -163,8 +175,23 @@ def front(spec, Lmm, Hmm):
     if has_sub:
         sm, _ = tmask(spec["brand_sub"], font(g * 0.42, 700))
         stamp(img, sm, INK, m + bl.width - sm.width, y + g * 0.15)
-    pk, _ = tmask(spec["pack"], font(g * 0.55, 500))
-    stamp(img, pk, INK, m, H - m - pk.height)
+    if spec.get("strength"):  # strength | pack box, bottom left (live pack style)
+        sf = font(g * 0.5, 500)
+        a1, _ = tmask(spec["strength"], sf)
+        b1, _ = tmask(spec["pack"], sf)
+        pad = g * 0.26
+        bh = max(a1.height, b1.height) + 2 * pad
+        by = H - m - bh
+        w1, w2 = a1.width + 2 * pad, b1.width + 2 * pad
+        d = ImageDraw.Draw(img)
+        lw = max(2, round(g * 0.04))
+        d.rectangle([m, by, m + w1 + w2, by + bh], outline=INK, width=lw)
+        d.line([m + w1, by, m + w1, by + bh], fill=INK, width=lw)
+        stamp(img, a1, INK, m + pad, by + pad)
+        stamp(img, b1, INK, m + w1 + pad, by + pad)
+    else:
+        pk, _ = tmask(spec["pack"], font(g * 0.55, 500))
+        stamp(img, pk, INK, m, H - m - pk.height)
     return img
 
 
@@ -206,11 +233,15 @@ def side(spec, Wmm, Hmm):
     return img
 
 
-def top(spec, Lmm, Wmm):
+def top(spec, Lmm, Wmm, Hmm):
     W, D = round(Lmm * PX), round(Wmm * PX)
     img = Image.new("RGB", (W, D), KRAFT)
-    pw = round(W * spec["panel"]["frac"])
+    pw = round(min(W * spec["panel"]["frac"], Hmm * PX * 1.05))
     img.paste(Image.new("RGB", (pw, D), hexrgb(spec["panel"]["color"])), (W - pw, 0))
+    bl = brand_mask(spec["brand"], D * 0.42)
+    if bl.width > (W - pw) * 0.8:
+        bl = bl.resize((round((W - pw) * 0.8), round(bl.height * (W - pw) * 0.8 / bl.width)), Image.LANCZOS)
+    stamp(img, bl, INK, (W - pw - bl.width) / 2, (D - bl.height) / 2)
     return img
 
 
@@ -280,7 +311,7 @@ def main():
         out.save(f"{outdir}/{slug}.webp", quality=88, method=6)
         return
     s = side(spec, spec["W"], spec["H"])
-    t = top(spec, spec["L"], spec["W"])
+    t = top(spec, spec["L"], spec["W"], spec["H"])
     ms = importlib.util.spec_from_file_location("mp", os.path.join(HERE, "make-packshots.py"))
     mp = importlib.util.module_from_spec(ms)
     sys.argv = sys.argv[:1]

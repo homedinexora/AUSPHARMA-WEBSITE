@@ -1,5 +1,27 @@
-{"slug":"parasyp-250","kind":"bottle","L":44,"H":45,"rx":false,"seal":false,
- "generic":["Paracetamol","Paediatric Oral","Suspension IP","250 mg"],
- "brand":[["aquris PARASYP 250",""]],
- "pack":"60 ml",
- "panel":{"color":"#B94700","frac":0.16,"lines":["250 mg"],"rotate":true}}
+{
+ "slug": "parasyp-250",
+ "kind": "bottle",
+ "L": 44,
+ "H": 45,
+ "rx": false,
+ "seal": true,
+ "generic": [
+  "Paracetamol",
+  "Paediatric Oral",
+  "Suspension IP",
+  "250 mg"
+ ],
+ "brand": [
+  [
+   "aquris PARASYP 250",
+   ""
+  ]
+ ],
+ "pack": "60 ml",
+ "panel": {
+  "color": "#B94700",
+  "tint": "#FDBE87",
+  "frac": 0.36
+ },
+ "strength": "250 mg / 5 ml"
+}
