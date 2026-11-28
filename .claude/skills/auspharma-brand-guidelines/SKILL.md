@@ -144,8 +144,9 @@ distinct on brown board.
     bottom corner (kept on the panel), Rx box, generic name, brand line, strength | pack box bottom left,
     brand set vertically on the side and across the top flap.
   - Take the wording from the product's previous artwork, and put ® / ™ where it has them
-    (e.g. "aquris OMZOLE®D", "aquris HYTREMOM®"); no mark where the artwork has none.
-  - Write "aquris" in lowercase before the product name. The word marks are registered as
+    (e.g. "aquris Omzole®D", "aquris Hytremom®"); no mark where the artwork has none.
+  - Write "aquris" in lowercase and the product name in sentence case ("aquris Azithcin 250",
+    "aquris Omzole D"), never in capitals (AUSPHARMA, 28 Nov 2026). The word marks are registered as
     "AQURIS OMZOLE" etc., and a change of case keeps the same mark, but the ® must sit on the full
     registered mark, never straight after "aquris" (AQURIS alone is not yet registered).
   - **Outer cartons never carry the colour patch** (AUSPHARMA, 28 Nov 2026): kraft only, black WHO-GMP
