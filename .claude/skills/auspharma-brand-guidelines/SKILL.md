@@ -135,7 +135,16 @@ distinct on brown board.
   manufacturers' spec boxes use generic 24 pt, brand 21 pt). Apply this to every carton, foil and
   mock-up we make or review. (AUSPHARMA, 28 Nov 2026)
 - Strength box shows the active ingredients only (no preservatives), with lowercase units ("40 mg + 25 mg").
-- Use "™ – Trademark under Registration", not ®, unless the registration is confirmed.
+- Use "™ – Trademark under Registration", not ®, unless the registration is confirmed. Registration
+  status: `docs/design/trademark-status.md` (from the IP India word-mark report). "AQURIS" on its own is
+  not yet registered, so the division mark stays "+aquris™".
+- **Mock-ups follow the product's previous artwork** (AUSPHARMA, 28 Nov 2026):
+  - Mono-carton treatment (solid therapy panel over white) only for products that have a mono carton
+    (today: Azithcin). Everything else gets the outer treatment: bare kraft, one therapy panel, black text.
+  - No "+a" mark unless the previous artwork carries it.
+  - Put ® / ™ exactly where the previous artwork has it (e.g. "AQURIS OMZOLE®D", "AQURIS HYTREMOM®");
+    no mark where the artwork has none. Don't add a WHO-GMP seal the artwork doesn't have.
+  - Generator: `scripts/make-mockup.py <spec.json> <outdir>`.
 
 ## 5. Typography
 
