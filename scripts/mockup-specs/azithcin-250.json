@@ -1,0 +1,30 @@
+{
+ "slug": "azithcin-250",
+ "kind": "carton",
+ "L": 110,
+ "W": 22,
+ "H": 58,
+ "rx": true,
+ "seal": true,
+ "generic": [
+  "Azithromycin",
+  "Tablets IP 250 mg"
+ ],
+ "brand": [
+  [
+   "aquris AZITHCIN 250",
+   ""
+  ],
+  [
+   "®",
+   "sup"
+  ]
+ ],
+ "strength": "250 mg",
+ "pack": "1 x 6 Tablets",
+ "panel": {
+  "color": "#44883E",
+  "tint": "#ADDC91",
+  "frac": 0.27
+ }
+}

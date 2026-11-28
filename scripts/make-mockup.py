@@ -1,4 +1,5 @@
-"""Website pack mock-ups. With panel.tint set, they follow the pack shots live on auspharma.in (therapy panel
+"""Website pack mock-ups. Outer cartons (panel.outer) never carry a colour patch: kraft, black seal, "+a" in the
+therapy colour, as on the live ACEELO outer. With panel.tint set, they follow the pack shots live on auspharma.in (therapy panel
 with white WHO-GMP seal and "+a" tint, strength | pack box); without it, the plain outer treatment below.
 Wording and (R)/(TM) positions come from the product's previous artwork.
 
@@ -124,9 +125,16 @@ def front(spec, Lmm, Hmm):
     W, H = round(Lmm * PX), round(Hmm * PX)
     img = Image.new("RGB", (W, H), KRAFT)
     p = spec["panel"]
-    pw = round(min(W * p["frac"], H * 1.05))
+    outer = bool(p.get("outer"))  # outer carton: never a colour patch; "+a" in the therapy colour on bare board
+    pw = 0 if outer else round(min(W * p["frac"], H * 1.05))
     px0 = W - pw
-    img.paste(Image.new("RGB", (pw, H), hexrgb(p["color"])), (px0, 0))
+    if outer:
+        a = Image.open(os.path.join(ASSETS, "plus-a.png")).convert("L")
+        ah = min(H * 0.5, W * 0.28 * a.height / a.width)  # same size as on the live ACEELO outer
+        a = a.resize((round(a.width * ah / a.height), round(ah)), Image.LANCZOS)
+        stamp(img, a, hexrgb(p["color"]), W - a.width * 1.02, H - a.height * 0.86)
+    else:
+        img.paste(Image.new("RGB", (pw, H), hexrgb(p["color"])), (px0, 0))
     if p.get("lines"):
         panel_text(img, spec, px0, pw, H)
     site = bool(p.get("tint"))  # website pack style: seal + "+a" tint on the panel, as on the live pack shots
@@ -236,7 +244,7 @@ def side(spec, Wmm, Hmm):
 def top(spec, Lmm, Wmm, Hmm):
     W, D = round(Lmm * PX), round(Wmm * PX)
     img = Image.new("RGB", (W, D), KRAFT)
-    pw = round(min(W * spec["panel"]["frac"], Hmm * PX * 1.05))
+    pw = 0 if spec["panel"].get("outer") else round(min(W * spec["panel"]["frac"], Hmm * PX * 1.05))
     img.paste(Image.new("RGB", (pw, D), hexrgb(spec["panel"]["color"])), (W - pw, 0))
     bl = brand_mask(spec["brand"], D * 0.42)
     if bl.width > (W - pw) * 0.8:

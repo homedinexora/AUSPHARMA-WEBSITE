@@ -148,7 +148,11 @@ distinct on brown board.
   - Write "aquris" in lowercase before the product name. The word marks are registered as
     "AQURIS OMZOLE" etc., and a change of case keeps the same mark, but the ® must sit on the full
     registered mark, never straight after "aquris" (AQURIS alone is not yet registered).
-  - Printed cartons are a separate matter: only Azithcin has a mono carton.
+  - **Outer cartons never carry the colour patch** (AUSPHARMA, 28 Nov 2026): kraft only, black WHO-GMP
+    seal, "+a" in the full therapy colour on the board, as on the live ACEELO outer. Today: ACEELO,
+    ACEELO PS, ACEELO MR, ACEELO SP, Omzole D (`panel.outer` in the spec).
+  - **Mono cartons, tube cartons and syrup stickers keep the patch** (white seal and "+a" tint on it).
+    Today: Azithcin (mono), Hytremom (tube carton), Parasyp 250 (bottle sticker), plus the live monos.
   - Generator: `scripts/make-mockup.py <spec.json> <outdir>`; specs in `scripts/mockup-specs/`.
 
 ## 5. Typography
