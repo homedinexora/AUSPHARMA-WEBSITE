@@ -154,7 +154,7 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
   AQU0448: { gtin: "8906219880315", packImageBlob: "/packs/8906219880315.webp" },
   AQU0483: { gtin: "8906219880308", packImageBlob: "/packs/8906219880308.webp" },
   AQU0457: { gtin: "8906219880292", packImageBlob: "/packs/8906219880292.webp" },
-  AQU0424: { gtin: "8906219880285", packImageBlob: "/packs/8906219880285.webp" },
+  AQU0424: { gtin: "8906219880285", packImageBlob: "/packs/8906219880285.webp" }, // pack shot from Malik mono carton R3 (150 x 15 x 90)
   // Renamed SKUs (Nov 2026): same formula and manufacturer as ACEELO / ACEELO PS, which stay live for packs in the
   // market. Temporary item IDs until the ERP assigns them; inserts copied from the parent products.
   "ACE-NEW-MR": {
