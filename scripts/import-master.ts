@@ -168,7 +168,8 @@ const CONFIRMED: Record<string, Partial<typeof products.$inferInsert>> = {
     manufacturerId: "MFR-MALIK", manufacturingLicenceNo: "48/UA/SC/P-2013", schedule: "H" },
   AQU0457: { gtin: "8906219880292", packImageBlob: "/packs/8906219880292.webp",
     manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "31/UA/2013", schedule: "H" },
-  // Pack shot from Malik mono carton R3 (150 x 15 x 90). Its "Manufactured by" block names Pure & Cure,
+  // Pack shot from Malik mono carton R3 (150 x 15 x 90), corrected for the website: "aquris Azithcin 250®" and
+  // "1 x 6 Tablets" (the R3 carton prints "aquris®" and 1 x 15). Its "Manufactured by" block names Pure & Cure,
   // 51/UA/SC/P-2013; another panel prints 48/UA/SC/P-2013 (open with the vendor).
   AQU0424: { gtin: "8906219880285", packImageBlob: "/packs/8906219880285.webp",
     manufacturerId: "MFR-PURECURE", manufacturingLicenceNo: "51/UA/SC/P-2013", schedule: "H" },
